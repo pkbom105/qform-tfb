@@ -1,53 +1,55 @@
-// src/components/ExportPDFButton.tsx
 "use client";
 import React, { useState } from 'react';
 import { toPng } from 'html-to-image';
 import jsPDF from 'jspdf';
-import { FileDown, Loader2 } from "lucide-react";
+import { FileDown, Loader2, FileJson } from "lucide-react";
 
+// 1. เพิ่ม 'data: any' เข้าไปใน Interface
 interface ExportPDFButtonProps {
   targetId: string;
+  data: any; 
   fileName?: string;
 }
 
-const ExportPDFButton: React.FC<ExportPDFButtonProps> = ({ targetId, fileName = "Quotation-Data" }) => {
+// 2. รับค่า 'data' มาใช้งานใน Component
+const ExportPDFButton: React.FC<ExportPDFButtonProps> = ({ 
+  targetId, 
+  data, 
+  fileName = "Toffy-Quotation" 
+}) => {
   const [isExporting, setIsExporting] = useState(false);
+
+  // ฟังก์ชันสำหรับดาวน์โหลดไฟล์ JSON (Step 1)
+  const downloadJSON = () => {
+    const jsonString = JSON.stringify(data, null, 4);
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${fileName}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
 
   const handleExport = async () => {
     const element = document.getElementById(targetId);
-    if (!element) {
-      alert("ไม่พบพื้นที่สำหรับสร้าง PDF");
-      return;
-    }
+    if (!element) return;
 
     setIsExporting(true);
-
     try {
-      // Step 1: Capture ข้อมูลที่จัดเรียงเป็น JSON ให้เป็นรูปภาพความละเอียดสูง
-      const dataUrl = await toPng(element, { 
-        quality: 1.0,
-        pixelRatio: 3, // เพิ่มความคมชัดเป็นพิเศษสำหรับตัวอักษรขนาดเล็ก
-        skipFonts: false, // มั่นใจว่าใช้ Font Kanit ในการ Render
-      });
-
-      // Step 2: สร้างไฟล์ PDF ขนาด A4
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
-      });
-
+      // Step 2: สร้าง PDF จากหน้า Report
+      const dataUrl = await toPng(element, { quality: 1.0, pixelRatio: 2 });
+      const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const pdfHeight = (element.offsetHeight * pdfWidth) / element.offsetWidth;
 
-      // วางรูปภาพให้เต็มหน้า A4 พอดี
       pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      
-      // สั่ง Download
       pdf.save(`${fileName}.pdf`);
+
+      // ดาวน์โหลด JSON พร้อมกัน
+      downloadJSON();
     } catch (error) {
-      console.error("PDF Export Error:", error);
-      alert("เกิดข้อผิดพลาดในการสร้างไฟล์ PDF");
+      console.error("Export Error:", error);
     } finally {
       setIsExporting(false);
     }
@@ -58,14 +60,10 @@ const ExportPDFButton: React.FC<ExportPDFButtonProps> = ({ targetId, fileName = 
       type="button"
       onClick={handleExport}
       disabled={isExporting}
-      className="flex items-center gap-2 bg-slate-900 hover:bg-red-600 text-white px-10 py-4 rounded-full transition-all shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] font-black uppercase italic tracking-wider disabled:opacity-50 active:scale-95"
+      className="flex items-center gap-2 bg-slate-900 hover:bg-red-600 text-white px-6 py-3 rounded-xl transition-all shadow-lg font-bold disabled:opacity-50"
     >
-      {isExporting ? (
-        <Loader2 className="animate-spin" size={22} />
-      ) : (
-        <FileDown size={22} />
-      )}
-      {isExporting ? "Processing..." : "Generate PDF (A4)"}
+      {isExporting ? <Loader2 className="animate-spin" size={18} /> : <FileJson size={18} />}
+      {isExporting ? "กำลังประมวลผล..." : "Export PDF + JSON"}
     </button>
   );
 };
