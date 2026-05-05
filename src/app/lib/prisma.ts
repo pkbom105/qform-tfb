@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
 
+// ตรวจสอบว่ามี DATABASE_URL ใน Vercel Environment Variables หรือไม่
 const connectionString = process.env.DATABASE_URL
 
 const pool = new Pool({ connectionString })
