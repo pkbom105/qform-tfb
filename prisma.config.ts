@@ -8,7 +8,6 @@ export default defineConfig({
   migrations: {
     path: "prisma/migrations",
   },
-  datasource: {
-    url: process.env["DATABASE_URL"],
-  },
+  // datasource.url is defined in schema.prisma via env("DATABASE_URL")
+  // Defining it here AND in schema.prisma causes a Vercel build conflict
 });
