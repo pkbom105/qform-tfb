@@ -2,11 +2,9 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
 
 // บอก Next.js ว่าห้ามทำ Static Prefetch สำหรับไฟล์นี้
-export const dynamic = 'force-dynamic'; 
+export const dynamic = 'force-dynamic';
 
 const prisma = new PrismaClient();
 
@@ -33,29 +31,9 @@ export async function POST(req: NextRequest) {
     const embroiderySize = formData.get("embroiderySize") as string;
     const additionalNeeds = formData.get("additionalNeeds") as string;
 
-    // 2. จัดการไฟล์แนบ (คืนค่าตัวแปรที่หายไป)
-    const files = formData.getAll("files") as File[];
-    const uploadedFileNames: string[] = []; 
-
-    if (files && files.length > 0) {
-      const uploadDir = path.join(process.cwd(), "public/uploads");
-      
-      try {
-        await mkdir(uploadDir, { recursive: true });
-      } catch (err) { /* folder exists */ }
-
-      for (const file of files) {
-        if (file.name === 'undefined' || file.size === 0) continue;
-        
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
-        const filePath = path.join(uploadDir, fileName);
-        
-        await writeFile(filePath, buffer);
-        uploadedFileNames.push(`/uploads/${fileName}`);
-      }
-    }
+    // 2. ไฟล์แนบ — Vercel ไม่มี writable filesystem
+    // หากต้องการ upload ไฟล์ ให้ใช้ Vercel Blob / S3 / Cloudinary แทน
+    const uploadedFileNames: string[] = [];
 
     // 3. บันทึกลง Database
     const newQuotation = await prisma.quotation.create({
@@ -75,7 +53,7 @@ export async function POST(req: NextRequest) {
         embroideryTitle,
         embroiderySize,
         additionalNeeds,
-        images: uploadedFileNames, // ต้องมั่นใจว่ารัน npx prisma generate แล้ว
+        images: uploadedFileNames,
       },
     });
 
@@ -88,4 +66,4 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
-}
+}
