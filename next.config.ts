@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: 'standalone', // เพิ่มบรรทัดนี้
   experimental: {
     serverActions: {
       allowedOrigins: ['10.1.255.1', 'localhost:3000'],

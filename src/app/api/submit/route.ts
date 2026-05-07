@@ -41,6 +41,20 @@ export async function POST(req: Request) {
         fileUrls: fileUrls,
       },
     });
+    // ในฟังก์ชัน POST...
+for (const file of files) {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const fileName = `${Date.now()}-${file.name}`;
+  const filePath = path.join(process.cwd(), 'public', 'uploads', fileName);
+
+  try {
+    await writeFile(filePath, buffer);
+    uploadedFileNames.push(`/uploads/${fileName}`);
+  } catch (err) {
+    console.error("Local write failed, might be on Vercel:", err);
+    // ถ้าอยู่บน Vercel อาจจะต้องใช้วิธีอัปโหลดไป Cloud แทน หรือข้ามไปก่อน
+  }
+}
 
     return NextResponse.json({ success: true, data: submission });
   } catch (error) {

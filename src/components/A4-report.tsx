@@ -1,6 +1,4 @@
-"use client";
-import React from "react";
-import { User, Shirt, Scissors, Printer, FileText, ImageIcon } from "lucide-react";
+import React from 'react';
 
 interface A4ReportProps {
   id: string;
@@ -8,147 +6,133 @@ interface A4ReportProps {
 }
 
 const A4Report: React.FC<A4ReportProps> = ({ id, data }) => {
-  const customer = data?.customer_profile || {};
-  const product = data?.product_specification || {};
-  const decoration = data?.decoration_details || {};
-  const sizes = product?.size_breakdown || {};
-  // รับ Array ของ Image URLs จากข้อมูลที่ส่งมา
-  const images = data?.design_images || []; 
+  const { customer_profile, product_specification, decoration_details, design_images } = data;
+  const sizeList = ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL", "5XL", "6XL"];
 
   return (
     <div 
       id={id} 
-      className="w-[210mm] min-h-[297mm] bg-white p-[20mm] flex flex-col border border-slate-200 mx-auto font-kanit text-slate-900 shadow-sm print:shadow-none print:border-none"
+      className="w-[210mm] min-h-[297mm] p-12 bg-white mx-auto font-kanit text-slate-900 flex flex-col box-border shadow-2xl"
     >
-      {/* --- Header Section --- */}
+      
+      {/* HEADER */}
       <div className="flex justify-between items-start border-b-4 border-red-600 pb-6 mb-8">
-        <div>
-          <h1 className="text-4xl font-black tracking-tighter uppercase italic text-slate-900">
-            Toffy Boutique
-          </h1>
-          <p className="text-slate-500 font-bold tracking-[0.2em] text-[10px] mt-1 uppercase">
-            Order Summary Report
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-[10px] text-slate-400 font-mono uppercase tracking-widest">
-            Ref: TFB-{customer?.contact?.replace(/-/g, '') || "DRAFT"}
-          </p>
-          <p className="text-[10px] text-slate-400 font-mono">
-            Date: {new Date().toLocaleDateString('th-TH')}
-          </p>
+        <img src="/toffy_logo.png" alt="Logo" className="h-20 object-contain" />
+        <div className="text-right text-[10px] text-slate-500 leading-relaxed uppercase font-bold">
+          <h2 className="text-lg font-black text-slate-900 italic">บริษัท ทอฟฟี่ บูติก จำกัด</h2>
+          <p>ผลิตเสื้อโปโลและยูนิฟอร์มครบวงจร - เรายินดีให้คำปรึกษาแก่ทุกองค์กร</p>
+          <p>258 ถนน พุทธบูชา แขวง บางมด เขตจอมทอง กรุงเทพฯ 10150</p>
+          <p>Tel: 02-428-2591, 02-874-0205 | Line: @toffyboutique</p>
         </div>
       </div>
 
-      <div className="flex-1 space-y-6">
-        {/* --- 1. Customer Info --- */}
-        <section>
-          <div className="flex items-center gap-2 mb-2 text-red-600">
-            <User size={16} />
-            <h2 className="text-xs font-black uppercase tracking-widest">1. Customer Information</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-y-3 bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs">
-            <div className="flex flex-col"><span className="text-[9px] font-bold text-slate-400 uppercase">Name</span><span className="font-bold">{customer.name}</span></div>
-            <div className="flex flex-col"><span className="text-[9px] font-bold text-slate-400 uppercase">Company</span><span className="font-bold">{customer.company}</span></div>
-            <div className="flex flex-col"><span className="text-[9px] font-bold text-slate-400 uppercase">Contact</span><span className="font-bold text-red-600">{customer.contact}</span></div>
-            <div className="flex flex-col"><span className="text-[9px] font-bold text-slate-400 uppercase">Email</span><span className="font-bold">{customer.email}</span></div>
-          </div>
-        </section>
-
-        {/* --- 2. Product Specs --- */}
-        <section>
-          <div className="flex items-center gap-2 mb-2 text-red-600">
-            <Shirt size={16} />
-            <h2 className="text-xs font-black uppercase tracking-widest">2. Product Specifications</h2>
-          </div>
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs space-y-3">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col"><span className="text-[9px] font-bold text-slate-400 uppercase">Category</span><span className="font-bold">{product.category}</span></div>
-              <div className="flex flex-col"><span className="text-[9px] font-bold text-slate-400 uppercase">Material</span><span className="font-bold">{product.material}</span></div>
-            </div>
-            <div className="flex flex-col pt-2 border-t border-slate-200">
-              <span className="text-[9px] font-bold text-slate-400 uppercase">Additional Specs</span>
-              <p className="font-medium text-slate-700 leading-relaxed italic">{product.details}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* --- 3. Size Breakdown --- */}
-        <section>
-          <div className="flex items-center gap-2 mb-2 text-red-600">
-            <Scissors size={16} />
-            <h2 className="text-xs font-black uppercase tracking-widest">3. Size Breakdown</h2>
-          </div>
-          <div className="bg-slate-900 text-white p-5 rounded-xl">
-            <div className="grid grid-cols-5 gap-2 text-center border-b border-slate-700 pb-3 mb-3">
-              {["S", "M", "L", "XL", "Other"].map((s) => (
-                <div key={s}>
-                  <p className="text-[8px] font-bold text-slate-500 uppercase mb-1">Size {s}</p>
-                  <p className="text-lg font-black">{sizes[s] || "0"}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-between items-center px-1">
-              <span className="text-[10px] font-bold uppercase text-slate-400 italic">Total Units</span>
-              <span className="text-2xl font-black text-red-500">{product.total_qty} <span className="text-[10px] text-white">PCS</span></span>
-            </div>
-          </div>
-        </section>
-
-        {/* --- 4 & 5. Decoration & Note --- */}
-        <section className="grid grid-cols-2 gap-4">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-red-600"><Printer size={16} /><h2 className="text-xs font-black uppercase tracking-widest">4. Decoration</h2></div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[10px] space-y-3">
-              <div className="flex justify-between"><span>งานพิมพ์</span><span className="font-bold">{decoration.printing}</span></div>
-              <div className="flex justify-between border-t border-slate-200 pt-2"><span>งานปัก</span><span className="font-bold">{decoration.embroidery}</span></div>
-            </div>
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-red-600"><FileText size={16} /><h2 className="text-xs font-black uppercase tracking-widest">5. Special Note</h2></div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-[10px] min-h-[75px]">
-              <p className="font-medium text-slate-600 italic leading-relaxed">{decoration.additional}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* --- 6. Design Thumbnails (รูปภาพแนบ) --- */}
-        <section className="pt-4">
-          <div className="flex items-center gap-2 mb-3 text-red-600 border-t border-slate-100 pt-4">
-            <ImageIcon size={16} />
-            <h2 className="text-xs font-black uppercase tracking-widest">6. Design Previews / รูปภาพแนบ</h2>
-          </div>
-          {images.length > 0 ? (
-            <div className="grid grid-cols-5 gap-3">
-              {images.map((url: string, index: number) => (
-                <div key={index} className="aspect-square bg-slate-50 rounded-lg border border-slate-200 overflow-hidden flex items-center justify-center p-1">
-                  <img 
-                    src={url} 
-                    alt={`design-preview-${index}`} 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-slate-50 rounded-xl border border-dashed border-slate-200 py-6 text-center">
-              <p className="text-[10px] font-bold text-slate-400 uppercase italic tracking-widest">No images attached / ไม่มีรูปภาพแนบ</p>
-            </div>
-          )}
-        </section>
+      {/* TITLE */}
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-black uppercase tracking-[0.2em] text-slate-900 border-y border-slate-200 py-3">
+          แบบฟอร์มข้อมูลออเดอร์
+        </h1>
       </div>
 
-      {/* --- Footer Section --- */}
-      <div className="mt-auto pt-6 border-t border-slate-100 flex justify-between items-center">
-        <p className="text-[8px] font-black uppercase text-slate-400 tracking-widest">
-          Verified by Toffy Boutique Automation System
-        </p>
-        <p className="text-[8px] text-slate-300 font-bold uppercase">
-          A4 Page 1 of 1 • Internal Document
-        </p>
+      {/* SECTION 1: CUSTOMER INFO */}
+      <div className="grid grid-cols-2 gap-y-3 gap-x-12 text-sm mb-8 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+        <p><strong>ชื่อผู้ติดต่อ:</strong> <span className="text-slate-600">{customer_profile.name}</span></p>
+        <p><strong>เบอร์โทรศัพท์:</strong> <span className="text-red-600 font-bold">{customer_profile.contact}</span></p>
+        <p><strong>บริษัท/หน่วยงาน:</strong> <span className="text-slate-600">{customer_profile.company}</span></p>
+        <p><strong>อีเมล:</strong> <span className="text-slate-600">{customer_profile.email}</span></p>
+        <p><strong>Line ID:</strong> <span className="text-slate-600">{customer_profile.line_id}</span></p>
+        <p><strong>วันที่ส่ง:</strong> <span className="text-slate-600">{new Date().toLocaleDateString('th-TH')}</span></p>
+      </div>
+
+      {/* SECTION 2: PRODUCT & FABRIC */}
+      <div className="grid grid-cols-2 gap-8 mb-8">
+        <div className="space-y-2">
+          <h3 className="text-xs font-black text-red-600 uppercase tracking-wider">ประเภทสินค้าและเนื้อผ้า</h3>
+          <div className="p-4 bg-white border border-slate-200 rounded-xl text-sm">
+            <p><strong>หมวดหมู่:</strong> {product_specification.category}</p>
+            <p><strong>ชนิดเนื้อผ้า:</strong> {product_specification.material}</p>
+          </div>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-xs font-black text-red-600 uppercase tracking-wider">สเปกเพิ่มเติม</h3>
+          <div className="p-4 bg-white border border-slate-200 rounded-xl h-full text-xs italic text-slate-500">
+            {product_specification.details || "-"}
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION 3: SIZE MATRIX */}
+      <div className="mb-8 overflow-hidden border border-slate-200 rounded-xl">
+        <table className="w-full text-center border-collapse">
+          <thead>
+            <tr className="bg-slate-900 text-white text-[9px] font-black uppercase">
+              <th className="p-2 border-r border-slate-700">Size</th>
+              {sizeList.map(s => <th key={s} className="p-2 border-r border-slate-700">{s}</th>)}
+              <th className="p-2 bg-red-600">รวม</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-[10px] bg-white">
+              <td className="p-2 border-r border-slate-100 font-bold bg-slate-50">อก (นิ้ว)</td>
+              {sizeList.map(s => <td key={s} className="p-2 border-r border-slate-100 text-red-600 font-bold">{product_specification.size_breakdown[s]?.chest || "-"}</td>)}
+              <td className="p-2 bg-slate-50 text-slate-400">-</td>
+            </tr>
+            <tr className="text-[11px] bg-slate-50">
+              <td className="p-2 border-r border-slate-200 font-bold">จำนวน</td>
+              {sizeList.map(s => <td key={s} className="p-2 border-r border-slate-200 font-black">{product_specification.size_breakdown[s]?.qty || "0"}</td>)}
+              <td className="p-2 bg-red-50 text-red-600 font-black">{product_specification.total_qty}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* SECTION 4: DECORATION & NOTES (เพิ่มส่วน Note) */}
+      <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="space-y-3">
+           <div className="p-4 border-l-4 border-red-600 bg-slate-50 rounded-r-xl">
+             <h4 className="text-[10px] font-black text-slate-400 uppercase mb-1">งานพิมพ์ (Printing)</h4>
+             <p className="text-sm font-bold">{decoration_details.printing_title} ({decoration_details.printing_size})</p>
+           </div>
+           <div className="p-4 border-l-4 border-slate-900 bg-slate-50 rounded-r-xl">
+             <h4 className="text-[10px] font-black text-slate-400 uppercase mb-1">งานปัก (Embroidery)</h4>
+             <p className="text-sm font-bold">{decoration_details.embroidery_title} ({decoration_details.embroidery_size})</p>
+           </div>
+        </div>
+        {/* คืนค่า Note มาที่นี่ */}
+        <div className="p-5 bg-yellow-50 border border-yellow-100 rounded-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-2 opacity-10"><FileText size={40}/></div>
+          <h4 className="text-[10px] font-black text-yellow-700 uppercase mb-2">หมายเหตุเพิ่มเติม (Additional Notes)</h4>
+          <p className="text-xs text-yellow-900 leading-relaxed italic">{decoration_details.additional || "ไม่มีหมายเหตุเพิ่มเติม"}</p>
+        </div>
+      </div>
+
+      {/* SECTION 5: ATTACHMENTS (คืนค่ารูปภาพแนบ) */}
+      {design_images && design_images.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">ภาพประกอบอ้างอิง (Attachments)</h3>
+          <div className="flex flex-wrap gap-4">
+            {design_images.map((img: string, idx: number) => (
+              <div key={idx} className="w-32 h-32 border-2 border-slate-100 rounded-xl overflow-hidden bg-slate-50 shadow-sm">
+                <img src={img} alt={`Attached ${idx}`} className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* FOOTER */}
+      <div className="mt-auto pt-8 border-t border-slate-100 flex justify-between items-end">
+        <div className="text-sm font-black text-slate-300 uppercase">
+          {customer_profile.company}
+        </div>
+        <div className="text-[8px] text-slate-300 italic">
+          GENERATED BY TOFFY BOUTIQUE ONLINE SYSTEM
+        </div>
       </div>
     </div>
   );
 };
+
+// เพิ่มการ Import icon ที่ขาดไปในหน้า Report
+import { FileText } from "lucide-react";
 
 export default A4Report;
