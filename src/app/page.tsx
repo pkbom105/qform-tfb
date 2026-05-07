@@ -130,8 +130,46 @@ export default function ToffyOrderPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // Submit logic...
-    setLoading(false);
+    setMessage(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("companyName", companyName);
+      formData.append("phone", phone);
+      formData.append("lineId", lineId);
+      formData.append("productType", productType === "อื่นๆ (Other)" ? otherProductType : productType);
+      formData.append("fabricType", fabricType === "Other" ? otherFabric : fabricType);
+      formData.append("specs", specs);
+      formData.append("sizeDetails", JSON.stringify(sizeData));
+      formData.append("finalTotal", String(manualTotal || totalQuantity));
+      formData.append("printTitle", printTitle);
+      formData.append("printSize", printSize);
+      formData.append("embroideryTitle", embroideryTitle);
+      formData.append("embroiderySize", embroiderySize);
+      formData.append("additionalNeeds", additionalNeeds);
+      selectedFiles.forEach(file => formData.append("files", file));
+
+      const res = await fetch("/api/submit", { method: "POST", body: formData });
+      const data = await res.json();
+
+      if (data.success) {
+        setMessage({ type: "success", text: "✅ ส่งข้อมูลเรียบร้อยแล้ว! ทีมงานจะติดต่อกลับโดยเร็ว" });
+        // Reset form
+        setName(""); setEmail(""); setCompanyName(""); setPhone(""); setLineId("");
+        setProductType(""); setFabricType(""); setSpecs(""); setAdditionalNeeds("");
+        setPrintTitle(""); setPrintSize(""); setEmbroideryTitle(""); setEmbroiderySize("");
+        setManualTotal(""); setSelectedFiles([]);
+        setSizeData([...sizeList, "Other"].reduce((acc, size) => ({ ...acc, [size]: { qty: "", chest: "" } }), {}));
+      } else {
+        setMessage({ type: "error", text: `❌ เกิดข้อผิดพลาด: ${data.error}` });
+      }
+    } catch (err) {
+      setMessage({ type: "error", text: "❌ ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่" });
+    } finally {
+      setLoading(false);
+    }
   };
         
   return (
@@ -308,7 +346,15 @@ export default function ToffyOrderPage() {
             </div>
           </section>
 
+          {/* Message Feedback */}
+          {message && (
+            <div className={`p-4 rounded-2xl font-bold text-center text-sm ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+              {message.text}
+            </div>
+          )}
+
           {/* Footer Submit */}
+
           <div className="pt-10 border-t-2 border-slate-50 flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-4 bg-green-50 p-5 rounded-3xl border border-green-100">
               <img src="/line-tfb.png" alt="Line" className="w-30 h-30 object-contain" />
