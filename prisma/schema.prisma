@@ -46,5 +46,6 @@ model Quotation {
   embroideryTitle  String?  // เพิ่มอันนี้
   embroiderySize   String?  // เพิ่มอันนี้
   additionalNeeds  String?
+  images           Json?
   createdAt        DateTime @default(now())
 }
