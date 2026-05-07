@@ -31,7 +31,7 @@ model Admin {
   password String
 }
 
-model Quotation {
+model Wso {
   id               Int      @id @default(autoincrement())
   name             String
   email            String
@@ -50,4 +50,6 @@ model Quotation {
   additionalNeeds  String?
   images           Json?
   createdAt        DateTime @default(now())
+
+  @@map("wso")
 }

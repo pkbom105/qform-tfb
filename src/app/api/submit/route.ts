@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     const uploadedFileNames: string[] = [];
 
     // 3. บันทึกลง Database
-    const newQuotation = await prisma.quotation.create({
+    const newQuotation = await prisma.wso.create({
       data: {
         name,
         email,
