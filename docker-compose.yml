@@ -8,12 +8,15 @@ services:
       - POSTGRES_USER=qform.admin
       - POSTGRES_PASSWORD=Brubrat.258
       - POSTGRES_DB=customer_data
+      - TZ=Asia/Bangkok
+      - PGTZ=Asia/Bangkok
     ports:
       - "5432:5432"   # เปิดให้ Vercel / ภายนอกเชื่อมต่อได้
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     networks:
       - qform-network
+
 
   # --- 2. Toffy Boutique Next.js App ---
   qform-app:
