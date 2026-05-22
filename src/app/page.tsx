@@ -43,10 +43,8 @@ const productTypes = [
 const fabricTypes = [
   "Cotton 100%",
   "Polyester",
-  "TC / CVC",
-  "ผ้าไมโคร Micro",
-  "ผ้าเม็ดข้าวสาร",
-  "ผ้าปีเก้ Pique",
+  "TC",
+  "CVC",
   "อื่นๆ (ระบุในหมายเหตุ)",
 ];
 
