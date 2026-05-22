@@ -20,6 +20,10 @@ import {
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import A4Report from "@/components/A4-report";
+import ContactSection from "@/components/ContactSection";
+import OrderTabs from "@/components/OrderTabs";
+import QuotationForm from "@/components/QuotationForm";
+import { getReportName } from "@/lib/reportNameGenerator";
 
 const productTypes = [
   "เสื้อยืด T-shirt",
@@ -34,7 +38,16 @@ const productTypes = [
   "เสื้อแจ็คเก็ต Jacket",
   "เสื้อรปภ. Security Uniform",
   "ผ้ากันเปื้อน Apron",
-  "อื่นๆ (Other)",
+];
+
+const fabricTypes = [
+  "Cotton 100%",
+  "Polyester",
+  "TC / CVC",
+  "ผ้าไมโคร Micro",
+  "ผ้าเม็ดข้าวสาร",
+  "ผ้าปีเก้ Pique",
+  "อื่นๆ (ระบุในหมายเหตุ)",
 ];
 
 const sizeList = [
@@ -74,6 +87,7 @@ export default function ToffyOrderPage() {
     text: string;
   } | null>(null);
   const [showA4Preview, setShowA4Preview] = useState(false);
+  const [reportName, setReportName] = useState("");
   const [isExporting, setIsExporting] = useState(false);
 
   // Form States
@@ -83,98 +97,252 @@ export default function ToffyOrderPage() {
   const [phone, setPhone] = useState("");
   const [lineId, setLineId] = useState("");
 
-  // Product & Fabric States
-  const [productType, setProductType] = useState("");
-  const [otherProductType, setOtherProductType] = useState("");
-  const [fabricType, setFabricType] = useState("");
-  const [otherFabric, setOtherFabric] = useState("");
-  const [specs, setSpecs] = useState("");
+  // Tabs with Product, Fabric, Size, and Decoration States
+  const [decorationTabs, setDecorationTabs] = useState<
+    Array<{
+      id: string;
+      // Section 2: Product & Fabric
+      productType: string;
+      fabricType: string;
+      specs: string;
+      // Section 3: Size Breakdown
+      sizeData: Record<string, { qty: string; chest: string }>;
+      totalQuantity: number;
+      manualTotal: string;
+      // Section 4: Decoration & Remarks
+      printTitle: string;
+      printSize: string;
+      printPos2Title: string;
+      printPos2Size: string;
+      printPos3Title: string;
+      printPos3Size: string;
+      printPos4Title: string;
+      printPos4Size: string;
+      embroideryTitle: string;
+      embroiderySize: string;
+      embroideryPos2Title: string;
+      embroideryPos2Size: string;
+      embroideryPos3Title: string;
+      embroideryPos3Size: string;
+      embroideryPos4Title: string;
+      embroideryPos4Size: string;
+      additionalNeeds: string;
+      selectedFiles: File[]; // Add selectedFiles to each tab
+    }>
+  >([
+    {
+      id: "set-1",
+      // Section 2
+      productType: "",
+      fabricType: "",
+      specs: "",
+      // Section 3
+      sizeData: sizeList.reduce(
+        (acc, size) => ({
+          ...acc,
+          [size]: { qty: "", chest: defaultChestSizes[size] || "" },
+        }),
+        {},
+      ),
+      totalQuantity: 0,
+      manualTotal: "",
+      // Section 4
+      printTitle: "",
+      printSize: "",
+      printPos2Title: "",
+      printPos2Size: "",
+      printPos3Title: "",
+      printPos3Size: "",
+      printPos4Title: "",
+      printPos4Size: "",
+      embroideryTitle: "",
+      embroiderySize: "",
+      embroideryPos2Title: "",
+      embroideryPos2Size: "",
+      embroideryPos3Title: "",
+      embroideryPos3Size: "",
+      embroideryPos4Title: "",
+      embroideryPos4Size: "",
+      additionalNeeds: "",
+      selectedFiles: [], // Initialize empty for new tabs
+    },
+  ]);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  // Sizes & Chest Data
-  const [sizeData, setSizeData] = useState<
-    Record<string, { qty: string; chest: string }>
-  >(
-    [...sizeList, "Other"].reduce(
-      (acc, size) => ({
-        ...acc,
-        [size]: { qty: "", chest: defaultChestSizes[size] || "" },
-      }),
-      {},
-    ),
-  );
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [manualTotal, setManualTotal] = useState("");
+  const addTab = () => {
+    if (decorationTabs.length < 5) {
+      const newTab = {
+        id: `set-${decorationTabs.length + 1}`,
+        // Section 2
+        productType: "",
+        fabricType: "",
+        specs: "",
+        // Section 3
+        sizeData: sizeList.reduce(
+          (acc, size) => ({
+            ...acc,
+            [size]: { qty: "", chest: defaultChestSizes[size] || "" },
+          }),
+          {},
+        ),
+        totalQuantity: 0,
+        manualTotal: "",
+        // Section 4
+        printTitle: "",
+        printSize: "",
+        printPos2Title: "",
+        printPos2Size: "",
+        printPos3Title: "",
+        printPos3Size: "",
+        printPos4Title: "",
+        printPos4Size: "",
+        embroideryTitle: "",
+        embroiderySize: "",
+        embroideryPos2Title: "",
+        embroideryPos2Size: "",
+        embroideryPos3Title: "",
+        embroideryPos3Size: "",
+        embroideryPos4Title: "",
+        embroideryPos4Size: "",
+        additionalNeeds: "",
+        selectedFiles: [], // Initialize empty for new tabs
+      };
+      setDecorationTabs([...decorationTabs, newTab]);
+      setActiveTabIndex(decorationTabs.length);
+    }
+  };
 
-  // Decoration States
-  const [printTitle, setPrintTitle] = useState("");
-  const [printSize, setPrintSize] = useState("");
-  const [embroideryTitle, setEmbroideryTitle] = useState("");
-  const [embroiderySize, setEmbroiderySize] = useState("");
+  const removeTab = (index: number) => {
+    if (decorationTabs.length > 1) {
+      const newTabs = decorationTabs.filter((_, i) => i !== index);
+      setDecorationTabs(newTabs);
+      setActiveTabIndex(Math.max(0, activeTabIndex - 1));
+    }
+  };
 
-  const [additionalNeeds, setAdditionalNeeds] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const updateTab = (
+    index: number,
+    updates: Partial<(typeof decorationTabs)[0]>,
+  ) => {
+    const newTabs = [...decorationTabs];
+    newTabs[index] = { ...newTabs[index], ...updates };
+    setDecorationTabs(newTabs);
+  };
+
+  const currentTab = decorationTabs[activeTabIndex];
+
+  // Colors for each set
+  const setColors = [
+    {
+      border: "border-red-600",
+      text: "text-red-600",
+      bg: "bg-red-600",
+      lightBg: "bg-red-50",
+      ring: "ring-red-500",
+      accent: "accent-red-600",
+    },
+    {
+      border: "border-blue-600",
+      text: "text-blue-600",
+      bg: "bg-blue-600",
+      lightBg: "bg-blue-50",
+      ring: "ring-blue-500",
+      accent: "accent-blue-600",
+    },
+    {
+      border: "border-green-600",
+      text: "text-green-600",
+      bg: "bg-green-600",
+      lightBg: "bg-green-50",
+      ring: "ring-green-500",
+      accent: "accent-green-600",
+    },
+    {
+      border: "border-orange-600",
+      text: "text-orange-600",
+      bg: "bg-orange-600",
+      lightBg: "bg-orange-50",
+      ring: "ring-orange-500",
+      accent: "accent-orange-600",
+    },
+    {
+      border: "border-purple-600",
+      text: "text-purple-600",
+      bg: "bg-purple-600",
+      lightBg: "bg-purple-50",
+      ring: "ring-purple-500",
+      accent: "accent-purple-600",
+    },
+  ];
+  const activeColor = setColors[activeTabIndex % setColors.length];
 
   useEffect(() => {
-    const total = Object.values(sizeData).reduce(
-      (acc, val) => acc + (Number(val.qty) || 0),
-      0,
-    );
-    setTotalQuantity(total);
-  }, [sizeData]);
+    if (currentTab) {
+      const total = Object.values(currentTab.sizeData).reduce(
+        (acc, val) => acc + (Number(val.qty) || 0),
+        0,
+      );
+      updateTab(activeTabIndex, { totalQuantity: total });
+    }
+  }, [currentTab?.sizeData]);
 
   const imagePreviews = useMemo(() => {
-    return selectedFiles.map((file) => URL.createObjectURL(file));
-  }, [selectedFiles]);
+    // This now returns a map of tabId to its image URLs
+    return decorationTabs.reduce(
+      (acc, tab) => {
+        acc[tab.id] = tab.selectedFiles.map((file) =>
+          URL.createObjectURL(file),
+        );
+        return acc;
+      },
+      {} as Record<string, string[]>,
+    );
+  }, [decorationTabs]);
 
-  const quotationJson = useMemo(
-    () => ({
-      customer_profile: {
-        name: name || "-",
-        email: email || "-",
-        company: companyName || "Toffy Boutique",
-        contact: phone || "-",
-        line_id: lineId || "-",
-      },
-      product_specification: {
-        category:
-          productType === "อื่นๆ (Other)"
-            ? otherProductType
-            : productType || "ยังไม่ได้เลือก",
-        material: fabricType === "Other" ? otherFabric : fabricType || "-",
-        details: specs || "-",
-        size_breakdown: sizeData,
-        total_qty: manualTotal || totalQuantity,
-      },
-      decoration_details: {
-        printing_title: printTitle || "ไม่มี",
-        printing_size: printSize || "-",
-        embroidery_title: embroideryTitle || "ไม่มี",
-        embroidery_size: embroiderySize || "-",
-        additional: additionalNeeds || "-", // Note กลับมาแล้ว
-      },
-      design_images: imagePreviews, // Attachments กลับมาแล้ว
-    }),
-    [
-      name,
-      email,
-      companyName,
-      phone,
-      lineId,
-      productType,
-      otherProductType,
-      fabricType,
-      otherFabric,
-      specs,
-      sizeData,
-      totalQuantity,
-      manualTotal,
-      printTitle,
-      printSize,
-      embroideryTitle,
-      embroiderySize,
-      additionalNeeds,
-      imagePreviews,
-    ],
+  // Remove global selectedFiles state from dependencies as it's now per tab
+  // const quotationDataList = useMemo(
+  //   () =>
+  //     decorationTabs.map((tab) => ({
+
+  const allQuotationData = useMemo(
+    () =>
+      decorationTabs.map((tab) => ({
+        customer_profile: {
+          name: name || "-",
+          email: email || "-",
+          company: companyName || "Toffy Boutique",
+          contact: phone || "-",
+          line_id: lineId || "-",
+        },
+        product_specification: {
+          category: tab.productType || "ยังไม่ได้เลือก",
+          material: tab.fabricType || "-",
+          details: tab.specs || "-",
+          size_breakdown: tab.sizeData || {},
+          total_qty: tab.manualTotal || tab.totalQuantity || 0,
+        },
+        decoration_details: {
+          printing_title: tab.printTitle || "ไม่มี",
+          printing_size: tab.printSize || "-",
+          printing_pos2_title: tab.printPos2Title || "ไม่มี",
+          printing_pos2_size: tab.printPos2Size || "-",
+          printing_pos3_title: tab.printPos3Title || "ไม่มี",
+          printing_pos3_size: tab.printPos3Size || "-",
+          printing_pos4_title: tab.printPos4Title || "ไม่มี",
+          printing_pos4_size: tab.printPos4Size || "-",
+          embroidery_title: tab.embroideryTitle || "ไม่มี",
+          embroidery_size: tab.embroiderySize || "-",
+          embroidery_pos2_title: tab.embroideryPos2Title || "ไม่มี",
+          embroidery_pos2_size: tab.embroideryPos2Size || "-",
+          embroidery_pos3_title: tab.embroideryPos3Title || "ไม่มี",
+          embroidery_pos3_size: tab.embroideryPos3Size || "-",
+          embroidery_pos4_title: tab.embroideryPos4Title || "ไม่มี",
+          embroidery_pos4_size: tab.embroideryPos4Size || "-",
+          additional: tab.additionalNeeds || "-",
+        },
+        design_images: imagePreviews[tab.id] || [],
+      })),
+    [name, email, companyName, phone, lineId, decorationTabs, imagePreviews],
   );
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,40 +356,70 @@ export default function ToffyOrderPage() {
     setPhone(formatted);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // New handleFileChange for per-tab files
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    tabId: string,
+  ) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
-      if (selectedFiles.length + filesArray.length > 5) {
+      const currentTab = decorationTabs.find((tab) => tab.id === tabId);
+      if (!currentTab) return;
+
+      if (currentTab.selectedFiles.length + filesArray.length > 5) {
         alert("❌ แนบรูปได้สูงสุด 5 รูปเท่านั้น");
         return;
       }
       const validFiles = filesArray.filter(
         (file) => file.size <= 3 * 1024 * 1024,
       );
-      setSelectedFiles((prev) => [...prev, ...validFiles]);
+
+      const newSelectedFiles = [...currentTab.selectedFiles, ...validFiles];
+      updateTab(
+        decorationTabs.findIndex((tab) => tab.id === tabId),
+        { selectedFiles: newSelectedFiles },
+      );
     }
   };
+
+  // No longer needed global handleFileChange
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const filesArray = Array.from(e.target.files);
+  //     if (selectedFiles.length + filesArray.length > 5) {
+  //       alert("❌ แนบรูปได้สูงสุด 5 รูปเท่านั้น");
+  //       return;
+  //     }
+  //     const validFiles = filesArray.filter(
+  //       (file) => file.size <= 3 * 1024 * 1024,
+  //     );
+  //     setSelectedFiles((prev) => [...prev, ...validFiles]);
+  //   }
+  // };
 
   const handleSavePDF = async () => {
     if (!showA4Preview) {
       alert("กรุณากด 'แสดงหน้า A4 Preview'");
       return;
     }
-    const element = document.getElementById("tfb-report-a4");
-    if (!element) return;
+    const pages = document.querySelectorAll(".tfb-report-page");
+    if (pages.length === 0) return;
+
     setIsExporting(true);
     try {
-      const dataUrl = await toPng(element, { quality: 1.0, pixelRatio: 2 });
       const pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(
-        dataUrl,
-        "PNG",
-        0,
-        0,
-        210,
-        (element.offsetHeight * 210) / element.offsetWidth,
-      );
-      pdf.save(`TFB-Report-${phone || "Draft"}.pdf`);
+
+      for (let i = 0; i < pages.length; i++) {
+        const page = pages[i] as HTMLElement;
+        const dataUrl = await toPng(page, { quality: 1.0, pixelRatio: 2 });
+
+        if (i > 0) pdf.addPage();
+
+        pdf.addImage(dataUrl, "PNG", 0, 0, 210, 297);
+      }
+
+      const reportName = getReportName();
+      pdf.save(`${reportName}.pdf`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -241,23 +439,14 @@ export default function ToffyOrderPage() {
       formData.append("companyName", companyName);
       formData.append("phone", phone);
       formData.append("lineId", lineId);
-      formData.append(
-        "productType",
-        productType === "อื่นๆ (Other)" ? otherProductType : productType,
-      );
-      formData.append(
-        "fabricType",
-        fabricType === "Other" ? otherFabric : fabricType,
-      );
-      formData.append("specs", specs);
-      formData.append("sizeDetails", JSON.stringify(sizeData));
-      formData.append("finalTotal", String(manualTotal || totalQuantity));
-      formData.append("printTitle", printTitle);
-      formData.append("printSize", printSize);
-      formData.append("embroideryTitle", embroideryTitle);
-      formData.append("embroiderySize", embroiderySize);
-      formData.append("additionalNeeds", additionalNeeds);
-      selectedFiles.forEach((file) => formData.append("files", file));
+      formData.append("decorationTabs", JSON.stringify(decorationTabs));
+
+      // Append files from all tabs
+      decorationTabs.forEach((tab) => {
+        tab.selectedFiles.forEach((file) =>
+          formData.append(`files-${tab.id}`, file),
+        );
+      });
 
       const res = await fetch("/api/submit", {
         method: "POST",
@@ -276,22 +465,46 @@ export default function ToffyOrderPage() {
         setCompanyName("");
         setPhone("");
         setLineId("");
-        setProductType("");
-        setFabricType("");
-        setSpecs("");
-        setAdditionalNeeds("");
-        setPrintTitle("");
-        setPrintSize("");
-        setEmbroideryTitle("");
-        setEmbroiderySize("");
-        setManualTotal("");
-        setSelectedFiles([]);
-        setSizeData(
-          [...sizeList, "Other"].reduce(
-            (acc, size) => ({ ...acc, [size]: { qty: "", chest: "" } }),
-            {},
-          ),
+        // Reset selectedFiles for all tabs
+        setDecorationTabs((prevTabs) =>
+          prevTabs.map((tab) => ({ ...tab, selectedFiles: [] })),
         );
+        setDecorationTabs([
+          {
+            id: "set-1",
+            productType: "",
+            fabricType: "",
+            specs: "",
+            sizeData: sizeList.reduce(
+              (acc, size) => ({
+                ...acc,
+                [size]: { qty: "", chest: defaultChestSizes[size] || "" },
+              }),
+              {},
+            ),
+            totalQuantity: 0,
+            manualTotal: "",
+            printTitle: "",
+            printSize: "",
+            printPos2Title: "",
+            printPos2Size: "",
+            printPos3Title: "",
+            printPos3Size: "",
+            printPos4Title: "",
+            printPos4Size: "",
+            embroideryTitle: "",
+            embroiderySize: "",
+            embroideryPos2Title: "",
+            embroideryPos2Size: "",
+            embroideryPos3Title: "",
+            embroideryPos3Size: "",
+            embroideryPos4Title: "",
+            embroideryPos4Size: "",
+            additionalNeeds: "",
+            selectedFiles: [], // Reset for initial tab
+          },
+        ]);
+        setActiveTabIndex(0);
       } else {
         setMessage({ type: "error", text: `❌ เกิดข้อผิดพลาด: ${data.error}` });
       }
@@ -309,7 +522,7 @@ export default function ToffyOrderPage() {
     <main className="min-h-screen bg-slate-100 py-10 px-4 flex flex-col items-center font-kanit">
       <div className="max-w-6xl w-full bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-200 mb-10">
         {/* 1. Header Section: Logo ซ้าย | Info ขวา */}
-        <div className="flex justify-between items-start border-b-4 border-red-600 pb-6 mb-8">
+        <div className="flex justify-between items-start border-b-4 border-red-500 pb-6 mb-8">
           <div className="flex-shrink-0 ml-8 mt-8">
             <img
               src="/toffy_logo.png"
@@ -319,21 +532,21 @@ export default function ToffyOrderPage() {
           </div>
 
           <div className="text-right flex flex-col gap-5 mr-10 mt-8">
-            <h2 className="text-2xl font-black text-slate-900 leading-none italic uppercase">
+            <h2 className="text-2xl font-light text-black leading-none italic uppercase">
               บริษัท ทอฟฟี่ บูติก จำกัด
             </h2>
-            <p className="text-xl font-bold text-red-600">
+            <p className="text-xl font-light text-red-600">
               TOFFY BOUTIQUE CO., LTD.
             </p>
-            <div className="mt-2 text-[12px] text-slate-500 leading-tight font-medium">
+            <div className="mt-2 text-[12px] text-black leading-tight font-medium">
               <p>
                 ผลิตเสื้อโปโลและยูนิฟอร์มครบวงจร -
                 เรายินดีให้คำปรึกษาแก่ทุกองค์กร
               </p>
               <p>258 ถนน พุทธบูชา แขวง บางมด เขตจอมทอง กรุงเทพฯ 10150</p>
-              <div className="flex justify-end gap-3 mt-1 font-bold text-slate-700">
+              <div className="flex justify-end gap-3 mt-1 font-light text-black">
                 <span>Tel: 02-428-2591, 02-874-0205</span>
-                <span className="text-slate-300">|</span>
+                <span className="text-black">|</span>
                 <span className="text-green-600">Line: @toffyboutique</span>
               </div>
             </div>
@@ -342,439 +555,53 @@ export default function ToffyOrderPage() {
 
         {/* 2. Title Section */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-black uppercase tracking-[0.2em] text-slate-900 border-y-2 border-slate-100 py-3 inline-block px-10">
+          <h1 className="text-3xl font-light uppercase tracking-[0.2em] text-black border-y-2 border-slate-100 py-3 inline-block px-10">
             แบบฟอร์มข้อมูลออเดอร์
           </h1>
-          <p className="text-[10px] text-slate-400 mt-2 font-bold tracking-[0.3em]">
+          <p className="text-[10px] text-black mt-2 font-light tracking-[0.3em]">
             ORDER INFORMATION FORM
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-8 space-y-12">
-          {/* Section 1: ข้อมูลผู้ติดต่อ */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-3 text-red-600 border-b pb-2">
-              <User size={24} />
-              <h2 className="text-xl font-bold uppercase">
-                1. ข้อมูลผู้ติดต่อ
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                placeholder="ชื่อผู้ติดต่อ *"
-                className="p-3 border rounded-xl outline-none focus:ring-2 focus:ring-red-500 bg-slate-50"
-              />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                required
-                placeholder="อีเมล *"
-                className="p-3 border rounded-xl outline-none focus:ring-2 focus:ring-red-500 bg-slate-50"
-              />
-              <input
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                placeholder="บริษัท/หน่วยงาน"
-                className="p-3 border rounded-xl outline-none focus:ring-2 focus:ring-red-500 bg-slate-50"
-              />
-              <input
-                value={phone}
-                onChange={handlePhoneChange}
-                required
-                placeholder="0XX-XXX-XXXX *"
-                className="p-3 border rounded-xl outline-none focus:ring-2 focus:ring-red-500 font-mono bg-slate-50 text-red-600 font-bold"
-              />
-              <input
-                value={lineId}
-                onChange={(e) => setLineId(e.target.value)}
-                placeholder="Line ID"
-                className="p-3 border rounded-xl outline-none focus:ring-2 focus:ring-red-500 bg-slate-50"
-              />
-            </div>
-          </section>
-
-          {/* Section 2: เนื้อผ้าและประเภทสินค้า */}
-          <section className="space-y-6">
-            <div className="flex items-center gap-3 text-red-600 border-b pb-2">
-              <Shirt size={24} />
-              <h2 className="text-xl font-bold uppercase">
-                2. เนื้อผ้าและประเภทสินค้า
-              </h2>
-            </div>
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <label className="text-sm font-black text-slate-700 uppercase">
-                  ประเภทสินค้า
-                </label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {productTypes.map((t) => (
-                    <label
-                      key={t}
-                      className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition-all ${productType === t ? "bg-red-50 border-red-200 shadow-sm" : "bg-white hover:bg-slate-50"}`}
-                    >
-                      <input
-                        type="radio"
-                        checked={productType === t}
-                        onChange={() => setProductType(t)}
-                        required
-                        className="w-5 h-5 accent-red-600"
-                      />
-                      <span
-                        className={`text-xs ${productType === t ? "text-red-600 font-bold" : "text-slate-600"}`}
-                      >
-                        {t}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-                {productType === "อื่นๆ (Other)" && (
-                  <input
-                    value={otherProductType}
-                    onChange={(e) => setOtherProductType(e.target.value)}
-                    placeholder="ระบุประเภทสินค้า..."
-                    className="w-full p-3 border-b-2 border-red-500 outline-none bg-slate-50 font-bold text-red-600"
-                  />
-                )}
-              </div>
-
-              <div className="p-6 bg-slate-50 rounded-2xl border space-y-4">
-                <label className="text-sm font-black text-slate-700 uppercase">
-                  เลือกเนื้อผ้า
-                </label>
-                <div className="flex flex-wrap gap-4">
-                  {["Cotton 100%", "Polyester", "TC / CVC", "Other"].map(
-                    (f) => (
-                      <label
-                        key={f}
-                        className={`flex items-center gap-3 cursor-pointer px-6 py-3 rounded-full border bg-white transition-all ${fabricType === f ? "border-red-500 ring-2 ring-red-500 shadow-md" : "hover:border-slate-300"}`}
-                      >
-                        <input
-                          type="radio"
-                          checked={fabricType === f}
-                          onChange={() => setFabricType(f)}
-                          required
-                          className="accent-red-600 w-4 h-4"
-                        />
-                        <span className="text-sm font-bold">{f}</span>
-                      </label>
-                    ),
-                  )}
-                </div>
-                {fabricType === "Other" && (
-                  <input
-                    value={otherFabric}
-                    onChange={(e) => setOtherFabric(e.target.value)}
-                    placeholder="ระบุเนื้อผ้า..."
-                    className="w-full mt-2 p-3 border-b-2 border-red-500 outline-none bg-white rounded-t-lg font-bold text-red-600"
-                  />
-                )}
-              </div>
-              <textarea
-                value={specs}
-                onChange={(e) => setSpecs(e.target.value)}
-                rows={3}
-                className="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-red-500 bg-white shadow-inner"
-                placeholder="รายละเอียดสเปกเพิ่มเติม..."
-              />
-            </div>
-          </section>
-
-          {/* Section 3: จำนวนแยกไซซ์และงานตกแต่ง */}
-          <section className="space-y-8">
-            <div className="flex items-center gap-3 text-red-600 border-b pb-2">
-              <Scissors size={24} />
-              <h2 className="text-xl font-bold uppercase">
-                3. จำนวนแยกไซซ์และงานตกแต่ง
-              </h2>
-            </div>
-
-            <div className="overflow-x-auto pb-4">
-              <table className="w-full border-collapse min-w-[800px]">
-                <thead>
-                  <tr>
-                    <th className="border p-2 bg-slate-50 w-32"></th>
-                    {sizeList.map((s) => (
-                      <th
-                        key={s}
-                        className="border p-2 bg-green-500 text-white font-bold text-sm"
-                      >
-                        {s}
-                      </th>
-                    ))}
-                    <th className="border p-2 bg-slate-800 text-white font-bold text-sm">
-                      Other
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border p-3 font-bold text-sm bg-slate-50 text-slate-700 leading-tight">
-                      ขนาดรอบอก (นิ้ว)
-                      <div className="text-[10px] text-red-500 font-medium">
-                        (แก้ไขได้)
-                      </div>
-                    </td>
-                    {sizeList.map((s) => (
-                      <td key={s} className="border p-0">
-                        <input
-                          type="text"
-                          value={sizeData[s].chest}
-                          onChange={(e) =>
-                            setSizeData({
-                              ...sizeData,
-                              [s]: { ...sizeData[s], chest: e.target.value },
-                            })
-                          }
-                          className="w-full h-12 text-center font-bold outline-none focus:bg-red-50 transition-colors bg-white hover:bg-slate-50"
-                          title="คลิกเพื่อแก้ไขขนาดรอบอก"
-                        />
-                      </td>
-                    ))}
-                    <td className="border p-0">
-                      <input
-                        type="text"
-                        placeholder="ระบุไซซ์..."
-                        value={sizeData["Other"].chest}
-                        onChange={(e) =>
-                          setSizeData({
-                            ...sizeData,
-                            ["Other"]: {
-                              ...sizeData["Other"],
-                              chest: e.target.value,
-                            },
-                          })
-                        }
-                        className="w-full h-12 text-center text-xs font-bold outline-none focus:bg-red-50 transition-colors"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="border p-3 font-bold text-sm bg-slate-50 text-slate-700">
-                      จำนวน (ตัว)
-                    </td>
-                    {sizeList.map((s) => (
-                      <td key={s} className="border p-0">
-                        <input
-                          type="number"
-                          placeholder="-"
-                          value={sizeData[s].qty}
-                          onChange={(e) =>
-                            setSizeData({
-                              ...sizeData,
-                              [s]: { ...sizeData[s], qty: e.target.value },
-                            })
-                          }
-                          className="w-full h-12 text-center font-black text-red-600 outline-none focus:bg-red-50 transition-colors"
-                        />
-                      </td>
-                    ))}
-                    <td className="border p-0">
-                      <input
-                        type="number"
-                        placeholder="-"
-                        value={sizeData["Other"].qty}
-                        onChange={(e) =>
-                          setSizeData({
-                            ...sizeData,
-                            ["Other"]: {
-                              ...sizeData["Other"],
-                              qty: e.target.value,
-                            },
-                          })
-                        }
-                        className="w-full h-12 text-center font-black text-red-600 outline-none focus:bg-red-50 transition-colors"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="space-y-3">
-                <div className="flex items-center border-2 border-slate-200 rounded-xl overflow-hidden h-[62px]">
-                  <div className="bg-slate-100 px-4 py-3 font-bold text-[13px] text-slate-600 w-32 border-r">
-                    ยอดรวมจากตาราง
-                  </div>
-                  <div className="flex-1 px-4 py-3 text-xl font-black text-slate-900 bg-white">
-                    {totalQuantity}
-                  </div>
-                </div>
-                <div className="flex items-center border-2 border-red-500 rounded-xl overflow-hidden h-[62px]">
-                  <div className="bg-red-50 px-4 py-3 font-bold text-[13px] text-red-600 w-32 border-r">
-                    ยอดรวมโดยประมาณ
-                  </div>
-                  <input
-                    type="number"
-                    value={manualTotal}
-                    onChange={(e) => setManualTotal(e.target.value)}
-                    className="flex-1 px-4 py-3 text-xl font-black outline-none bg-white"
-                    placeholder="ระบุ..."
-                  />
-                </div>
-              </div>
-
-              {/* งานพิมพ์ */}
-              <div className="p-4 bg-slate-50 rounded-2xl border space-y-3">
-                <div className="flex items-center gap-2 text-slate-800">
-                  <div className="w-2 h-2 bg-red-500 rounded-full" />
-                  <span className="text-sm font-black uppercase">
-                    งานพิมพ์ (Screen / DTF)
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-2">
-                  <input
-                    value={printTitle}
-                    onChange={(e) => setPrintTitle(e.target.value)}
-                    className="p-2 bg-white border rounded-lg outline-none text-xs"
-                    placeholder="หัวข้อ/จุดที่พิมพ์"
-                  />
-                  <input
-                    value={printSize}
-                    onChange={(e) => setPrintSize(e.target.value)}
-                    className="p-2 bg-white border rounded-lg outline-none text-xs"
-                    placeholder="ขนาด"
-                  />
-                </div>
-              </div>
-
-              {/* งานปัก */}
-              <div className="p-4 bg-slate-50 rounded-2xl border space-y-3">
-                <div className="flex items-center gap-2 text-slate-800">
-                  <div className="w-2 h-2 bg-red-500 rounded-full" />
-                  <span className="text-sm font-black uppercase">
-                    งานปัก (Embroidery)
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-2">
-                  <input
-                    value={embroideryTitle}
-                    onChange={(e) => setEmbroideryTitle(e.target.value)}
-                    className="p-2 bg-white border rounded-lg outline-none text-xs"
-                    placeholder="หัวข้อ/ตำแหน่งที่ปัก"
-                  />
-                  <input
-                    value={embroiderySize}
-                    onChange={(e) => setEmbroiderySize(e.target.value)}
-                    className="p-2 bg-white border rounded-lg outline-none text-xs"
-                    placeholder="ขนาด"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 4: ระบุหมายเหตุ (แก้ไขได้) */}
-          <section className="border-t pt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-red-600">
-                <FileText size={20} />
-                <h2 className="text-xl font-bold uppercase">
-                  4. ระบุหมายเหตุ (แก้ไขได้)
-                </h2>
-              </div>
-              <textarea
-                value={additionalNeeds}
-                onChange={(e) => setAdditionalNeeds(e.target.value)}
-                rows={5}
-                className="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:ring-2 focus:ring-red-500"
-                placeholder="ระบุหมายเหตุหรือความต้องการเพิ่มเติมอื่นๆ..."
-              />
-            </div>
-            <div className="space-y-4">
-              <label className="text-sm font-black text-slate-700 uppercase">
-                แนบไฟล์แบบเสื้อ (สูงสุด 5 รูป)
-              </label>
-              <div className="border-2 border-dashed border-slate-200 rounded-3xl p-8 bg-slate-50 flex flex-col items-center justify-center min-h-[160px] group hover:border-red-400 transition-colors">
-                <Upload className="text-slate-300 group-hover:text-red-400 mb-2" />
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                  id="f-up"
-                />
-                <label
-                  htmlFor="f-up"
-                  className="cursor-pointer bg-slate-900 text-white px-8 py-2 rounded-full font-bold text-xs hover:bg-red-600 shadow-lg"
-                >
-                  เลือกไฟล์รูปภาพ
-                </label>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {selectedFiles.map((f, i) => (
-                    <div
-                      key={i}
-                      className="text-[10px] bg-white border px-2 py-1 rounded-lg flex gap-2"
-                    >
-                      <span className="truncate max-w-[100px]">{f.name}</span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setSelectedFiles(
-                            selectedFiles.filter((_, idx) => idx !== i),
-                          )
-                        }
-                        className="text-red-500"
-                      >
-                        x
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Message Feedback */}
-          {message && (
-            <div
-              className={`p-4 rounded-2xl font-bold text-center text-sm ${message.type === "success" ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"}`}
-            >
-              {message.text}
-            </div>
-          )}
-
-          {/* Footer Submit */}
-
-          <div className="pt-10 border-t-2 border-slate-50 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex items-center gap-4 bg-green-50 p-5 rounded-3xl border border-green-100">
-              <img
-                src="/line-tfb.png"
-                alt="Line"
-                className="w-30 h-30 object-contain"
-              />
-              <div>
-                <p className="text-[15px] font-black text-green-700">
-                  Line Official
-                </p>
-                <h3 className="text-xl font-black text-slate-900">
-                  @toffyboutique
-                </h3>
-              </div>
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full md:w-[320px] py-5 bg-red-600 text-white font-black rounded-full text-xl shadow-xl hover:bg-slate-900 transition-all flex justify-center items-center gap-3 disabled:opacity-50"
-            >
-              <Send size={20} />
-              {loading ? "บันทึก..." : "ส่งข้อมูลเสนอราคา"}
-            </button>
-          </div>
-        </form>
+        <QuotationForm
+          name={name}
+          setName={setName}
+          email={email}
+          setEmail={setEmail}
+          companyName={companyName}
+          setCompanyName={setCompanyName}
+          phone={phone}
+          handlePhoneChange={handlePhoneChange}
+          lineId={lineId}
+          setLineId={setLineId}
+          decorationTabs={decorationTabs}
+          activeTabIndex={activeTabIndex}
+          setActiveTabIndex={setActiveTabIndex}
+          addTab={addTab}
+          updateTab={updateTab}
+          setColors={setColors}
+          productTypes={productTypes}
+          fabricTypes={fabricTypes}
+          sizeList={sizeList}
+          currentTab={currentTab}
+          handleFileChange={handleFileChange}
+          handleSubmit={handleSubmit}
+          message={message}
+          loading={loading}
+        />
       </div>
 
       {/* Control Panel */}
       <div className="max-w-6xl w-full mb-8 flex justify-end gap-3 bg-white p-6 rounded-3xl shadow-xl border border-slate-200">
         <button
           type="button"
-          onClick={() => setShowA4Preview(!showA4Preview)}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${showA4Preview ? "bg-slate-800 text-white" : "bg-white border-2 border-slate-200 text-slate-600"}`}
+          onClick={() => {
+            if (!showA4Preview) {
+              setReportName(getReportName());
+            }
+            setShowA4Preview(!showA4Preview);
+          }}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-light transition-all ${showA4Preview ? "bg-slate-800 text-white" : "bg-white border-2 border-slate-200 text-black"}`}
         >
           {showA4Preview ? <EyeOff size={18} /> : <Eye size={18} />}{" "}
           {showA4Preview ? "ซ่อนพรีวิว" : "แสดงหน้า A4 Preview"}
@@ -783,7 +610,7 @@ export default function ToffyOrderPage() {
           type="button"
           onClick={handleSavePDF}
           disabled={isExporting}
-          className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg"
+          className="flex items-center gap-2 bg-red-600 text-white px-6 py-3 rounded-xl font-light shadow-lg"
         >
           {isExporting ? (
             <Loader2 className="animate-spin" size={18} />
@@ -796,7 +623,7 @@ export default function ToffyOrderPage() {
 
       {showA4Preview && (
         <div className="mb-20 animate-in fade-in zoom-in-95 duration-500">
-          <A4Report id="tfb-report-a4" data={quotationJson} />
+          <A4Report id="tfb-report-a4" dataList={allQuotationData} reportName={reportName} />
         </div>
       )}
     </main>
