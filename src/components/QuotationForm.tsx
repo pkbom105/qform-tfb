@@ -25,7 +25,7 @@ interface QuotationFormProps {
   sizeList: string[];
   currentTab: any;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>, tabId: string) => void;
-  handleSubmit: (e: React.FormEvent) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   message: { type: string; text: string } | null;
   loading: boolean;
 }
