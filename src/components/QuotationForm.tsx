@@ -11,7 +11,7 @@ interface QuotationFormProps {
   companyName: string;
   setCompanyName: (name: string) => void;
   phone: string;
-  handlePhoneChange: (value: string) => void;
+  handlePhoneChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   lineId: string;
   setLineId: (id: string) => void;
   decorationTabs: any[];
