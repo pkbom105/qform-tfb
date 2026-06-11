@@ -1,0 +1,14 @@
+picture format
+
+
+one picture 
+show contain 
+100% all center
+ 
+2 picture
+show contain 2 column or 2 row depend on picture 
+all center
+
+3 or 4 picture
+show 2x2 grid
+show contain picture

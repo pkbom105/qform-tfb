@@ -18,7 +18,7 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 # สร้างโฟลเดอร์สำหรับอัปโหลดและตั้งสิทธิ์
-RUN mkdir -p public/uploads && chmod 777 public/uploads
+RUN mkdir -p public/uploads /home/qform/uploads && chmod 777 public/uploads /home/qform/uploads
 
 EXPOSE 3000
 ENV PORT 3000

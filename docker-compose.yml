@@ -10,23 +10,24 @@ services:
       - POSTGRES_DB=customer_data
       - TZ=Asia/Bangkok
       - PGTZ=Asia/Bangkok
+
     ports:
-      - "5432:5432"   # เปิดให้ Vercel / ภายนอกเชื่อมต่อได้
+      - "5432:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     networks:
       - qform-network
-
 
   # --- 2. Toffy Boutique Next.js App ---
   qform-app:
     build: ./app
     container_name: qform-tfb
     restart: always
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000" # เปิด port ภายในเพื่อให้ NPM มองเห็น
     volumes:
       - ./uploads:/app/public/uploads
+      - /home/qform/upload2:/home/qform/uploads
     env_file:
       - ./app/.env
     depends_on:
@@ -34,38 +35,8 @@ services:
     networks:
       - qform-network
 
-  # --- 3. Nginx Proxy Manager (NPM) ---
-  npm-app:
-    image: 'jc21/nginx-proxy-manager:latest'
-    container_name: npm-app
-    restart: always
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - ./npm/data:/data
-      - ./npm/letsencrypt:/etc/letsencrypt
-    depends_on:
-      - npm-db
-    networks:
-      - qform-network
-
-  # --- 4. Database for NPM (MariaDB) ---
-  npm-db:
-    image: 'jc21/mariadb-aria:latest'
-    container_name: npm-db
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=npm_root_pass
-      - MYSQL_DATABASE=npm
-      - MYSQL_USER=npm
-      - MYSQL_PASSWORD=npm_pass
-    volumes:
-      - ./npm/mysql:/var/lib/mysql
-    networks:
-      - qform-network
 
 networks:
   qform-network:
     driver: bridge
+

@@ -1,12 +1,39 @@
-import { PrismaClient } from '@prisma/client'
+// =============================================
+// Dual Prisma Client for Local (SQLite) + Online (PostgreSQL)
+// =============================================
+import { PrismaClient as LocalPrismaClient } from "../prisma/generated/local";
+import { PrismaClient as OnlinePrismaClient } from "../prisma/generated/online";
 
-// Prisma v5 — เชื่อมต่อผ่าน DATABASE_URL ใน schema.prisma โดยตรง
-const globalForPrisma = global as unknown as { prisma: PrismaClient }
+// --- Local SQLite Client (Primary) ---
+const globalForLocalPrisma = globalThis as unknown as {
+  localPrisma: LocalPrismaClient | undefined;
+};
 
-export const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    log: ['error', 'warn'],
-  })
+export const localDb =
+  globalForLocalPrisma.localPrisma ??
+  new LocalPrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== "production") {
+  globalForLocalPrisma.localPrisma = localDb;
+}
+
+// --- Online PostgreSQL Client (Backup/Sync) ---
+const globalForOnlinePrisma = globalThis as unknown as {
+  onlinePrisma: OnlinePrismaClient | undefined;
+};
+
+export const onlineDb =
+  globalForOnlinePrisma.onlinePrisma ??
+  new OnlinePrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForOnlinePrisma.onlinePrisma = onlineDb;
+}
+
+// Default export = local (primary) database
+const prisma = localDb;
+export default prisma;

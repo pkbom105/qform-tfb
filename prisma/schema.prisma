@@ -1,5 +1,10 @@
+// Shared schema - DO NOT MODIFY directly
+// Uses datasource blocks that get overridden by --schema flag
+// This is the base schema template
+
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/@prisma/client"
 }
 
 datasource db {

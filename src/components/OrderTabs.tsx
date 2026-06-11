@@ -422,7 +422,7 @@ const OrderTabs: React.FC<OrderTabsProps> = ({
             {/* Section File Upload */}
             <div className="space-y-4 pt-4 border-t border-dashed">
               <label className="text-sm font-light text-black uppercase">
-                แนบไฟล์แบบเสื้อ (สูงสุด 5 รูป)
+                แนบไฟล์แบบเสื้อ (สูงสุด 4 รูป)
               </label>
               <div className="border-2 border-dashed border-slate-200 rounded-3xl p-8 bg-slate-50 flex flex-col items-center justify-center min-h-[160px] group hover:border-red-400 transition-colors">
                 <Upload className="text-black group-hover:text-red-400 mb-2" />

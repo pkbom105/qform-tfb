@@ -1,0 +1,67 @@
+// SQLite Local Database - Primary storage for qform
+// Stores: orders, customers, form submissions
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/prisma/generated/local"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("LOCAL_DATABASE_URL")
+}
+
+model Customer {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  companyName String?
+  phone       String
+  lineId      String?
+  totalOrders Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+}
+
+model Order {
+  id                  Int      @id @default(autoincrement())
+  customerId          Int
+  customer            Customer @relation(fields: [customerId], references: [id])
+  // Product info
+  productType         String
+  fabricType          String
+  specs               String?
+  // Size & quantity
+  sizeData            String   @default("{}")
+  totalQuantity       Int      @default(0)
+  manualTotal         String?
+  // Decoration sets (JSON array string)
+  decorationSets      String   @default("[]")
+  // Printing details
+  printTitle          String?
+  printSize           String?
+  printPos2Title      String?
+  printPos2Size       String?
+  printPos3Title      String?
+  printPos3Size       String?
+  printPos4Title      String?
+  printPos4Size       String?
+  // Embroidery details
+  embroideryTitle     String?
+  embroiderySize      String?
+  embroideryPos2Title String?
+  embroideryPos2Size  String?
+  embroideryPos3Title String?
+  embroideryPos3Size  String?
+  embroideryPos4Title String?
+  embroideryPos4Size  String?
+  // Additional
+  additionalNeeds     String?
+  images              String   @default("[]")
+  reportName          String?
+  status              String   @default("pending")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("orders")
+}

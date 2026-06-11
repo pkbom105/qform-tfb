@@ -7,7 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate --schema=prisma/local/schema.prisma && prisma generate --schema=prisma/online/schema.prisma",
+    "db:generate:local": "prisma generate --schema=prisma/local/schema.prisma",
+    "db:generate:online": "prisma generate --schema=prisma/online/schema.prisma",
+    "db:migrate:local": "prisma migrate dev --schema=prisma/local/schema.prisma",
+    "db:push:local": "prisma db push --schema=prisma/local/schema.prisma",
+    "db:push:online": "prisma db push --schema=prisma/online/schema.prisma",
+    "db:studio:local": "prisma studio --schema=prisma/local/schema.prisma",
+    "db:studio:online": "prisma studio --schema=prisma/online/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
