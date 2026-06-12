@@ -15,6 +15,11 @@ export const getReportName = (orderId?: number, setNumber?: number): string => {
   }
 
   // Fallback
+  if (typeof window === "undefined") {
+    const runningNumber = String(setNumber || 1).padStart(4, "0");
+    return `TFB-OrderForm-${yymm}-${runningNumber}`;
+  }
+
   const storageKey = `tfb-counter-${yymm}`;
   let counter = parseInt(localStorage.getItem(storageKey) || "0", 10) + 1;
   localStorage.setItem(storageKey, String(counter));
