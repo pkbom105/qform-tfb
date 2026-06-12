@@ -152,6 +152,14 @@ export async function GET(
       images = [];
     }
 
+    // Parse decorationSets (full tab data from multi-set forms)
+    let decorationSets: any[] = [];
+    try {
+      decorationSets = JSON.parse(order.decorationSets || "[]");
+    } catch {
+      decorationSets = [];
+    }
+
     // Build quotation data in the format A4 report expects
     const quotationData = {
       customer_profile: {
@@ -192,6 +200,7 @@ export async function GET(
         additional: order.additionalNeeds || "-",
       },
       design_images: images,
+      decorationSets, // Pass through all decoration sets for multi-set A4 rendering
     };
 
     return NextResponse.json({

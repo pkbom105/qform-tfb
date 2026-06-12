@@ -9,33 +9,55 @@ import { getReportName } from "@/lib/reportNameGenerator";
 // บอก Next.js ว่าห้ามทำ Static Prefetch สำหรับไฟล์นี้
 export const dynamic = "force-dynamic";
 
+/**
+ * Parse decorationTabs JSON from FormData.
+ * Returns parsed array or empty array.
+ */
+function parseDecorationTabs(formData: FormData): any[] {
+  try {
+    const raw = String(formData.get("decorationTabs") || "[]");
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed;
+    return [];
+  } catch {
+    return [];
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
     console.log("[submit] Received form submission");
     console.log("[submit] form keys:", Array.from(formData.keys()));
 
-    // 1. รับค่าจากฟอร์ม
+    // 1. Parse all decoration tabs/sets from the submitted JSON
+    const decorationTabs = parseDecorationTabs(formData);
+
+    // 2. Use first tab data for main order fields (backward compatible)
+    const firstTab = decorationTabs[0] || {};
+
     const name = String(formData.get("name") || "");
     const email = String(formData.get("email") || "no-reply@example.com");
     const companyName = String(formData.get("companyName") || "Toffy Boutique");
     const phone = String(formData.get("phone") || "");
     const lineId = String(formData.get("lineId") || "");
 
-    const productType = String(formData.get("productType") || "ไม่ระบุ");
-    const fabricType = String(formData.get("fabricType") || "ไม่ระบุ");
-    const specs = String(formData.get("specs") || "");
-    const sizeDetails = String(formData.get("sizeDetails") || "{}");
-    const finalTotal = String(formData.get("finalTotal") || "0");
+    const productType = firstTab.productType || String(formData.get("productType") || "ไม่ระบุ");
+    const fabricType = firstTab.fabricType || String(formData.get("fabricType") || "ไม่ระบุ");
+    const specs = firstTab.specs || String(formData.get("specs") || "");
+    const sizeDetails = firstTab.sizeData ? JSON.stringify(firstTab.sizeData) : String(formData.get("sizeDetails") || "{}");
+    const finalTotal = firstTab.manualTotal || firstTab.totalQuantity || String(formData.get("finalTotal") || "0");
 
-    const printTitle = String(formData.get("printTitle") || "");
-    const printSize = String(formData.get("printSize") || "");
-    const embroideryTitle = String(formData.get("embroideryTitle") || "");
-    const embroiderySize = String(formData.get("embroiderySize") || "");
-    const additionalNeeds = String(formData.get("additionalNeeds") || "");
+    const printTitle = firstTab.printTitle || "";
+    const printSize = firstTab.printSize || "";
+    const embroideryTitle = firstTab.embroideryTitle || "";
+    const embroiderySize = firstTab.embroiderySize || "";
+    const additionalNeeds = firstTab.additionalNeeds || String(formData.get("additionalNeeds") || "");
 
     // 2. ไฟล์แนบ — บันทึกไปยังโฟลเดอร์บนเซิร์ฟเวอร์
-    const uploadedUrls: string[] = [];
+    // Images separated by set: uploadedUrls["set-1"] = [...], uploadedUrls["set-2"] = [...]
+    const uploadedUrlsBySet: Record<string, string[]> = {};
+    const allUploadedUrls: string[] = [];
     const HOST_UPLOAD_ROOT = "/home/qform/uploads";
     const publicUploadsDir = path.join(process.cwd(), "public", "uploads");
     try {
@@ -46,6 +68,9 @@ export async function POST(req: NextRequest) {
 
     for (const [key, value] of formData.entries()) {
       if (!key.startsWith("files-")) continue;
+      // Extract set ID from key: "files-set-1" -> "set-1", "files-set-2" -> "set-2"
+      const setKey = key.slice("files-".length);
+      if (!uploadedUrlsBySet[setKey]) uploadedUrlsBySet[setKey] = [];
       try {
         // @ts-ignore - file from FormData
         const file: any = value;
@@ -58,7 +83,8 @@ export async function POST(req: NextRequest) {
         const publicPath = path.join(publicUploadsDir, filename);
         try {
           await fs.writeFile(publicPath, buf);
-          uploadedUrls.push(`/uploads/${filename}`);
+          uploadedUrlsBySet[setKey].push(`/uploads/${filename}`);
+          allUploadedUrls.push(`/uploads/${filename}`);
         } catch (err) {
           console.error("Error writing to public/uploads:", err);
         }
@@ -78,7 +104,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. บันทึกลง Local Database (SQLite)
-    console.log("[submit] uploaded urls:", uploadedUrls);
+    console.log("[submit] uploaded urls:", allUploadedUrls);
 
     // Find or create customer
     let customer = await localDb.customer.findFirst({
@@ -106,6 +132,38 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Store all decoration tabs as JSON (sets 1-5) with per-set images
+    const decorationSets = decorationTabs.map((tab: any, idx: number) => {
+      const setKey = `set-${idx + 1}`;
+      return {
+        setNumber: idx + 1,
+        productType: tab.productType || "",
+        fabricType: tab.fabricType || "",
+        specs: tab.specs || "",
+        sizeData: tab.sizeData || {},
+        totalQuantity: tab.totalQuantity || 0,
+        manualTotal: tab.manualTotal || "",
+        printTitle: tab.printTitle || "",
+        printSize: tab.printSize || "",
+        printPos2Title: tab.printPos2Title || "",
+        printPos2Size: tab.printPos2Size || "",
+        printPos3Title: tab.printPos3Title || "",
+        printPos3Size: tab.printPos3Size || "",
+        printPos4Title: tab.printPos4Title || "",
+        printPos4Size: tab.printPos4Size || "",
+        embroideryTitle: tab.embroideryTitle || "",
+        embroiderySize: tab.embroiderySize || "",
+        embroideryPos2Title: tab.embroideryPos2Title || "",
+        embroideryPos2Size: tab.embroideryPos2Size || "",
+        embroideryPos3Title: tab.embroideryPos3Title || "",
+        embroideryPos3Size: tab.embroideryPos3Size || "",
+        embroideryPos4Title: tab.embroideryPos4Title || "",
+        embroideryPos4Size: tab.embroideryPos4Size || "",
+        additionalNeeds: tab.additionalNeeds || "",
+        images: uploadedUrlsBySet[setKey] || [],
+      };
+    });
+
     // Save to local SQLite database
     const newOrder = await localDb.order.create({
       data: {
@@ -120,7 +178,8 @@ export async function POST(req: NextRequest) {
         embroideryTitle: embroideryTitle || "",
         embroiderySize: embroiderySize || "",
         additionalNeeds: additionalNeeds || "",
-        images: JSON.stringify(uploadedUrls),
+        images: JSON.stringify(allUploadedUrls),
+        decorationSets: JSON.stringify(decorationSets),
         status: "pending",
       },
     });
@@ -145,7 +204,7 @@ export async function POST(req: NextRequest) {
           embroideryTitle,
           embroiderySize,
           additionalNeeds,
-          images: uploadedUrls,
+          images: allUploadedUrls,
         },
       });
     } catch (onlineErr) {
@@ -172,7 +231,7 @@ export async function POST(req: NextRequest) {
       indexData.push({
         createdAt: new Date().toISOString(),
         name: name || null,
-        urls: uploadedUrls,
+        urls: allUploadedUrls,
       });
       try {
         await fs.writeFile(

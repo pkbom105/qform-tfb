@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { RotateCcw, Copy, Check } from "lucide-react";
-import { getReportName, getReportNameWithoutCounter } from "@/lib/reportNameGenerator";
+import { fetchNextReportName } from "@/lib/reportNameGenerator";
 
 export default function ReportNamePage() {
   const [currentName, setCurrentName] = useState<string>("");
@@ -16,25 +16,20 @@ export default function ReportNamePage() {
   }, []);
 
   const updateReportName = () => {
-    const name = getReportName();
-    setCurrentName(name);
+    // Fetch next report name from server (DB-based)
+    fetchNextReportName().then((name) => {
+      setCurrentName(name);
+    });
 
-    // Get current month counter
-    const now = new Date();
-    const year = now.getFullYear().toString().slice(-2);
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const storageKey = `tfb-counter-${year}${month}`;
-    const count = parseInt(localStorage.getItem(storageKey) || "0", 10);
-    setCounter(count);
-  };
-
-  const resetCounter = () => {
-    const now = new Date();
-    const year = now.getFullYear().toString().slice(-2);
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const storageKey = `tfb-counter-${year}${month}`;
-    localStorage.setItem(storageKey, "0");
-    updateReportName();
+    // Get current max order count from server
+    fetch("/api/report-name/next")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setCounter(json.nextOrderId);
+        }
+      })
+      .catch(() => {});
   };
 
   const copyToClipboard = async () => {
@@ -120,11 +115,11 @@ export default function ReportNamePage() {
             Refresh Current Name
           </button>
           <button
-            onClick={resetCounter}
+            onClick={updateReportName}
             className="bg-yellow-600 hover:bg-yellow-700 text-white py-3 px-6 rounded-2xl font-light transition-all flex items-center justify-center gap-2 shadow-lg"
           >
             <RotateCcw size={18} />
-            Reset Counter (This Month)
+            Refresh from Database
           </button>
         </div>
 

@@ -1,28 +1,44 @@
 import { NextResponse } from "next/server";
-import { onlineDb } from "@/lib/prisma";
+import { localDb, onlineDb } from "@/lib/prisma";
+import { getDisplayReportName } from "@/lib/reportNameGenerator";
 
 export const dynamic = "force-dynamic";
 
+const fmtDate = (d: Date) => {
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${day}-${months[d.getMonth()]}-${d.getFullYear()}`;
+};
+
 export async function GET() {
   try {
-    // Fetch from PostgreSQL (VPN) - Wso table
+    // Primary source: Local SQLite
+    const localOrders = await localDb.order.findMany({
+      include: { customer: true },
+      orderBy: { createdAt: "desc" },
+    });
+
+    // Secondary source: PostgreSQL (VPN) - Wso table
     const wsoRecords = await onlineDb.wso.findMany({
       orderBy: { createdAt: "desc" },
     });
 
-    // Also fetch from Submission table
+    // Submission table
     const submissions = await onlineDb.submission.findMany({
       orderBy: { createdAt: "desc" },
     });
 
     // Combine stats
-    const totalOrders = wsoRecords.length + submissions.length;
-    const totalCustomers = totalOrders; // Each record = 1 customer
+    const totalOrders = localOrders.length + wsoRecords.length + submissions.length;
+    const totalCustomers = totalOrders;
     const pendingOrders = totalOrders;
     const completedOrders = 0;
 
-    // Get popular products from Wso
+    // Get popular products from Wso + Local
     const productCount = new Map<string, number>();
+    localOrders.forEach((o) => {
+      productCount.set(o.productType, (productCount.get(o.productType) || 0) + 1);
+    });
     wsoRecords.forEach((w) => {
       productCount.set(w.productType, (productCount.get(w.productType) || 0) + 1);
     });
@@ -35,28 +51,60 @@ export async function GET() {
       .sort((a, b) => b.count - a.count)
       .slice(0, 5);
 
-    // Format recent orders (combine Wso + Submission, take 8)
-    const allRecords = [
-      ...wsoRecords.map((w) => ({
-        id: w.id,
-        customerName: w.name,
-        company: w.companyName || "-",
-        productType: w.productType,
-        quantity: w.totalQuantity,
-        status: "active" as const,
-        createdAt: new Date(w.createdAt).toLocaleDateString("th-TH"),
+    // Format recent orders (take 8)
+    const existingLocalIds = new Set(localOrders.map((o) => o.id));
+    type RecordType = {
+      id: number;
+      orderNumber: string;
+      customerName: string;
+      company: string;
+      productType: string;
+      quantity: number;
+      status: string;
+      createdAt: string;
+    };
+    const allRecords: RecordType[] = [
+      ...localOrders.map((o) => ({
+        id: o.id,
+        orderNumber: getDisplayReportName(o.id),
+        customerName: o.customer?.name || "-",
+        company: o.customer?.companyName || "-",
+        productType: o.productType,
+        quantity: parseInt(String(o.manualTotal || o.totalQuantity || 0), 10),
+        status: o.status as "active" | "inactive",
+        createdAt: fmtDate(new Date(o.createdAt)),
       })),
-      ...submissions.map((s) => ({
-        id: 10000 + s.id,
-        customerName: s.name,
-        company: s.companyName || "-",
-        productType: s.productType,
-        quantity: parseInt(s.totalQuantity || "0") || 0,
-        status: "active" as const,
-        createdAt: new Date(s.createdAt).toLocaleDateString("th-TH"),
-      })),
+      ...wsoRecords
+        .filter((w) => !existingLocalIds.has(w.id))
+        .map((w) => ({
+          id: w.id,
+          orderNumber: getDisplayReportName(w.id),
+          customerName: w.name,
+          company: w.companyName || "-",
+          productType: w.productType,
+          quantity: w.totalQuantity,
+          status: "active" as const,
+          createdAt: fmtDate(new Date(w.createdAt)),
+        })),
+      ...submissions
+        .filter((s) => {
+          const subId = 10000 + s.id;
+          return !existingLocalIds.has(subId);
+        })
+        .map((s) => {
+          const subId = 10000 + s.id;
+          return {
+            id: subId,
+            orderNumber: getDisplayReportName(subId),
+            customerName: s.name,
+            company: s.companyName || "-",
+            productType: s.productType,
+            quantity: parseInt(s.totalQuantity || "0") || 0,
+            status: "active" as const,
+            createdAt: fmtDate(new Date(s.createdAt)),
+          };
+        }),
     ].sort((a, b) => {
-      // Sort by date desc
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     }).slice(0, 8);
 

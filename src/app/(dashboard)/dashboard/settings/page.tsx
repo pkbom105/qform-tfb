@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Save, User, Shield, Bell, Palette, Database, Server, RefreshCw, Loader2 } from "lucide-react";
+import { Save, User, Shield, Bell, Palette, Database, Server, RefreshCw, Loader2, FileText } from "lucide-react";
 
 const defaultSettings: Record<string, string> = {
   "notification_new_order": "true",
@@ -24,6 +24,23 @@ export default function SettingsPage() {
   const [testingPg, setTestingPg] = useState(false);
   const [pgConnectionStatus, setPgConnectionStatus] = useState<"idle" | "connected" | "failed">("idle");
   const [syncing, setSyncing] = useState(false);
+  const [disconnectLogs, setDisconnectLogs] = useState<{ timestamp: string; message: string }[]>([]);
+  const [logsLoading, setLogsLoading] = useState(false);
+
+  const fetchDisconnectLogs = async () => {
+    setLogsLoading(true);
+    try {
+      const res = await fetch("/api/settings/disconnect-logs");
+      const json = await res.json();
+      if (json.success) {
+        setDisconnectLogs(json.logs);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setLogsLoading(false);
+    }
+  };
 
   const checkConnection = async () => {
     try {
@@ -266,6 +283,56 @@ export default function SettingsPage() {
               {syncing ? "กำลังซิงค์..." : "ซิงค์ข้อมูลจาก VPN"}
             </button>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* PostgreSQL Disconnect Logs */}
+      <Card className="border-red-200 bg-red-50">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <FileText size={20} className="text-red-700" />
+              <CardTitle className="text-red-900">บันทึกการขาดการเชื่อมต่อ PostgreSQL</CardTitle>
+            </div>
+            <button
+              onClick={fetchDisconnectLogs}
+              disabled={logsLoading}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-light bg-red-100 text-red-700 hover:bg-red-200 transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={14} className={logsLoading ? "animate-spin" : ""} />
+              {logsLoading ? "กำลังโหลด..." : "รีเฟรช"}
+            </button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {disconnectLogs.length === 0 ? (
+            <p className="text-sm text-red-500 font-light">
+              {logsLoading ? "กำลังโหลด..." : "ไม่มีบันทึกการขาดการเชื่อมต่อ"}
+            </p>
+          ) : (
+            <div className="max-h-64 overflow-y-auto space-y-2">
+              {disconnectLogs.map((entry, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white border border-red-200 rounded-lg px-3 py-2 text-sm"
+                >
+                  <div className="flex items-start gap-2">
+                    <span className="text-xs text-red-400 font-mono whitespace-nowrap mt-0.5">
+                      {new Date(entry.timestamp).toLocaleString("th-TH", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      })}
+                    </span>
+                    <span className="text-red-800 font-light break-all">{entry.message}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 

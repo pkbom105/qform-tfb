@@ -12,7 +12,7 @@ import A4Report from "@/components/A4-report";
 import ContactSection from "@/components/ContactSection";
 import OrderTabs from "@/components/OrderTabs";
 import QuotationForm from "@/components/QuotationForm";
-import { getReportName } from "@/lib/reportNameGenerator";
+import { fetchNextReportName, getReportNameWithoutCounter } from "@/lib/reportNameGenerator";
 import { productTypes, fabricTypes, sizeList, defaultChestSizes, setColors } from "@/constants/frontpageData";
 
 const OrderFormContent: React.FC = () => {
@@ -182,45 +182,59 @@ const OrderFormContent: React.FC = () => {
 
   const allQuotationData = useMemo(
     () =>
-      decorationTabs.map((tab, idx) => ({
-        _reportName: reportName ? `${reportName.slice(0, -4)}${String(idx + 1).padStart(4, "0")}` : getReportName(undefined, idx + 1),
-        _setNumber: idx + 1,
-        customer_profile: {
-          name: name || "-",
-          email: email || "-",
-          company: companyName || "Toffy Boutique",
-          contact: phone || "-",
-          line_id: lineId || "-",
-        },
-        product_specification: {
-          category: tab.productType || "ยังไม่ได้เลือก",
-          material: tab.fabricType || "-",
-          details: tab.specs || "-",
-          size_breakdown: tab.sizeData || {},
-          total_qty: tab.manualTotal || tab.totalQuantity || 0,
-        },
-        decoration_details: {
-          printing_title: tab.printTitle || "ไม่มี",
-          printing_size: tab.printSize || "-",
-          printing_pos2_title: tab.printPos2Title || "ไม่มี",
-          printing_pos2_size: tab.printPos2Size || "-",
-          printing_pos3_title: tab.printPos3Title || "ไม่มี",
-          printing_pos3_size: tab.printPos3Size || "-",
-          printing_pos4_title: tab.printPos4Title || "ไม่มี",
-          printing_pos4_size: tab.printPos4Size || "-",
-          embroidery_title: tab.embroideryTitle || "ไม่มี",
-          embroidery_size: tab.embroiderySize || "-",
-          embroidery_pos2_title: tab.embroideryPos2Title || "ไม่มี",
-          embroidery_pos2_size: tab.embroideryPos2Size || "-",
-          embroidery_pos3_title: tab.embroideryPos3Title || "ไม่มี",
-          embroidery_pos3_size: tab.embroideryPos3Size || "-",
-          embroidery_pos4_title: tab.embroideryPos4Title || "ไม่มี",
-          embroidery_pos4_size: tab.embroideryPos4Size || "-",
-          additional: tab.additionalNeeds || "-",
-        },
-        design_images: imagePreviews[tab.id] || [],
-      })),
-    [name, email, companyName, phone, lineId, decorationTabs, imagePreviews],
+      decorationTabs.map((tab, idx) => {
+        // Derive report name: if reportName is "TFB-OrderForm-2606-10079", set 1 = same, set 2 = 10080, etc.
+        let setReportName = getReportNameWithoutCounter();
+        if (reportName) {
+          const match = reportName.match(/^(.*-)(\d{4})$/);
+          if (match) {
+            const prefix = match[1]; // e.g. "TFB-OrderForm-2606-"
+            const base = parseInt(match[2], 10); // e.g. 10079
+            setReportName = `${prefix}${String(base + idx).padStart(4, "0")}`;
+          } else {
+            setReportName = `${reportName}-${String(idx + 1).padStart(4, "0")}`;
+          }
+        }
+        return {
+          _reportName: setReportName,
+          _setNumber: idx + 1,
+          customer_profile: {
+            name: name || "-",
+            email: email || "-",
+            company: companyName || "Toffy Boutique",
+            contact: phone || "-",
+            line_id: lineId || "-",
+          },
+          product_specification: {
+            category: tab.productType || "ยังไม่ได้เลือก",
+            material: tab.fabricType || "-",
+            details: tab.specs || "-",
+            size_breakdown: tab.sizeData || {},
+            total_qty: tab.manualTotal || tab.totalQuantity || 0,
+          },
+          decoration_details: {
+            printing_title: tab.printTitle || "ไม่มี",
+            printing_size: tab.printSize || "-",
+            printing_pos2_title: tab.printPos2Title || "ไม่มี",
+            printing_pos2_size: tab.printPos2Size || "-",
+            printing_pos3_title: tab.printPos3Title || "ไม่มี",
+            printing_pos3_size: tab.printPos3Size || "-",
+            printing_pos4_title: tab.printPos4Title || "ไม่มี",
+            printing_pos4_size: tab.printPos4Size || "-",
+            embroidery_title: tab.embroideryTitle || "ไม่มี",
+            embroidery_size: tab.embroiderySize || "-",
+            embroidery_pos2_title: tab.embroideryPos2Title || "ไม่มี",
+            embroidery_pos2_size: tab.embroideryPos2Size || "-",
+            embroidery_pos3_title: tab.embroideryPos3Title || "ไม่มี",
+            embroidery_pos3_size: tab.embroideryPos3Size || "-",
+            embroidery_pos4_title: tab.embroideryPos4Title || "ไม่มี",
+            embroidery_pos4_size: tab.embroideryPos4Size || "-",
+            additional: tab.additionalNeeds || "-",
+          },
+          design_images: imagePreviews[tab.id] || [],
+        };
+      }),
+    [name, email, reportName, companyName, phone, lineId, decorationTabs, imagePreviews],
   );
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -259,34 +273,37 @@ const OrderFormContent: React.FC = () => {
     }
   };
 
+  const generatePDF = async (): Promise<boolean> => {
+    const pages = document.querySelectorAll(".tfb-report-page");
+    if (pages.length === 0) return false;
+
+    setIsExporting(true);
+    try {
+      const pdf = new jsPDF("p", "mm", "a4");
+      for (let i = 0; i < pages.length; i++) {
+        const page = pages[i] as HTMLElement;
+        const dataUrl = await toPng(page, { quality: 1.0, pixelRatio: 2 });
+        if (i > 0) pdf.addPage();
+        pdf.addImage(dataUrl, "PNG", 0, 0, 210, 297);
+      }
+      // Use the current reportName state if set, otherwise fetch from server
+      const name = reportName || await fetchNextReportName();
+      pdf.save(`${name}.pdf`);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const handleSavePDF = async () => {
     if (!showA4Preview) {
       alert("กรุณากด 'แสดงหน้า A4 Preview'");
       return;
     }
-    const pages = document.querySelectorAll(".tfb-report-page");
-    if (pages.length === 0) return;
-
-    setIsExporting(true);
-    try {
-      const pdf = new jsPDF("p", "mm", "a4");
-
-      for (let i = 0; i < pages.length; i++) {
-        const page = pages[i] as HTMLElement;
-        const dataUrl = await toPng(page, { quality: 1.0, pixelRatio: 2 });
-
-        if (i > 0) pdf.addPage();
-
-        pdf.addImage(dataUrl, "PNG", 0, 0, 210, 297);
-      }
-
-      const reportName = getReportName();
-      pdf.save(`${reportName}.pdf`);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsExporting(false);
-    }
+    await generatePDF();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -321,50 +338,61 @@ const OrderFormContent: React.FC = () => {
           type: "success",
           text: `✅ ส่งข้อมูลเรียบร้อยแล้ว!${orderRef ? ` (${orderRef})` : ""} ทีมงานจะติดต่อกลับโดยเร็ว`,
         });
-        setName("");
-        setEmail("");
-        setCompanyName("");
-        setPhone("");
-        setLineId("");
-        setDecorationTabs((prevTabs) =>
-          prevTabs.map((tab) => ({ ...tab, selectedFiles: [] })),
-        );
-        setDecorationTabs([
-          {
-            id: "set-1",
-            productType: "",
-            fabricType: "",
-            specs: "",
-            sizeData: sizeList.reduce(
-              (acc, size) => ({
-                ...acc,
-                [size]: { qty: "", chest: defaultChestSizes[size] || "" },
-              }),
-              {},
-            ),
-            totalQuantity: 0,
-            manualTotal: "",
-            printTitle: "",
-            printSize: "",
-            printPos2Title: "",
-            printPos2Size: "",
-            printPos3Title: "",
-            printPos3Size: "",
-            printPos4Title: "",
-            printPos4Size: "",
-            embroideryTitle: "",
-            embroiderySize: "",
-            embroideryPos2Title: "",
-            embroideryPos2Size: "",
-            embroideryPos3Title: "",
-            embroideryPos3Size: "",
-            embroideryPos4Title: "",
-            embroideryPos4Size: "",
-            additionalNeeds: "",
-            selectedFiles: [],
-          },
-        ]);
-        setActiveTabIndex(0);
+
+        // Auto-download PDF after successful submission
+        // Show A4 preview first (keep current form data for rendering)
+        fetchNextReportName().then((name) => {
+          setReportName(name);
+        });
+        setShowA4Preview(true);
+
+        // Wait for React to render A4, then generate PDF, then clear form
+        setTimeout(async () => {
+          await generatePDF();
+
+          // Clear form data AFTER PDF generation
+          setName("");
+          setEmail("");
+          setCompanyName("");
+          setPhone("");
+          setLineId("");
+          setDecorationTabs([
+            {
+              id: "set-1",
+              productType: "",
+              fabricType: "",
+              specs: "",
+              sizeData: sizeList.reduce(
+                (acc, size) => ({
+                  ...acc,
+                  [size]: { qty: "", chest: defaultChestSizes[size] || "" },
+                }),
+                {},
+              ),
+              totalQuantity: 0,
+              manualTotal: "",
+              printTitle: "",
+              printSize: "",
+              printPos2Title: "",
+              printPos2Size: "",
+              printPos3Title: "",
+              printPos3Size: "",
+              printPos4Title: "",
+              printPos4Size: "",
+              embroideryTitle: "",
+              embroiderySize: "",
+              embroideryPos2Title: "",
+              embroideryPos2Size: "",
+              embroideryPos3Title: "",
+              embroideryPos3Size: "",
+              embroideryPos4Title: "",
+              embroideryPos4Size: "",
+              additionalNeeds: "",
+              selectedFiles: [],
+            },
+          ]);
+          setActiveTabIndex(0);
+        }, 1500);
       } else {
         setMessage({ type: "error", text: `❌ เกิดข้อผิดพลาด: ${data.error}` });
       }
@@ -457,7 +485,7 @@ const OrderFormContent: React.FC = () => {
           type="button"
           onClick={() => {
             if (!showA4Preview) {
-              setReportName(getReportName());
+              fetchNextReportName().then((name) => setReportName(name));
             }
             setShowA4Preview(!showA4Preview);
           }}

@@ -16,7 +16,55 @@ function isEmpty(val: string): boolean {
   return !val || val === "ไม่มี" || val === "-" || val.trim() === "";
 }
 
+/**
+ * Build a decoration_details object from a decoration set entry.
+ */
+function buildDecorationDetails(set: any, defaultAdditional: string = "-") {
+  return {
+    printing_title: set.printTitle || "ไม่มี",
+    printing_size: set.printSize || "-",
+    printing_pos2_title: set.printPos2Title || "ไม่มี",
+    printing_pos2_size: set.printPos2Size || "-",
+    printing_pos3_title: set.printPos3Title || "ไม่มี",
+    printing_pos3_size: set.printPos3Size || "-",
+    printing_pos4_title: set.printPos4Title || "ไม่มี",
+    printing_pos4_size: set.printPos4Size || "-",
+    printing_pos5_title: "ไม่มี",
+    printing_pos5_size: "-",
+    embroidery_title: set.embroideryTitle || "ไม่มี",
+    embroidery_size: set.embroiderySize || "-",
+    embroidery_pos2_title: set.embroideryPos2Title || "ไม่มี",
+    embroidery_pos2_size: set.embroideryPos2Size || "-",
+    embroidery_pos3_title: set.embroideryPos3Title || "ไม่มี",
+    embroidery_pos3_size: set.embroideryPos3Size || "-",
+    embroidery_pos4_title: set.embroideryPos4Title || "ไม่มี",
+    embroidery_pos4_size: set.embroideryPos4Size || "-",
+    embroidery_pos5_title: "ไม่มี",
+    embroidery_pos5_size: "-",
+    additional: set.additionalNeeds || defaultAdditional,
+  };
+}
+
 function splitIntoSets(data: any, orderId: number): any[] {
+  // If we have full decorationSets from the API (multi-set submission), use them directly
+  const decorationSets = data?.decorationSets;
+  if (decorationSets && Array.isArray(decorationSets) && decorationSets.length > 0) {
+    return decorationSets.map((set: any, idx: number) => {
+      const setNumber = set.setNumber || idx + 1;
+      // Use per-set images if available, otherwise fall back to the global design_images
+      const setImages = (set.images && Array.isArray(set.images) && set.images.length > 0)
+        ? set.images
+        : (data?.design_images || []);
+      return {
+        ...data,
+        _setNumber: setNumber,
+        _reportName: getReportName(orderId, setNumber),
+        decoration_details: buildDecorationDetails(set, data?.decoration_details?.additional || "-"),
+        design_images: setImages,
+      };
+    });
+  }
+
   const dd = data?.decoration_details;
   if (!dd) {
     // No decoration data - still add report name
