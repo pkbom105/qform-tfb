@@ -2964,6 +2964,22 @@ export namespace Prisma {
     printSize: string | null
     embroideryTitle: string | null
     embroiderySize: string | null
+    printPos2Title: string | null
+    printPos2Size: string | null
+    embroideryPos2Title: string | null
+    embroideryPos2Size: string | null
+    printPos3Title: string | null
+    printPos3Size: string | null
+    embroideryPos3Title: string | null
+    embroideryPos3Size: string | null
+    printPos4Title: string | null
+    printPos4Size: string | null
+    embroideryPos4Title: string | null
+    embroideryPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
     additionalNeeds: string | null
     createdAt: Date | null
   }
@@ -2983,6 +2999,22 @@ export namespace Prisma {
     printSize: string | null
     embroideryTitle: string | null
     embroiderySize: string | null
+    printPos2Title: string | null
+    printPos2Size: string | null
+    embroideryPos2Title: string | null
+    embroideryPos2Size: string | null
+    printPos3Title: string | null
+    printPos3Size: string | null
+    embroideryPos3Title: string | null
+    embroideryPos3Size: string | null
+    printPos4Title: string | null
+    printPos4Size: string | null
+    embroideryPos4Title: string | null
+    embroideryPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
     additionalNeeds: string | null
     createdAt: Date | null
   }
@@ -3003,6 +3035,22 @@ export namespace Prisma {
     printSize: number
     embroideryTitle: number
     embroiderySize: number
+    printPos2Title: number
+    printPos2Size: number
+    embroideryPos2Title: number
+    embroideryPos2Size: number
+    printPos3Title: number
+    printPos3Size: number
+    embroideryPos3Title: number
+    embroideryPos3Size: number
+    printPos4Title: number
+    printPos4Size: number
+    embroideryPos4Title: number
+    embroideryPos4Size: number
+    printPos5Title: number
+    printPos5Size: number
+    embroideryPos5Title: number
+    embroideryPos5Size: number
     additionalNeeds: number
     images: number
     createdAt: number
@@ -3035,6 +3083,22 @@ export namespace Prisma {
     printSize?: true
     embroideryTitle?: true
     embroiderySize?: true
+    printPos2Title?: true
+    printPos2Size?: true
+    embroideryPos2Title?: true
+    embroideryPos2Size?: true
+    printPos3Title?: true
+    printPos3Size?: true
+    embroideryPos3Title?: true
+    embroideryPos3Size?: true
+    printPos4Title?: true
+    printPos4Size?: true
+    embroideryPos4Title?: true
+    embroideryPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
     additionalNeeds?: true
     createdAt?: true
   }
@@ -3054,6 +3118,22 @@ export namespace Prisma {
     printSize?: true
     embroideryTitle?: true
     embroiderySize?: true
+    printPos2Title?: true
+    printPos2Size?: true
+    embroideryPos2Title?: true
+    embroideryPos2Size?: true
+    printPos3Title?: true
+    printPos3Size?: true
+    embroideryPos3Title?: true
+    embroideryPos3Size?: true
+    printPos4Title?: true
+    printPos4Size?: true
+    embroideryPos4Title?: true
+    embroideryPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
     additionalNeeds?: true
     createdAt?: true
   }
@@ -3074,6 +3154,22 @@ export namespace Prisma {
     printSize?: true
     embroideryTitle?: true
     embroiderySize?: true
+    printPos2Title?: true
+    printPos2Size?: true
+    embroideryPos2Title?: true
+    embroideryPos2Size?: true
+    printPos3Title?: true
+    printPos3Size?: true
+    embroideryPos3Title?: true
+    embroideryPos3Size?: true
+    printPos4Title?: true
+    printPos4Size?: true
+    embroideryPos4Title?: true
+    embroideryPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
     additionalNeeds?: true
     images?: true
     createdAt?: true
@@ -3182,6 +3278,22 @@ export namespace Prisma {
     printSize: string | null
     embroideryTitle: string | null
     embroiderySize: string | null
+    printPos2Title: string | null
+    printPos2Size: string | null
+    embroideryPos2Title: string | null
+    embroideryPos2Size: string | null
+    printPos3Title: string | null
+    printPos3Size: string | null
+    embroideryPos3Title: string | null
+    embroideryPos3Size: string | null
+    printPos4Title: string | null
+    printPos4Size: string | null
+    embroideryPos4Title: string | null
+    embroideryPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
     additionalNeeds: string | null
     images: JsonValue | null
     createdAt: Date
@@ -3222,6 +3334,22 @@ export namespace Prisma {
     printSize?: boolean
     embroideryTitle?: boolean
     embroiderySize?: boolean
+    printPos2Title?: boolean
+    printPos2Size?: boolean
+    embroideryPos2Title?: boolean
+    embroideryPos2Size?: boolean
+    printPos3Title?: boolean
+    printPos3Size?: boolean
+    embroideryPos3Title?: boolean
+    embroideryPos3Size?: boolean
+    printPos4Title?: boolean
+    printPos4Size?: boolean
+    embroideryPos4Title?: boolean
+    embroideryPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
     additionalNeeds?: boolean
     images?: boolean
     createdAt?: boolean
@@ -3243,6 +3371,22 @@ export namespace Prisma {
     printSize?: boolean
     embroideryTitle?: boolean
     embroiderySize?: boolean
+    printPos2Title?: boolean
+    printPos2Size?: boolean
+    embroideryPos2Title?: boolean
+    embroideryPos2Size?: boolean
+    printPos3Title?: boolean
+    printPos3Size?: boolean
+    embroideryPos3Title?: boolean
+    embroideryPos3Size?: boolean
+    printPos4Title?: boolean
+    printPos4Size?: boolean
+    embroideryPos4Title?: boolean
+    embroideryPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
     additionalNeeds?: boolean
     images?: boolean
     createdAt?: boolean
@@ -3264,6 +3408,22 @@ export namespace Prisma {
     printSize?: boolean
     embroideryTitle?: boolean
     embroiderySize?: boolean
+    printPos2Title?: boolean
+    printPos2Size?: boolean
+    embroideryPos2Title?: boolean
+    embroideryPos2Size?: boolean
+    printPos3Title?: boolean
+    printPos3Size?: boolean
+    embroideryPos3Title?: boolean
+    embroideryPos3Size?: boolean
+    printPos4Title?: boolean
+    printPos4Size?: boolean
+    embroideryPos4Title?: boolean
+    embroideryPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
     additionalNeeds?: boolean
     images?: boolean
     createdAt?: boolean
@@ -3289,6 +3449,22 @@ export namespace Prisma {
       printSize: string | null
       embroideryTitle: string | null
       embroiderySize: string | null
+      printPos2Title: string | null
+      printPos2Size: string | null
+      embroideryPos2Title: string | null
+      embroideryPos2Size: string | null
+      printPos3Title: string | null
+      printPos3Size: string | null
+      embroideryPos3Title: string | null
+      embroideryPos3Size: string | null
+      printPos4Title: string | null
+      printPos4Size: string | null
+      embroideryPos4Title: string | null
+      embroideryPos4Size: string | null
+      printPos5Title: string | null
+      printPos5Size: string | null
+      embroideryPos5Title: string | null
+      embroideryPos5Size: string | null
       additionalNeeds: string | null
       images: Prisma.JsonValue | null
       createdAt: Date
@@ -3700,6 +3876,22 @@ export namespace Prisma {
     readonly printSize: FieldRef<"Wso", 'String'>
     readonly embroideryTitle: FieldRef<"Wso", 'String'>
     readonly embroiderySize: FieldRef<"Wso", 'String'>
+    readonly printPos2Title: FieldRef<"Wso", 'String'>
+    readonly printPos2Size: FieldRef<"Wso", 'String'>
+    readonly embroideryPos2Title: FieldRef<"Wso", 'String'>
+    readonly embroideryPos2Size: FieldRef<"Wso", 'String'>
+    readonly printPos3Title: FieldRef<"Wso", 'String'>
+    readonly printPos3Size: FieldRef<"Wso", 'String'>
+    readonly embroideryPos3Title: FieldRef<"Wso", 'String'>
+    readonly embroideryPos3Size: FieldRef<"Wso", 'String'>
+    readonly printPos4Title: FieldRef<"Wso", 'String'>
+    readonly printPos4Size: FieldRef<"Wso", 'String'>
+    readonly embroideryPos4Title: FieldRef<"Wso", 'String'>
+    readonly embroideryPos4Size: FieldRef<"Wso", 'String'>
+    readonly printPos5Title: FieldRef<"Wso", 'String'>
+    readonly printPos5Size: FieldRef<"Wso", 'String'>
+    readonly embroideryPos5Title: FieldRef<"Wso", 'String'>
+    readonly embroideryPos5Size: FieldRef<"Wso", 'String'>
     readonly additionalNeeds: FieldRef<"Wso", 'String'>
     readonly images: FieldRef<"Wso", 'Json'>
     readonly createdAt: FieldRef<"Wso", 'DateTime'>
@@ -4051,6 +4243,22 @@ export namespace Prisma {
     printSize: 'printSize',
     embroideryTitle: 'embroideryTitle',
     embroiderySize: 'embroiderySize',
+    printPos2Title: 'printPos2Title',
+    printPos2Size: 'printPos2Size',
+    embroideryPos2Title: 'embroideryPos2Title',
+    embroideryPos2Size: 'embroideryPos2Size',
+    printPos3Title: 'printPos3Title',
+    printPos3Size: 'printPos3Size',
+    embroideryPos3Title: 'embroideryPos3Title',
+    embroideryPos3Size: 'embroideryPos3Size',
+    printPos4Title: 'printPos4Title',
+    printPos4Size: 'printPos4Size',
+    embroideryPos4Title: 'embroideryPos4Title',
+    embroideryPos4Size: 'embroideryPos4Size',
+    printPos5Title: 'printPos5Title',
+    printPos5Size: 'printPos5Size',
+    embroideryPos5Title: 'embroideryPos5Title',
+    embroideryPos5Size: 'embroideryPos5Size',
     additionalNeeds: 'additionalNeeds',
     images: 'images',
     createdAt: 'createdAt'
@@ -4345,6 +4553,22 @@ export namespace Prisma {
     printSize?: StringNullableFilter<"Wso"> | string | null
     embroideryTitle?: StringNullableFilter<"Wso"> | string | null
     embroiderySize?: StringNullableFilter<"Wso"> | string | null
+    printPos2Title?: StringNullableFilter<"Wso"> | string | null
+    printPos2Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos2Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos2Size?: StringNullableFilter<"Wso"> | string | null
+    printPos3Title?: StringNullableFilter<"Wso"> | string | null
+    printPos3Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos3Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos3Size?: StringNullableFilter<"Wso"> | string | null
+    printPos4Title?: StringNullableFilter<"Wso"> | string | null
+    printPos4Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos4Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos4Size?: StringNullableFilter<"Wso"> | string | null
+    printPos5Title?: StringNullableFilter<"Wso"> | string | null
+    printPos5Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Wso"> | string | null
     additionalNeeds?: StringNullableFilter<"Wso"> | string | null
     images?: JsonNullableFilter<"Wso">
     createdAt?: DateTimeFilter<"Wso"> | Date | string
@@ -4366,6 +4590,22 @@ export namespace Prisma {
     printSize?: SortOrderInput | SortOrder
     embroideryTitle?: SortOrderInput | SortOrder
     embroiderySize?: SortOrderInput | SortOrder
+    printPos2Title?: SortOrderInput | SortOrder
+    printPos2Size?: SortOrderInput | SortOrder
+    embroideryPos2Title?: SortOrderInput | SortOrder
+    embroideryPos2Size?: SortOrderInput | SortOrder
+    printPos3Title?: SortOrderInput | SortOrder
+    printPos3Size?: SortOrderInput | SortOrder
+    embroideryPos3Title?: SortOrderInput | SortOrder
+    embroideryPos3Size?: SortOrderInput | SortOrder
+    printPos4Title?: SortOrderInput | SortOrder
+    printPos4Size?: SortOrderInput | SortOrder
+    embroideryPos4Title?: SortOrderInput | SortOrder
+    embroideryPos4Size?: SortOrderInput | SortOrder
+    printPos5Title?: SortOrderInput | SortOrder
+    printPos5Size?: SortOrderInput | SortOrder
+    embroideryPos5Title?: SortOrderInput | SortOrder
+    embroideryPos5Size?: SortOrderInput | SortOrder
     additionalNeeds?: SortOrderInput | SortOrder
     images?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -4390,6 +4630,22 @@ export namespace Prisma {
     printSize?: StringNullableFilter<"Wso"> | string | null
     embroideryTitle?: StringNullableFilter<"Wso"> | string | null
     embroiderySize?: StringNullableFilter<"Wso"> | string | null
+    printPos2Title?: StringNullableFilter<"Wso"> | string | null
+    printPos2Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos2Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos2Size?: StringNullableFilter<"Wso"> | string | null
+    printPos3Title?: StringNullableFilter<"Wso"> | string | null
+    printPos3Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos3Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos3Size?: StringNullableFilter<"Wso"> | string | null
+    printPos4Title?: StringNullableFilter<"Wso"> | string | null
+    printPos4Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos4Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos4Size?: StringNullableFilter<"Wso"> | string | null
+    printPos5Title?: StringNullableFilter<"Wso"> | string | null
+    printPos5Size?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Wso"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Wso"> | string | null
     additionalNeeds?: StringNullableFilter<"Wso"> | string | null
     images?: JsonNullableFilter<"Wso">
     createdAt?: DateTimeFilter<"Wso"> | Date | string
@@ -4411,6 +4667,22 @@ export namespace Prisma {
     printSize?: SortOrderInput | SortOrder
     embroideryTitle?: SortOrderInput | SortOrder
     embroiderySize?: SortOrderInput | SortOrder
+    printPos2Title?: SortOrderInput | SortOrder
+    printPos2Size?: SortOrderInput | SortOrder
+    embroideryPos2Title?: SortOrderInput | SortOrder
+    embroideryPos2Size?: SortOrderInput | SortOrder
+    printPos3Title?: SortOrderInput | SortOrder
+    printPos3Size?: SortOrderInput | SortOrder
+    embroideryPos3Title?: SortOrderInput | SortOrder
+    embroideryPos3Size?: SortOrderInput | SortOrder
+    printPos4Title?: SortOrderInput | SortOrder
+    printPos4Size?: SortOrderInput | SortOrder
+    embroideryPos4Title?: SortOrderInput | SortOrder
+    embroideryPos4Size?: SortOrderInput | SortOrder
+    printPos5Title?: SortOrderInput | SortOrder
+    printPos5Size?: SortOrderInput | SortOrder
+    embroideryPos5Title?: SortOrderInput | SortOrder
+    embroideryPos5Size?: SortOrderInput | SortOrder
     additionalNeeds?: SortOrderInput | SortOrder
     images?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -4440,6 +4712,22 @@ export namespace Prisma {
     printSize?: StringNullableWithAggregatesFilter<"Wso"> | string | null
     embroideryTitle?: StringNullableWithAggregatesFilter<"Wso"> | string | null
     embroiderySize?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos2Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos2Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos2Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos2Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos3Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos3Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos3Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos3Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos4Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos4Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos4Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos4Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos5Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    printPos5Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos5Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
+    embroideryPos5Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
     additionalNeeds?: StringNullableWithAggregatesFilter<"Wso"> | string | null
     images?: JsonNullableWithAggregatesFilter<"Wso">
     createdAt?: DateTimeWithAggregatesFilter<"Wso"> | Date | string
@@ -4622,6 +4910,22 @@ export namespace Prisma {
     printSize?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -4643,6 +4947,22 @@ export namespace Prisma {
     printSize?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -4663,6 +4983,22 @@ export namespace Prisma {
     printSize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4684,6 +5020,22 @@ export namespace Prisma {
     printSize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4705,6 +5057,22 @@ export namespace Prisma {
     printSize?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
@@ -4725,6 +5093,22 @@ export namespace Prisma {
     printSize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4746,6 +5130,22 @@ export namespace Prisma {
     printSize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5051,6 +5451,22 @@ export namespace Prisma {
     printSize?: SortOrder
     embroideryTitle?: SortOrder
     embroiderySize?: SortOrder
+    printPos2Title?: SortOrder
+    printPos2Size?: SortOrder
+    embroideryPos2Title?: SortOrder
+    embroideryPos2Size?: SortOrder
+    printPos3Title?: SortOrder
+    printPos3Size?: SortOrder
+    embroideryPos3Title?: SortOrder
+    embroideryPos3Size?: SortOrder
+    printPos4Title?: SortOrder
+    printPos4Size?: SortOrder
+    embroideryPos4Title?: SortOrder
+    embroideryPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
     additionalNeeds?: SortOrder
     images?: SortOrder
     createdAt?: SortOrder
@@ -5076,6 +5492,22 @@ export namespace Prisma {
     printSize?: SortOrder
     embroideryTitle?: SortOrder
     embroiderySize?: SortOrder
+    printPos2Title?: SortOrder
+    printPos2Size?: SortOrder
+    embroideryPos2Title?: SortOrder
+    embroideryPos2Size?: SortOrder
+    printPos3Title?: SortOrder
+    printPos3Size?: SortOrder
+    embroideryPos3Title?: SortOrder
+    embroideryPos3Size?: SortOrder
+    printPos4Title?: SortOrder
+    printPos4Size?: SortOrder
+    embroideryPos4Title?: SortOrder
+    embroideryPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
     additionalNeeds?: SortOrder
     createdAt?: SortOrder
   }
@@ -5095,6 +5527,22 @@ export namespace Prisma {
     printSize?: SortOrder
     embroideryTitle?: SortOrder
     embroiderySize?: SortOrder
+    printPos2Title?: SortOrder
+    printPos2Size?: SortOrder
+    embroideryPos2Title?: SortOrder
+    embroideryPos2Size?: SortOrder
+    printPos3Title?: SortOrder
+    printPos3Size?: SortOrder
+    embroideryPos3Title?: SortOrder
+    embroideryPos3Size?: SortOrder
+    printPos4Title?: SortOrder
+    printPos4Size?: SortOrder
+    embroideryPos4Title?: SortOrder
+    embroideryPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
     additionalNeeds?: SortOrder
     createdAt?: SortOrder
   }

@@ -18,9 +18,10 @@ import { usePathname } from "next/navigation";
 const navItems = [
   { href: "/dashboard", label: "ภาพรวม", icon: LayoutDashboard },
   { href: "/dashboard/analytics", label: "วิเคราะห์ข้อมูล", icon: BarChart3 },
-  { href: "/dashboard/customers", label: "ลูกค้า", icon: Users },
+  { href: "/dashboard/order-qform", label: "Order-QForm", icon: Users },
   { href: "/form", label: "ฟอร์มคำสั่งซื้อ", icon: ShoppingBag },
   { href: "/report-name", label: "จัดการรายงาน", icon: FileText },
+  { href: "/dashboard/settings", label: "ตั้งค่าระบบ", icon: Settings },
 ];
 
 interface SidebarProps {

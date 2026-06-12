@@ -174,7 +174,7 @@ export default function DashboardOverview() {
               + สร้างคำสั่งซื้อใหม่
             </a>
             <a
-              href="/dashboard/customers"
+              href="/dashboard/order-qform"
               className="block w-full text-center py-3 border border-slate-200 text-black rounded-xl font-light hover:bg-slate-50 transition-all"
             >
               ดูรายชื่อลูกค้า
@@ -230,20 +230,24 @@ export default function DashboardOverview() {
                           variant={
                             order.status === "completed"
                               ? "success"
-                              : order.status === "pending"
-                                ? "warning"
-                                : order.status === "cancelled"
-                                  ? "destructive"
-                                  : "secondary"
+                              : order.status === "active"
+                                ? "success"
+                                : order.status === "pending"
+                                  ? "warning"
+                                  : order.status === "cancelled"
+                                    ? "destructive"
+                                    : "secondary"
                           }
                         >
                           {order.status === "completed"
                             ? "สำเร็จ"
-                            : order.status === "pending"
-                              ? "รอดำเนินการ"
-                              : order.status === "processing"
-                                ? "กำลังดำเนินการ"
-                                : "ยกเลิก"}
+                            : order.status === "active"
+                              ? "ใช้งาน"
+                              : order.status === "pending"
+                                ? "รอดำเนินการ"
+                                : order.status === "processing"
+                                  ? "กำลังดำเนินการ"
+                                  : "ยกเลิก"}
                         </Badge>
                       </td>
                       <td className="py-3 text-base font-light text-black">{order.createdAt}</td>

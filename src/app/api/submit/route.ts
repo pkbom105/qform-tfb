@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { localDb } from "@/lib/prisma";
 import fs from "fs/promises";
 import path from "path";
+import { getReportName } from "@/lib/reportNameGenerator";
 
 // บอก Next.js ว่าห้ามทำ Static Prefetch สำหรับไฟล์นี้
 export const dynamic = "force-dynamic";
@@ -186,11 +187,12 @@ export async function POST(req: NextRequest) {
       console.error("Failed to write uploads index:", err);
     }
 
+    const reportName = getReportName(newOrder.id);
     return NextResponse.json({
       success: true,
       data: {
         id: newOrder.id,
-        reportName: `TFB-Order-${String(newOrder.id).padStart(4, "0")}`,
+        reportName,
       },
     });
   } catch (error: any) {

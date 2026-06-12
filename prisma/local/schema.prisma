@@ -46,6 +46,8 @@ model Order {
   printPos3Size    String?
   printPos4Title   String?
   printPos4Size    String?
+  printPos5Title   String?
+  printPos5Size    String?
   // Embroidery details
   embroideryTitle  String?
   embroiderySize   String?
@@ -55,6 +57,8 @@ model Order {
   embroideryPos3Size  String?
   embroideryPos4Title String?
   embroideryPos4Size  String?
+  embroideryPos5Title String?
+  embroideryPos5Size  String?
   // Additional
   additionalNeeds  String?
   images           String   @default("[]")
@@ -64,4 +68,12 @@ model Order {
   updatedAt        DateTime @updatedAt
 
   @@map("orders")
+}
+
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
+
+  @@map("settings")
 }

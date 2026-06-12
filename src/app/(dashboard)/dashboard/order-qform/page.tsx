@@ -1,10 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Search, Mail, Phone, FileText, Printer, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { Pagination } from "@/components/ui/Pagination";
 import A4PreviewModal from "@/components/dashboard/A4PreviewModal";
+
+const PAGE_SIZE = 35;
 
 interface CustomerRecord {
   id: number;
@@ -15,6 +18,7 @@ interface CustomerRecord {
   lineId: string;
   totalOrders: number;
   lastOrderId: number | null;
+  reportName: string;
   lastOrderDate: string;
   status: "active" | "inactive";
 }
@@ -25,6 +29,7 @@ export default function CustomersPage() {
   const [total, setTotal] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [previewOrderId, setPreviewOrderId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -54,7 +59,16 @@ export default function CustomersPage() {
       }
     }
     fetchCustomers();
+    // Reset to page 1 when search changes
+    setCurrentPage(1);
   }, [debouncedSearch]);
+
+  const paginatedCustomers = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return customers.slice(start, start + PAGE_SIZE);
+  }, [customers, currentPage]);
+
+  const totalPages = Math.max(1, Math.ceil(customers.length / PAGE_SIZE));
 
   const handleA4View = (customer: CustomerRecord) => {
     if (customer.lastOrderId) {
@@ -76,7 +90,7 @@ export default function CustomersPage() {
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-light text-black">ลูกค้า</h1>
+          <h1 className="text-3xl font-light text-black">Order-QForm</h1>
           <p className="text-base text-black font-light mt-1">
             จัดการข้อมูลลูกค้าทั้งหมด ({total} ราย)
           </p>
@@ -104,70 +118,70 @@ export default function CustomersPage() {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-slate-100">
+                    <th className="p-4 text-sm font-light text-black uppercase">Order-Form Number</th>
                     <th className="p-4 text-sm font-light text-black uppercase">ชื่อลูกค้า</th>
+                    <th className="p-4 text-sm font-light text-black uppercase">วันที่</th>
                     <th className="p-4 text-sm font-light text-black uppercase">บริษัท</th>
                     <th className="p-4 text-sm font-light text-black uppercase">อีเมล</th>
                     <th className="p-4 text-sm font-light text-black uppercase">เบอร์โทร</th>
-                    <th className="p-4 text-sm font-light text-black uppercase">ออเดอร์</th>
                     <th className="p-4 text-sm font-light text-black uppercase">สถานะ</th>
-                    <th className="p-4 text-sm font-light text-black uppercase">ออเดอร์ล่าสุด</th>
                     <th className="p-4 text-sm font-light text-black uppercase text-center">จัดการ</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {customers.length === 0 ? (
+                  {paginatedCustomers.length === 0 ? (
                     <tr>
                       <td colSpan={8} className="py-16 text-center text-base text-black font-light">
                         {debouncedSearch ? "ไม่พบลูกค้าที่ค้นหา" : "ยังไม่มีข้อมูลลูกค้า"}
                       </td>
                     </tr>
                   ) : (
-                    customers.map((customer) => (
+                    paginatedCustomers.map((customer) => (
                       <tr key={customer.id} className="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                        <td className="p-4 text-sm font-light text-black">{customer.reportName}</td>
                         <td className="p-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-sm text-black font-light">
+                            <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-xs text-black font-light">
                               {customer.name.charAt(0)}
                             </div>
-                            <span className="text-base font-light text-black">{customer.name}</span>
+                            <span className="text-sm font-light text-black">{customer.name}</span>
                           </div>
                         </td>
-                        <td className="p-4 text-base font-light text-black">{customer.company}</td>
+                        <td className="p-4 text-sm font-light text-black">{customer.lastOrderDate}</td>
+                        <td className="p-4 text-sm font-light text-black">{customer.company}</td>
                         <td className="p-4">
-                          <div className="flex items-center gap-1 text-base font-light text-black">
-                            <Mail size={14} className="text-black" />
+                          <div className="flex items-center gap-1 text-xs font-light text-black">
+                            <Mail size={12} className="text-black shrink-0" />
                             {customer.email}
                           </div>
                         </td>
                         <td className="p-4">
-                          <div className="flex items-center gap-1 text-base font-light text-black">
-                            <Phone size={14} className="text-black" />
+                          <div className="flex items-center gap-1 text-sm font-light text-black">
+                            <Phone size={13} className="text-black shrink-0" />
                             {customer.phone}
                           </div>
                         </td>
-                        <td className="p-4 text-base font-light text-black">{customer.totalOrders}</td>
                         <td className="p-4">
                           <Badge variant={customer.status === "active" ? "success" : "secondary"}>
                             {customer.status === "active" ? "ใช้งาน" : "ไม่ใช้งาน"}
                           </Badge>
                         </td>
-                        <td className="p-4 text-base font-light text-black">{customer.lastOrderDate}</td>
                         <td className="p-4">
                           <div className="flex items-center justify-center gap-1.5">
                             <button
                               onClick={() => handleA4View(customer)}
                               disabled={!customer.lastOrderId}
-                              className="inline-flex items-center gap-1 text-sm text-red-600 hover:text-white hover:bg-red-600 px-3 py-1.5 rounded-full border border-red-200 hover:border-red-600 transition-all font-light disabled:opacity-40 disabled:cursor-not-allowed"
+                              className="inline-flex items-center gap-1 text-xs text-red-600 hover:text-white hover:bg-red-600 px-2.5 py-1 rounded-full border border-red-200 hover:border-red-600 transition-all font-light disabled:opacity-40 disabled:cursor-not-allowed"
                             >
-                              <FileText size={14} />
+                              <FileText size={11} />
                               A4
                             </button>
                             <button
                               onClick={() => handlePrint(customer)}
                               disabled={!customer.lastOrderId}
-                              className="inline-flex items-center gap-1 text-sm text-black hover:text-white hover:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-200 hover:border-slate-800 transition-all font-light disabled:opacity-40 disabled:cursor-not-allowed"
+                              className="inline-flex items-center gap-1 text-xs text-black hover:text-white hover:bg-slate-800 px-2.5 py-1 rounded-full border border-slate-200 hover:border-slate-800 transition-all font-light disabled:opacity-40 disabled:cursor-not-allowed"
                             >
-                              <Printer size={14} />
+                              <Printer size={11} />
                               Print
                             </button>
                           </div>
@@ -181,6 +195,13 @@ export default function CustomersPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
 
       {previewOrderId !== null && (
         <A4PreviewModal orderId={previewOrderId} onClose={() => setPreviewOrderId(null)} />

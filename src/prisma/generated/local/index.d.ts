@@ -23,6 +23,11 @@ export type Customer = $Result.DefaultSelection<Prisma.$CustomerPayload>
  * 
  */
 export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
+/**
+ * Model Setting
+ * 
+ */
+export type Setting = $Result.DefaultSelection<Prisma.$SettingPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -166,6 +171,16 @@ export class PrismaClient<
     * ```
     */
   get order(): Prisma.OrderDelegate<ExtArgs>;
+
+  /**
+   * `prisma.setting`: Exposes CRUD operations for the **Setting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Settings
+    * const settings = await prisma.setting.findMany()
+    * ```
+    */
+  get setting(): Prisma.SettingDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -608,7 +623,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Customer: 'Customer',
-    Order: 'Order'
+    Order: 'Order',
+    Setting: 'Setting'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -624,7 +640,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "customer" | "order"
+      modelProps: "customer" | "order" | "setting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -765,6 +781,76 @@ export namespace Prisma {
           count: {
             args: Prisma.OrderCountArgs<ExtArgs>
             result: $Utils.Optional<OrderCountAggregateOutputType> | number
+          }
+        }
+      }
+      Setting: {
+        payload: Prisma.$SettingPayload<ExtArgs>
+        fields: Prisma.SettingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
+          }
+          findMany: {
+            args: Prisma.SettingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>[]
+          }
+          create: {
+            args: Prisma.SettingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
+          }
+          createMany: {
+            args: Prisma.SettingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
+          }
+          update: {
+            args: Prisma.SettingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SettingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSetting>
+          }
+          groupBy: {
+            args: Prisma.SettingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingCountAggregateOutputType> | number
           }
         }
       }
@@ -2033,6 +2119,8 @@ export namespace Prisma {
     printPos3Size: string | null
     printPos4Title: string | null
     printPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
     embroideryTitle: string | null
     embroiderySize: string | null
     embroideryPos2Title: string | null
@@ -2041,6 +2129,8 @@ export namespace Prisma {
     embroideryPos3Size: string | null
     embroideryPos4Title: string | null
     embroideryPos4Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
     additionalNeeds: string | null
     images: string | null
     reportName: string | null
@@ -2067,6 +2157,8 @@ export namespace Prisma {
     printPos3Size: string | null
     printPos4Title: string | null
     printPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
     embroideryTitle: string | null
     embroiderySize: string | null
     embroideryPos2Title: string | null
@@ -2075,6 +2167,8 @@ export namespace Prisma {
     embroideryPos3Size: string | null
     embroideryPos4Title: string | null
     embroideryPos4Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
     additionalNeeds: string | null
     images: string | null
     reportName: string | null
@@ -2101,6 +2195,8 @@ export namespace Prisma {
     printPos3Size: number
     printPos4Title: number
     printPos4Size: number
+    printPos5Title: number
+    printPos5Size: number
     embroideryTitle: number
     embroiderySize: number
     embroideryPos2Title: number
@@ -2109,6 +2205,8 @@ export namespace Prisma {
     embroideryPos3Size: number
     embroideryPos4Title: number
     embroideryPos4Size: number
+    embroideryPos5Title: number
+    embroideryPos5Size: number
     additionalNeeds: number
     images: number
     reportName: number
@@ -2149,6 +2247,8 @@ export namespace Prisma {
     printPos3Size?: true
     printPos4Title?: true
     printPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
     embroideryTitle?: true
     embroiderySize?: true
     embroideryPos2Title?: true
@@ -2157,6 +2257,8 @@ export namespace Prisma {
     embroideryPos3Size?: true
     embroideryPos4Title?: true
     embroideryPos4Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
     additionalNeeds?: true
     images?: true
     reportName?: true
@@ -2183,6 +2285,8 @@ export namespace Prisma {
     printPos3Size?: true
     printPos4Title?: true
     printPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
     embroideryTitle?: true
     embroiderySize?: true
     embroideryPos2Title?: true
@@ -2191,6 +2295,8 @@ export namespace Prisma {
     embroideryPos3Size?: true
     embroideryPos4Title?: true
     embroideryPos4Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
     additionalNeeds?: true
     images?: true
     reportName?: true
@@ -2217,6 +2323,8 @@ export namespace Prisma {
     printPos3Size?: true
     printPos4Title?: true
     printPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
     embroideryTitle?: true
     embroiderySize?: true
     embroideryPos2Title?: true
@@ -2225,6 +2333,8 @@ export namespace Prisma {
     embroideryPos3Size?: true
     embroideryPos4Title?: true
     embroideryPos4Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
     additionalNeeds?: true
     images?: true
     reportName?: true
@@ -2338,6 +2448,8 @@ export namespace Prisma {
     printPos3Size: string | null
     printPos4Title: string | null
     printPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
     embroideryTitle: string | null
     embroiderySize: string | null
     embroideryPos2Title: string | null
@@ -2346,6 +2458,8 @@ export namespace Prisma {
     embroideryPos3Size: string | null
     embroideryPos4Title: string | null
     embroideryPos4Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
     additionalNeeds: string | null
     images: string
     reportName: string | null
@@ -2391,6 +2505,8 @@ export namespace Prisma {
     printPos3Size?: boolean
     printPos4Title?: boolean
     printPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
     embroideryTitle?: boolean
     embroiderySize?: boolean
     embroideryPos2Title?: boolean
@@ -2399,6 +2515,8 @@ export namespace Prisma {
     embroideryPos3Size?: boolean
     embroideryPos4Title?: boolean
     embroideryPos4Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
     additionalNeeds?: boolean
     images?: boolean
     reportName?: boolean
@@ -2426,6 +2544,8 @@ export namespace Prisma {
     printPos3Size?: boolean
     printPos4Title?: boolean
     printPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
     embroideryTitle?: boolean
     embroiderySize?: boolean
     embroideryPos2Title?: boolean
@@ -2434,6 +2554,8 @@ export namespace Prisma {
     embroideryPos3Size?: boolean
     embroideryPos4Title?: boolean
     embroideryPos4Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
     additionalNeeds?: boolean
     images?: boolean
     reportName?: boolean
@@ -2461,6 +2583,8 @@ export namespace Prisma {
     printPos3Size?: boolean
     printPos4Title?: boolean
     printPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
     embroideryTitle?: boolean
     embroiderySize?: boolean
     embroideryPos2Title?: boolean
@@ -2469,6 +2593,8 @@ export namespace Prisma {
     embroideryPos3Size?: boolean
     embroideryPos4Title?: boolean
     embroideryPos4Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
     additionalNeeds?: boolean
     images?: boolean
     reportName?: boolean
@@ -2507,6 +2633,8 @@ export namespace Prisma {
       printPos3Size: string | null
       printPos4Title: string | null
       printPos4Size: string | null
+      printPos5Title: string | null
+      printPos5Size: string | null
       embroideryTitle: string | null
       embroiderySize: string | null
       embroideryPos2Title: string | null
@@ -2515,6 +2643,8 @@ export namespace Prisma {
       embroideryPos3Size: string | null
       embroideryPos4Title: string | null
       embroideryPos4Size: string | null
+      embroideryPos5Title: string | null
+      embroideryPos5Size: string | null
       additionalNeeds: string | null
       images: string
       reportName: string | null
@@ -2932,6 +3062,8 @@ export namespace Prisma {
     readonly printPos3Size: FieldRef<"Order", 'String'>
     readonly printPos4Title: FieldRef<"Order", 'String'>
     readonly printPos4Size: FieldRef<"Order", 'String'>
+    readonly printPos5Title: FieldRef<"Order", 'String'>
+    readonly printPos5Size: FieldRef<"Order", 'String'>
     readonly embroideryTitle: FieldRef<"Order", 'String'>
     readonly embroiderySize: FieldRef<"Order", 'String'>
     readonly embroideryPos2Title: FieldRef<"Order", 'String'>
@@ -2940,6 +3072,8 @@ export namespace Prisma {
     readonly embroideryPos3Size: FieldRef<"Order", 'String'>
     readonly embroideryPos4Title: FieldRef<"Order", 'String'>
     readonly embroideryPos4Size: FieldRef<"Order", 'String'>
+    readonly embroideryPos5Title: FieldRef<"Order", 'String'>
+    readonly embroideryPos5Size: FieldRef<"Order", 'String'>
     readonly additionalNeeds: FieldRef<"Order", 'String'>
     readonly images: FieldRef<"Order", 'String'>
     readonly reportName: FieldRef<"Order", 'String'>
@@ -3277,6 +3411,892 @@ export namespace Prisma {
 
 
   /**
+   * Model Setting
+   */
+
+  export type AggregateSetting = {
+    _count: SettingCountAggregateOutputType | null
+    _avg: SettingAvgAggregateOutputType | null
+    _sum: SettingSumAggregateOutputType | null
+    _min: SettingMinAggregateOutputType | null
+    _max: SettingMaxAggregateOutputType | null
+  }
+
+  export type SettingAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SettingSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SettingMinAggregateOutputType = {
+    id: number | null
+    key: string | null
+    value: string | null
+  }
+
+  export type SettingMaxAggregateOutputType = {
+    id: number | null
+    key: string | null
+    value: string | null
+  }
+
+  export type SettingCountAggregateOutputType = {
+    id: number
+    key: number
+    value: number
+    _all: number
+  }
+
+
+  export type SettingAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SettingSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SettingMinAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+  }
+
+  export type SettingMaxAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+  }
+
+  export type SettingCountAggregateInputType = {
+    id?: true
+    key?: true
+    value?: true
+    _all?: true
+  }
+
+  export type SettingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Setting to aggregate.
+     */
+    where?: SettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Settings to fetch.
+     */
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Settings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Settings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Settings
+    **/
+    _count?: true | SettingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SettingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SettingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingMaxAggregateInputType
+  }
+
+  export type GetSettingAggregateType<T extends SettingAggregateArgs> = {
+        [P in keyof T & keyof AggregateSetting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSetting[P]>
+      : GetScalarType<T[P], AggregateSetting[P]>
+  }
+
+
+
+
+  export type SettingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingWhereInput
+    orderBy?: SettingOrderByWithAggregationInput | SettingOrderByWithAggregationInput[]
+    by: SettingScalarFieldEnum[] | SettingScalarFieldEnum
+    having?: SettingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingCountAggregateInputType | true
+    _avg?: SettingAvgAggregateInputType
+    _sum?: SettingSumAggregateInputType
+    _min?: SettingMinAggregateInputType
+    _max?: SettingMaxAggregateInputType
+  }
+
+  export type SettingGroupByOutputType = {
+    id: number
+    key: string
+    value: string
+    _count: SettingCountAggregateOutputType | null
+    _avg: SettingAvgAggregateOutputType | null
+    _sum: SettingSumAggregateOutputType | null
+    _min: SettingMinAggregateOutputType | null
+    _max: SettingMaxAggregateOutputType | null
+  }
+
+  type GetSettingGroupByPayload<T extends SettingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["setting"]>
+
+  export type SettingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["setting"]>
+
+  export type SettingSelectScalar = {
+    id?: boolean
+    key?: boolean
+    value?: boolean
+  }
+
+
+  export type $SettingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Setting"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      key: string
+      value: string
+    }, ExtArgs["result"]["setting"]>
+    composites: {}
+  }
+
+  type SettingGetPayload<S extends boolean | null | undefined | SettingDefaultArgs> = $Result.GetResult<Prisma.$SettingPayload, S>
+
+  type SettingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SettingFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SettingCountAggregateInputType | true
+    }
+
+  export interface SettingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Setting'], meta: { name: 'Setting' } }
+    /**
+     * Find zero or one Setting that matches the filter.
+     * @param {SettingFindUniqueArgs} args - Arguments to find a Setting
+     * @example
+     * // Get one Setting
+     * const setting = await prisma.setting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingFindUniqueArgs>(args: SelectSubset<T, SettingFindUniqueArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Setting that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SettingFindUniqueOrThrowArgs} args - Arguments to find a Setting
+     * @example
+     * // Get one Setting
+     * const setting = await prisma.setting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Setting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingFindFirstArgs} args - Arguments to find a Setting
+     * @example
+     * // Get one Setting
+     * const setting = await prisma.setting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingFindFirstArgs>(args?: SelectSubset<T, SettingFindFirstArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Setting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingFindFirstOrThrowArgs} args - Arguments to find a Setting
+     * @example
+     * // Get one Setting
+     * const setting = await prisma.setting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Settings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Settings
+     * const settings = await prisma.setting.findMany()
+     * 
+     * // Get first 10 Settings
+     * const settings = await prisma.setting.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const settingWithIdOnly = await prisma.setting.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SettingFindManyArgs>(args?: SelectSubset<T, SettingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Setting.
+     * @param {SettingCreateArgs} args - Arguments to create a Setting.
+     * @example
+     * // Create one Setting
+     * const Setting = await prisma.setting.create({
+     *   data: {
+     *     // ... data to create a Setting
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingCreateArgs>(args: SelectSubset<T, SettingCreateArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Settings.
+     * @param {SettingCreateManyArgs} args - Arguments to create many Settings.
+     * @example
+     * // Create many Settings
+     * const setting = await prisma.setting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingCreateManyArgs>(args?: SelectSubset<T, SettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Settings and returns the data saved in the database.
+     * @param {SettingCreateManyAndReturnArgs} args - Arguments to create many Settings.
+     * @example
+     * // Create many Settings
+     * const setting = await prisma.setting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Settings and only return the `id`
+     * const settingWithIdOnly = await prisma.setting.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Setting.
+     * @param {SettingDeleteArgs} args - Arguments to delete one Setting.
+     * @example
+     * // Delete one Setting
+     * const Setting = await prisma.setting.delete({
+     *   where: {
+     *     // ... filter to delete one Setting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingDeleteArgs>(args: SelectSubset<T, SettingDeleteArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Setting.
+     * @param {SettingUpdateArgs} args - Arguments to update one Setting.
+     * @example
+     * // Update one Setting
+     * const setting = await prisma.setting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingUpdateArgs>(args: SelectSubset<T, SettingUpdateArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Settings.
+     * @param {SettingDeleteManyArgs} args - Arguments to filter Settings to delete.
+     * @example
+     * // Delete a few Settings
+     * const { count } = await prisma.setting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingDeleteManyArgs>(args?: SelectSubset<T, SettingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Settings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Settings
+     * const setting = await prisma.setting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingUpdateManyArgs>(args: SelectSubset<T, SettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Setting.
+     * @param {SettingUpsertArgs} args - Arguments to update or create a Setting.
+     * @example
+     * // Update or create a Setting
+     * const setting = await prisma.setting.upsert({
+     *   create: {
+     *     // ... data to create a Setting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Setting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingUpsertArgs>(args: SelectSubset<T, SettingUpsertArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Settings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCountArgs} args - Arguments to filter Settings to count.
+     * @example
+     * // Count the number of Settings
+     * const count = await prisma.setting.count({
+     *   where: {
+     *     // ... the filter for the Settings we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingCountArgs>(
+      args?: Subset<T, SettingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Setting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingAggregateArgs>(args: Subset<T, SettingAggregateArgs>): Prisma.PrismaPromise<GetSettingAggregateType<T>>
+
+    /**
+     * Group by Setting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingGroupByArgs['orderBy'] }
+        : { orderBy?: SettingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Setting model
+   */
+  readonly fields: SettingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Setting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Setting model
+   */ 
+  interface SettingFieldRefs {
+    readonly id: FieldRef<"Setting", 'Int'>
+    readonly key: FieldRef<"Setting", 'String'>
+    readonly value: FieldRef<"Setting", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Setting findUnique
+   */
+  export type SettingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Filter, which Setting to fetch.
+     */
+    where: SettingWhereUniqueInput
+  }
+
+  /**
+   * Setting findUniqueOrThrow
+   */
+  export type SettingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Filter, which Setting to fetch.
+     */
+    where: SettingWhereUniqueInput
+  }
+
+  /**
+   * Setting findFirst
+   */
+  export type SettingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Filter, which Setting to fetch.
+     */
+    where?: SettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Settings to fetch.
+     */
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Settings.
+     */
+    cursor?: SettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Settings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Settings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Settings.
+     */
+    distinct?: SettingScalarFieldEnum | SettingScalarFieldEnum[]
+  }
+
+  /**
+   * Setting findFirstOrThrow
+   */
+  export type SettingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Filter, which Setting to fetch.
+     */
+    where?: SettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Settings to fetch.
+     */
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Settings.
+     */
+    cursor?: SettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Settings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Settings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Settings.
+     */
+    distinct?: SettingScalarFieldEnum | SettingScalarFieldEnum[]
+  }
+
+  /**
+   * Setting findMany
+   */
+  export type SettingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Filter, which Settings to fetch.
+     */
+    where?: SettingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Settings to fetch.
+     */
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Settings.
+     */
+    cursor?: SettingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Settings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Settings.
+     */
+    skip?: number
+    distinct?: SettingScalarFieldEnum | SettingScalarFieldEnum[]
+  }
+
+  /**
+   * Setting create
+   */
+  export type SettingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Setting.
+     */
+    data: XOR<SettingCreateInput, SettingUncheckedCreateInput>
+  }
+
+  /**
+   * Setting createMany
+   */
+  export type SettingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Settings.
+     */
+    data: SettingCreateManyInput | SettingCreateManyInput[]
+  }
+
+  /**
+   * Setting createManyAndReturn
+   */
+  export type SettingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Settings.
+     */
+    data: SettingCreateManyInput | SettingCreateManyInput[]
+  }
+
+  /**
+   * Setting update
+   */
+  export type SettingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Setting.
+     */
+    data: XOR<SettingUpdateInput, SettingUncheckedUpdateInput>
+    /**
+     * Choose, which Setting to update.
+     */
+    where: SettingWhereUniqueInput
+  }
+
+  /**
+   * Setting updateMany
+   */
+  export type SettingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Settings.
+     */
+    data: XOR<SettingUpdateManyMutationInput, SettingUncheckedUpdateManyInput>
+    /**
+     * Filter which Settings to update
+     */
+    where?: SettingWhereInput
+  }
+
+  /**
+   * Setting upsert
+   */
+  export type SettingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Setting to update in case it exists.
+     */
+    where: SettingWhereUniqueInput
+    /**
+     * In case the Setting found by the `where` argument doesn't exist, create a new Setting with this data.
+     */
+    create: XOR<SettingCreateInput, SettingUncheckedCreateInput>
+    /**
+     * In case the Setting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingUpdateInput, SettingUncheckedUpdateInput>
+  }
+
+  /**
+   * Setting delete
+   */
+  export type SettingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Filter which Setting to delete.
+     */
+    where: SettingWhereUniqueInput
+  }
+
+  /**
+   * Setting deleteMany
+   */
+  export type SettingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Settings to delete
+     */
+    where?: SettingWhereInput
+  }
+
+  /**
+   * Setting without action
+   */
+  export type SettingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3320,6 +4340,8 @@ export namespace Prisma {
     printPos3Size: 'printPos3Size',
     printPos4Title: 'printPos4Title',
     printPos4Size: 'printPos4Size',
+    printPos5Title: 'printPos5Title',
+    printPos5Size: 'printPos5Size',
     embroideryTitle: 'embroideryTitle',
     embroiderySize: 'embroiderySize',
     embroideryPos2Title: 'embroideryPos2Title',
@@ -3328,6 +4350,8 @@ export namespace Prisma {
     embroideryPos3Size: 'embroideryPos3Size',
     embroideryPos4Title: 'embroideryPos4Title',
     embroideryPos4Size: 'embroideryPos4Size',
+    embroideryPos5Title: 'embroideryPos5Title',
+    embroideryPos5Size: 'embroideryPos5Size',
     additionalNeeds: 'additionalNeeds',
     images: 'images',
     reportName: 'reportName',
@@ -3337,6 +4361,15 @@ export namespace Prisma {
   };
 
   export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+  export const SettingScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    value: 'value'
+  };
+
+  export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3489,6 +4522,8 @@ export namespace Prisma {
     printPos3Size?: StringNullableFilter<"Order"> | string | null
     printPos4Title?: StringNullableFilter<"Order"> | string | null
     printPos4Size?: StringNullableFilter<"Order"> | string | null
+    printPos5Title?: StringNullableFilter<"Order"> | string | null
+    printPos5Size?: StringNullableFilter<"Order"> | string | null
     embroideryTitle?: StringNullableFilter<"Order"> | string | null
     embroiderySize?: StringNullableFilter<"Order"> | string | null
     embroideryPos2Title?: StringNullableFilter<"Order"> | string | null
@@ -3497,6 +4532,8 @@ export namespace Prisma {
     embroideryPos3Size?: StringNullableFilter<"Order"> | string | null
     embroideryPos4Title?: StringNullableFilter<"Order"> | string | null
     embroideryPos4Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Order"> | string | null
     additionalNeeds?: StringNullableFilter<"Order"> | string | null
     images?: StringFilter<"Order"> | string
     reportName?: StringNullableFilter<"Order"> | string | null
@@ -3524,6 +4561,8 @@ export namespace Prisma {
     printPos3Size?: SortOrderInput | SortOrder
     printPos4Title?: SortOrderInput | SortOrder
     printPos4Size?: SortOrderInput | SortOrder
+    printPos5Title?: SortOrderInput | SortOrder
+    printPos5Size?: SortOrderInput | SortOrder
     embroideryTitle?: SortOrderInput | SortOrder
     embroiderySize?: SortOrderInput | SortOrder
     embroideryPos2Title?: SortOrderInput | SortOrder
@@ -3532,6 +4571,8 @@ export namespace Prisma {
     embroideryPos3Size?: SortOrderInput | SortOrder
     embroideryPos4Title?: SortOrderInput | SortOrder
     embroideryPos4Size?: SortOrderInput | SortOrder
+    embroideryPos5Title?: SortOrderInput | SortOrder
+    embroideryPos5Size?: SortOrderInput | SortOrder
     additionalNeeds?: SortOrderInput | SortOrder
     images?: SortOrder
     reportName?: SortOrderInput | SortOrder
@@ -3562,6 +4603,8 @@ export namespace Prisma {
     printPos3Size?: StringNullableFilter<"Order"> | string | null
     printPos4Title?: StringNullableFilter<"Order"> | string | null
     printPos4Size?: StringNullableFilter<"Order"> | string | null
+    printPos5Title?: StringNullableFilter<"Order"> | string | null
+    printPos5Size?: StringNullableFilter<"Order"> | string | null
     embroideryTitle?: StringNullableFilter<"Order"> | string | null
     embroiderySize?: StringNullableFilter<"Order"> | string | null
     embroideryPos2Title?: StringNullableFilter<"Order"> | string | null
@@ -3570,6 +4613,8 @@ export namespace Prisma {
     embroideryPos3Size?: StringNullableFilter<"Order"> | string | null
     embroideryPos4Title?: StringNullableFilter<"Order"> | string | null
     embroideryPos4Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Order"> | string | null
     additionalNeeds?: StringNullableFilter<"Order"> | string | null
     images?: StringFilter<"Order"> | string
     reportName?: StringNullableFilter<"Order"> | string | null
@@ -3597,6 +4642,8 @@ export namespace Prisma {
     printPos3Size?: SortOrderInput | SortOrder
     printPos4Title?: SortOrderInput | SortOrder
     printPos4Size?: SortOrderInput | SortOrder
+    printPos5Title?: SortOrderInput | SortOrder
+    printPos5Size?: SortOrderInput | SortOrder
     embroideryTitle?: SortOrderInput | SortOrder
     embroiderySize?: SortOrderInput | SortOrder
     embroideryPos2Title?: SortOrderInput | SortOrder
@@ -3605,6 +4652,8 @@ export namespace Prisma {
     embroideryPos3Size?: SortOrderInput | SortOrder
     embroideryPos4Title?: SortOrderInput | SortOrder
     embroideryPos4Size?: SortOrderInput | SortOrder
+    embroideryPos5Title?: SortOrderInput | SortOrder
+    embroideryPos5Size?: SortOrderInput | SortOrder
     additionalNeeds?: SortOrderInput | SortOrder
     images?: SortOrder
     reportName?: SortOrderInput | SortOrder
@@ -3639,6 +4688,8 @@ export namespace Prisma {
     printPos3Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
     printPos4Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
     printPos4Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos5Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos5Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
     embroideryTitle?: StringNullableWithAggregatesFilter<"Order"> | string | null
     embroiderySize?: StringNullableWithAggregatesFilter<"Order"> | string | null
     embroideryPos2Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -3647,12 +4698,58 @@ export namespace Prisma {
     embroideryPos3Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
     embroideryPos4Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
     embroideryPos4Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
     additionalNeeds?: StringNullableWithAggregatesFilter<"Order"> | string | null
     images?: StringWithAggregatesFilter<"Order"> | string
     reportName?: StringNullableWithAggregatesFilter<"Order"> | string | null
     status?: StringWithAggregatesFilter<"Order"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+  }
+
+  export type SettingWhereInput = {
+    AND?: SettingWhereInput | SettingWhereInput[]
+    OR?: SettingWhereInput[]
+    NOT?: SettingWhereInput | SettingWhereInput[]
+    id?: IntFilter<"Setting"> | number
+    key?: StringFilter<"Setting"> | string
+    value?: StringFilter<"Setting"> | string
+  }
+
+  export type SettingOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SettingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    key?: string
+    AND?: SettingWhereInput | SettingWhereInput[]
+    OR?: SettingWhereInput[]
+    NOT?: SettingWhereInput | SettingWhereInput[]
+    value?: StringFilter<"Setting"> | string
+  }, "id" | "key">
+
+  export type SettingOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+    _count?: SettingCountOrderByAggregateInput
+    _avg?: SettingAvgOrderByAggregateInput
+    _max?: SettingMaxOrderByAggregateInput
+    _min?: SettingMinOrderByAggregateInput
+    _sum?: SettingSumOrderByAggregateInput
+  }
+
+  export type SettingScalarWhereWithAggregatesInput = {
+    AND?: SettingScalarWhereWithAggregatesInput | SettingScalarWhereWithAggregatesInput[]
+    OR?: SettingScalarWhereWithAggregatesInput[]
+    NOT?: SettingScalarWhereWithAggregatesInput | SettingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Setting"> | number
+    key?: StringWithAggregatesFilter<"Setting"> | string
+    value?: StringWithAggregatesFilter<"Setting"> | string
   }
 
   export type CustomerCreateInput = {
@@ -3756,6 +4853,8 @@ export namespace Prisma {
     printPos3Size?: string | null
     printPos4Title?: string | null
     printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
     embroideryPos2Title?: string | null
@@ -3764,6 +4863,8 @@ export namespace Prisma {
     embroideryPos3Size?: string | null
     embroideryPos4Title?: string | null
     embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: string
     reportName?: string | null
@@ -3791,6 +4892,8 @@ export namespace Prisma {
     printPos3Size?: string | null
     printPos4Title?: string | null
     printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
     embroideryPos2Title?: string | null
@@ -3799,6 +4902,8 @@ export namespace Prisma {
     embroideryPos3Size?: string | null
     embroideryPos4Title?: string | null
     embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: string
     reportName?: string | null
@@ -3823,6 +4928,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3831,6 +4938,8 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3858,6 +4967,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3866,6 +4977,8 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3892,6 +5005,8 @@ export namespace Prisma {
     printPos3Size?: string | null
     printPos4Title?: string | null
     printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
     embroideryPos2Title?: string | null
@@ -3900,6 +5015,8 @@ export namespace Prisma {
     embroideryPos3Size?: string | null
     embroideryPos4Title?: string | null
     embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: string
     reportName?: string | null
@@ -3924,6 +5041,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3932,6 +5051,8 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3958,6 +5079,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -3966,12 +5089,53 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SettingCreateInput = {
+    key: string
+    value: string
+  }
+
+  export type SettingUncheckedCreateInput = {
+    id?: number
+    key: string
+    value: string
+  }
+
+  export type SettingUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingCreateManyInput = {
+    id?: number
+    key: string
+    value: string
+  }
+
+  export type SettingUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -4172,6 +5336,8 @@ export namespace Prisma {
     printPos3Size?: SortOrder
     printPos4Title?: SortOrder
     printPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
     embroideryTitle?: SortOrder
     embroiderySize?: SortOrder
     embroideryPos2Title?: SortOrder
@@ -4180,6 +5346,8 @@ export namespace Prisma {
     embroideryPos3Size?: SortOrder
     embroideryPos4Title?: SortOrder
     embroideryPos4Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
     additionalNeeds?: SortOrder
     images?: SortOrder
     reportName?: SortOrder
@@ -4212,6 +5380,8 @@ export namespace Prisma {
     printPos3Size?: SortOrder
     printPos4Title?: SortOrder
     printPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
     embroideryTitle?: SortOrder
     embroiderySize?: SortOrder
     embroideryPos2Title?: SortOrder
@@ -4220,6 +5390,8 @@ export namespace Prisma {
     embroideryPos3Size?: SortOrder
     embroideryPos4Title?: SortOrder
     embroideryPos4Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
     additionalNeeds?: SortOrder
     images?: SortOrder
     reportName?: SortOrder
@@ -4246,6 +5418,8 @@ export namespace Prisma {
     printPos3Size?: SortOrder
     printPos4Title?: SortOrder
     printPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
     embroideryTitle?: SortOrder
     embroiderySize?: SortOrder
     embroideryPos2Title?: SortOrder
@@ -4254,6 +5428,8 @@ export namespace Prisma {
     embroideryPos3Size?: SortOrder
     embroideryPos4Title?: SortOrder
     embroideryPos4Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
     additionalNeeds?: SortOrder
     images?: SortOrder
     reportName?: SortOrder
@@ -4266,6 +5442,32 @@ export namespace Prisma {
     id?: SortOrder
     customerId?: SortOrder
     totalQuantity?: SortOrder
+  }
+
+  export type SettingCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SettingAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SettingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SettingMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SettingSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type OrderCreateNestedManyWithoutCustomerInput = {
@@ -4496,6 +5698,8 @@ export namespace Prisma {
     printPos3Size?: string | null
     printPos4Title?: string | null
     printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
     embroideryPos2Title?: string | null
@@ -4504,6 +5708,8 @@ export namespace Prisma {
     embroideryPos3Size?: string | null
     embroideryPos4Title?: string | null
     embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: string
     reportName?: string | null
@@ -4529,6 +5735,8 @@ export namespace Prisma {
     printPos3Size?: string | null
     printPos4Title?: string | null
     printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
     embroideryPos2Title?: string | null
@@ -4537,6 +5745,8 @@ export namespace Prisma {
     embroideryPos3Size?: string | null
     embroideryPos4Title?: string | null
     embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: string
     reportName?: string | null
@@ -4591,6 +5801,8 @@ export namespace Prisma {
     printPos3Size?: StringNullableFilter<"Order"> | string | null
     printPos4Title?: StringNullableFilter<"Order"> | string | null
     printPos4Size?: StringNullableFilter<"Order"> | string | null
+    printPos5Title?: StringNullableFilter<"Order"> | string | null
+    printPos5Size?: StringNullableFilter<"Order"> | string | null
     embroideryTitle?: StringNullableFilter<"Order"> | string | null
     embroiderySize?: StringNullableFilter<"Order"> | string | null
     embroideryPos2Title?: StringNullableFilter<"Order"> | string | null
@@ -4599,6 +5811,8 @@ export namespace Prisma {
     embroideryPos3Size?: StringNullableFilter<"Order"> | string | null
     embroideryPos4Title?: StringNullableFilter<"Order"> | string | null
     embroideryPos4Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Order"> | string | null
     additionalNeeds?: StringNullableFilter<"Order"> | string | null
     images?: StringFilter<"Order"> | string
     reportName?: StringNullableFilter<"Order"> | string | null
@@ -4686,6 +5900,8 @@ export namespace Prisma {
     printPos3Size?: string | null
     printPos4Title?: string | null
     printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
     embroideryTitle?: string | null
     embroiderySize?: string | null
     embroideryPos2Title?: string | null
@@ -4694,6 +5910,8 @@ export namespace Prisma {
     embroideryPos3Size?: string | null
     embroideryPos4Title?: string | null
     embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
     additionalNeeds?: string | null
     images?: string
     reportName?: string | null
@@ -4718,6 +5936,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4726,6 +5946,8 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4751,6 +5973,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4759,6 +5983,8 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4784,6 +6010,8 @@ export namespace Prisma {
     printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
     embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4792,6 +6020,8 @@ export namespace Prisma {
     embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
     embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
     additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
     images?: StringFieldUpdateOperationsInput | string
     reportName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -4817,6 +6047,10 @@ export namespace Prisma {
      * @deprecated Use OrderDefaultArgs instead
      */
     export type OrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OrderDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SettingDefaultArgs instead
+     */
+    export type SettingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SettingDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -182,7 +182,9 @@ const OrderFormContent: React.FC = () => {
 
   const allQuotationData = useMemo(
     () =>
-      decorationTabs.map((tab) => ({
+      decorationTabs.map((tab, idx) => ({
+        _reportName: reportName ? `${reportName.slice(0, -4)}${String(idx + 1).padStart(4, "0")}` : getReportName(undefined, idx + 1),
+        _setNumber: idx + 1,
         customer_profile: {
           name: name || "-",
           email: email || "-",
@@ -314,9 +316,10 @@ const OrderFormContent: React.FC = () => {
       const data = await res.json();
 
       if (data.success) {
+        const orderRef = data.data?.reportName || "";
         setMessage({
           type: "success",
-          text: "✅ ส่งข้อมูลเรียบร้อยแล้ว! ทีมงานจะติดต่อกลับโดยเร็ว",
+          text: `✅ ส่งข้อมูลเรียบร้อยแล้ว!${orderRef ? ` (${orderRef})` : ""} ทีมงานจะติดต่อกลับโดยเร็ว`,
         });
         setName("");
         setEmail("");

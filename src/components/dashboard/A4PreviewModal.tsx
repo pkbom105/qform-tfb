@@ -5,10 +5,75 @@ import { X, FileDown, Printer, Loader2 } from "lucide-react";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import A4Report from "@/components/A4-report";
+import { getReportName, getReportNameWithoutCounter } from "@/lib/reportNameGenerator";
 
 interface A4PreviewModalProps {
   orderId: number;
   onClose: () => void;
+}
+
+function isEmpty(val: string): boolean {
+  return !val || val === "ไม่มี" || val === "-" || val.trim() === "";
+}
+
+function splitIntoSets(data: any, orderId: number): any[] {
+  const dd = data?.decoration_details;
+  if (!dd) {
+    // No decoration data - still add report name
+    return [{ ...data, _setNumber: 1, _reportName: getReportName(orderId, 1) }];
+  }
+
+  const sets = [];
+  for (let i = 1; i <= 5; i++) {
+    const printTitleKey = i === 1 ? "printing_title" : `printing_pos${i}_title`;
+    const printSizeKey = i === 1 ? "printing_size" : `printing_pos${i}_size`;
+    const embTitleKey = i === 1 ? "embroidery_title" : `embroidery_pos${i}_title`;
+    const embSizeKey = i === 1 ? "embroidery_size" : `embroidery_pos${i}_size`;
+
+    const printTitle = dd[printTitleKey];
+    const printSize = dd[printSizeKey];
+    const embTitle = dd[embTitleKey];
+    const embSize = dd[embSizeKey];
+
+    // Skip sets where all fields are empty (always show Set 1)
+    if (i > 1 && isEmpty(printTitle) && isEmpty(printSize) && isEmpty(embTitle) && isEmpty(embSize)) continue;
+
+    const setReportName = getReportName(orderId, i);
+    sets.push({
+      ...data,
+      _setNumber: i,
+      _reportName: setReportName,
+      decoration_details: {
+        printing_title: printTitle || "ไม่มี",
+        printing_size: printSize || "-",
+        printing_pos2_title: "ไม่มี",
+        printing_pos2_size: "-",
+        printing_pos3_title: "ไม่มี",
+        printing_pos3_size: "-",
+        printing_pos4_title: "ไม่มี",
+        printing_pos4_size: "-",
+        printing_pos5_title: "ไม่มี",
+        printing_pos5_size: "-",
+        embroidery_title: embTitle || "ไม่มี",
+        embroidery_size: embSize || "-",
+        embroidery_pos2_title: "ไม่มี",
+        embroidery_pos2_size: "-",
+        embroidery_pos3_title: "ไม่มี",
+        embroidery_pos3_size: "-",
+        embroidery_pos4_title: "ไม่มี",
+        embroidery_pos4_size: "-",
+        embroidery_pos5_title: "ไม่มี",
+        embroidery_pos5_size: "-",
+        additional: dd.additional || "-",
+      },
+    });
+  }
+
+  // Ensure at least one set with report name
+  if (sets.length === 0) {
+    return [{ ...data, _setNumber: 1, _reportName: getReportName(orderId, 1) }];
+  }
+  return sets;
 }
 
 const A4PreviewModal: React.FC<A4PreviewModalProps> = ({ orderId, onClose }) => {
@@ -59,7 +124,8 @@ const A4PreviewModal: React.FC<A4PreviewModalProps> = ({ orderId, onClose }) => 
         pdf.addImage(dataUrl, "PNG", 0, 0, 210, 297);
       }
 
-      pdf.save(`Order-${String(orderId).padStart(4, "0")}.pdf`);
+      const fileName = getReportName(orderId);
+      pdf.save(`${fileName}.pdf`);
     } catch (err) {
       console.error("PDF export error:", err);
     } finally {
@@ -126,8 +192,7 @@ const A4PreviewModal: React.FC<A4PreviewModalProps> = ({ orderId, onClose }) => 
             <div ref={reportRef}>
               <A4Report
                 id={`a4-preview-${orderId}`}
-                dataList={[data]}
-                reportName={`Order-${String(orderId).padStart(4, "0")}`}
+                dataList={splitIntoSets(data, orderId)}
               />
             </div>
           ) : (

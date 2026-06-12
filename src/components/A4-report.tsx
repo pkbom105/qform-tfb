@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FileText } from "lucide-react";
-import { getReportNameWithoutCounter } from "@/lib/reportNameGenerator";
+import { getReportName, getReportNameWithoutCounter } from "@/lib/reportNameGenerator";
 
 interface A4ReportProps {
   id: string;
@@ -37,6 +37,7 @@ const A4Report: React.FC<A4ReportProps> = ({ id, dataList, reportName }) => {
   return (
     <div id={id} className="flex flex-col gap-10 print:gap-0">
       {dataList.map((data, index) => {
+        const setNumber = data._setNumber || index + 1;
         const {
           customer_profile,
           product_specification,
@@ -71,11 +72,9 @@ const A4Report: React.FC<A4ReportProps> = ({ id, dataList, reportName }) => {
 
               <div className="flex justify-between items-center">
                 <p className="text-lg font-bold text-black py-2">แบบฟอร์มข้อมูลออเดอร์</p>
-                {reportName && (
-                  <p className="text-sm font-bold text-black py-2 uppercase tracking-wider">
-                    {reportName}-{String(index + 1).padStart(4, "0")}
-                  </p>
-                )}
+                <p className="text-sm font-bold text-black py-2 uppercase tracking-wider">
+                  {data._reportName || "-"}
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-y-1 gap-x-4 text-xs bg-slate-50 p-2 rounded-xl border border-slate-100">
@@ -166,40 +165,58 @@ const A4Report: React.FC<A4ReportProps> = ({ id, dataList, reportName }) => {
             <div className="grid grid-cols-2 gap-x-8 gap-y-4 mb-4">
               <div className="space-y-1">
                 <h4 className="text-[10px] font-light text-red-600 uppercase mb-2 pb-1 border-b border-red-100">งานพิมพ์ (Printing)</h4>
-                {[1, 2, 3, 4].map((pos) => {
-                  const titleKey = pos === 1 ? "printing_title" : `printing_pos${pos}_title`;
-                  const sizeKey = pos === 1 ? "printing_size" : `printing_pos${pos}_size`;
-                  const title = decoration_details[titleKey] || "ไม่มี";
-                  const size = decoration_details[sizeKey] || "-";
-
-                  if (title === "ไม่มี" && size === "-" && pos !== 1) return null;
-
-                  return (
-                    <div key={`print-${pos}`} className="flex justify-between items-center py-1 border-b border-slate-50 last:border-0">
-                      <span className="text-[10px] font-light text-black uppercase">ตำแหน่งที่ {pos}:</span>
-                      <span className="text-[11px] font-light text-black">{title} <span className="text-black font-normal">({size})</span></span>
-                    </div>
-                  );
-                })}
+                {(() => {
+                  const positions = [1, 2, 3, 4, 5].filter((pos) => {
+                    const titleKey = pos === 1 ? "printing_title" : `printing_pos${pos}_title`;
+                    const sizeKey = pos === 1 ? "printing_size" : `printing_pos${pos}_size`;
+                    const title = decoration_details[titleKey];
+                    const size = decoration_details[sizeKey];
+                    return title && title !== "ไม่มี" && title !== "-" || size && size !== "ไม่มี" && size !== "-";
+                  });
+                  if (positions.length === 0) {
+                    return <p className="text-[10px] text-slate-400 italic">ไม่มีข้อมูล</p>;
+                  }
+                  return positions.map((pos) => {
+                    const titleKey = pos === 1 ? "printing_title" : `printing_pos${pos}_title`;
+                    const sizeKey = pos === 1 ? "printing_size" : `printing_pos${pos}_size`;
+                    const title = decoration_details[titleKey] || "ไม่มี";
+                    const size = decoration_details[sizeKey] || "-";
+                    return (
+                      <div key={`print-${pos}`} className="flex justify-between items-center py-1 border-b border-slate-50 last:border-0">
+                        <span className="text-[10px] font-light text-black uppercase">ตำแหน่งที่ {pos}:</span>
+                        <span className="text-[11px] font-light text-black">{title} <span className="text-black font-normal">({size})</span></span>
+                      </div>
+                    );
+                  });
+                })()}
               </div>
 
               <div className="space-y-1">
                 <h4 className="text-[10px] font-light text-black uppercase mb-2 pb-1 border-b border-slate-200">งานปัก (Embroidery)</h4>
-                {[1, 2, 3, 4].map((pos) => {
-                  const titleKey = pos === 1 ? "embroidery_title" : `embroidery_pos${pos}_title`;
-                  const sizeKey = pos === 1 ? "embroidery_size" : `embroidery_pos${pos}_size`;
-                  const title = decoration_details[titleKey] || "ไม่มี";
-                  const size = decoration_details[sizeKey] || "-";
-
-                  if (title === "ไม่มี" && size === "-" && pos !== 1) return null;
-
-                  return (
-                    <div key={`embroidery-${pos}`} className="flex justify-between items-center py-1 border-b border-slate-50 last:border-0">
-                      <span className="text-[10px] font-light text-black uppercase">ตำแหน่งที่ {pos}:</span>
-                      <span className="text-[11px] font-light text-black">{title} <span className="text-black font-normal">({size})</span></span>
-                    </div>
-                  );
-                })}
+                {(() => {
+                  const positions = [1, 2, 3, 4, 5].filter((pos) => {
+                    const titleKey = pos === 1 ? "embroidery_title" : `embroidery_pos${pos}_title`;
+                    const sizeKey = pos === 1 ? "embroidery_size" : `embroidery_pos${pos}_size`;
+                    const title = decoration_details[titleKey];
+                    const size = decoration_details[sizeKey];
+                    return title && title !== "ไม่มี" && title !== "-" || size && size !== "ไม่มี" && size !== "-";
+                  });
+                  if (positions.length === 0) {
+                    return <p className="text-[10px] text-slate-400 italic">ไม่มีข้อมูล</p>;
+                  }
+                  return positions.map((pos) => {
+                    const titleKey = pos === 1 ? "embroidery_title" : `embroidery_pos${pos}_title`;
+                    const sizeKey = pos === 1 ? "embroidery_size" : `embroidery_pos${pos}_size`;
+                    const title = decoration_details[titleKey] || "ไม่มี";
+                    const size = decoration_details[sizeKey] || "-";
+                    return (
+                      <div key={`embroidery-${pos}`} className="flex justify-between items-center py-1 border-b border-slate-50 last:border-0">
+                        <span className="text-[10px] font-light text-black uppercase">ตำแหน่งที่ {pos}:</span>
+                        <span className="text-[11px] font-light text-black">{title} <span className="text-black font-normal">({size})</span></span>
+                      </div>
+                    );
+                  });
+                })()}
               </div>
             </div>
 

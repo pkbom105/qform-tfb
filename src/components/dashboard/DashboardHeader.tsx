@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Bell, Search, User } from "lucide-react";
+import { Bell, Search, Settings, User } from "lucide-react";
+import Link from "next/link";
 
 const DashboardHeader: React.FC = () => {
   return (
@@ -23,6 +24,14 @@ const DashboardHeader: React.FC = () => {
           <Bell size={20} className="text-slate-600" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full ring-2 ring-white" />
         </button>
+
+        {/* Settings */}
+        <Link
+          href="/dashboard/settings"
+          className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
+        >
+          <Settings size={20} className="text-slate-600" />
+        </Link>
 
         {/* Divider */}
         <div className="w-px h-8 bg-slate-200" />

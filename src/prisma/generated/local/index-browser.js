@@ -149,6 +149,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   printPos3Size: 'printPos3Size',
   printPos4Title: 'printPos4Title',
   printPos4Size: 'printPos4Size',
+  printPos5Title: 'printPos5Title',
+  printPos5Size: 'printPos5Size',
   embroideryTitle: 'embroideryTitle',
   embroiderySize: 'embroiderySize',
   embroideryPos2Title: 'embroideryPos2Title',
@@ -157,12 +159,20 @@ exports.Prisma.OrderScalarFieldEnum = {
   embroideryPos3Size: 'embroideryPos3Size',
   embroideryPos4Title: 'embroideryPos4Title',
   embroideryPos4Size: 'embroideryPos4Size',
+  embroideryPos5Title: 'embroideryPos5Title',
+  embroideryPos5Size: 'embroideryPos5Size',
   additionalNeeds: 'additionalNeeds',
   images: 'images',
   reportName: 'reportName',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SettingScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value'
 };
 
 exports.Prisma.SortOrder = {
@@ -178,7 +188,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Customer: 'Customer',
-  Order: 'Order'
+  Order: 'Order',
+  Setting: 'Setting'
 };
 
 /**
