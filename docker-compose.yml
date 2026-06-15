@@ -5,12 +5,11 @@ services:
     container_name: qform-db
     restart: always
     environment:
-      - POSTGRES_USER=qform.admin
-      - POSTGRES_PASSWORD=Brubrat.258
+      - POSTGRES_USER=${DB_USER:-qform.admin}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=customer_data
       - TZ=Asia/Bangkok
       - PGTZ=Asia/Bangkok
-
     ports:
       - "5432:5432"
     volumes:
@@ -24,9 +23,9 @@ services:
     container_name: qform-tfb
     restart: always
     ports:
-      - "3000:3000" # เปิด port ภายในเพื่อให้ NPM มองเห็น
+      - "3000:3000"
     volumes:
-      - ./uploads:/app/public/uploads
+      - /home/qform/app/public/uploads:/app/public/uploads
       - /home/qform/upload2:/home/qform/uploads
     env_file:
       - ./app/.env
@@ -34,7 +33,6 @@ services:
       - db
     networks:
       - qform-network
-
 
 networks:
   qform-network:
