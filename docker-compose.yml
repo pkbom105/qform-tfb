@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_USER=${DB_USER:-qform.admin}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=customer_data
+      - POSTGRES_DB=qform2026
       - TZ=Asia/Bangkok
       - PGTZ=Asia/Bangkok
     ports:

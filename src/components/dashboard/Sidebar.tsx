@@ -7,7 +7,6 @@ import {
   Users,
   BarChart3,
   Settings,
-  FileText,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -20,7 +19,6 @@ const navItems = [
   { href: "/dashboard/analytics", label: "วิเคราะห์ข้อมูล", icon: BarChart3 },
   { href: "/dashboard/order-qform", label: "Order-QForm", icon: Users },
   { href: "/form", label: "ฟอร์มคำสั่งซื้อ", icon: ShoppingBag },
-  { href: "/report-name", label: "จัดการรายงาน", icon: FileText },
   { href: "/dashboard/settings", label: "ตั้งค่าระบบ", icon: Settings },
 ];
 

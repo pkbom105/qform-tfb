@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "@/components/frontpage/Navbar";
 import Footer from "@/components/frontpage/Footer";
 
 export default function FrontpageLayout({
@@ -9,7 +8,6 @@ export default function FrontpageLayout({
 }) {
   return (
     <>
-      <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
     </>

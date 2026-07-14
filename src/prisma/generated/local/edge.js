@@ -170,7 +170,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/tfb-pannavith/Documents/code-mint/qform/src/prisma/generated/local",
+      "value": "/home/pannavith1/code-amd7/qform-tfb/src/prisma/generated/local",
       "fromEnvVar": null
     },
     "config": {
@@ -184,12 +184,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/tfb-pannavith/Documents/code-mint/qform/prisma/local/schema.prisma",
+    "sourceFilePath": "/home/pannavith1/code-amd7/qform-tfb/prisma/local/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../../prisma/local",
   "clientVersion": "5.22.0",
@@ -198,6 +197,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

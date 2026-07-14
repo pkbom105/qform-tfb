@@ -1,10 +1,20 @@
 "use client";
 
 import React from "react";
-import { Bell, Search, Settings, User } from "lucide-react";
+import { Bell, Search, Settings, User, LogOut } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
 
 const DashboardHeader: React.FC = () => {
+  const { user, logout, isAdmin } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
+
   return (
     <header className="h-20 bg-white border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-30">
       {/* Search */}
@@ -25,27 +35,38 @@ const DashboardHeader: React.FC = () => {
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full ring-2 ring-white" />
         </button>
 
-        {/* Settings */}
-        <Link
-          href="/dashboard/settings"
-          className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
-        >
-          <Settings size={20} className="text-slate-600" />
-        </Link>
+        {/* Settings - only show for admin */}
+        {isAdmin && (
+          <Link
+            href="/dashboard/settings"
+            className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
+          >
+            <Settings size={20} className="text-slate-600" />
+          </Link>
+        )}
 
         {/* Divider */}
         <div className="w-px h-8 bg-slate-200" />
 
-        {/* Admin Profile */}
+        {/* User Profile */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">
             <User size={18} className="text-slate-500" />
           </div>
           <div className="hidden sm:block">
-            <p className="text-base font-light text-black">ผู้ดูแลระบบ</p>
-            <p className="text-sm text-black font-light">admin@toffyboutique.com</p>
+            <p className="text-base font-light text-black">{user?.name || "ผู้ใช้"}</p>
+            <p className="text-sm text-black font-light">{isAdmin ? "Admin" : "User"}</p>
           </div>
         </div>
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          className="p-2 rounded-xl hover:bg-red-50 hover:text-red-600 transition-colors text-slate-400"
+          title="ออกจากระบบ"
+        >
+          <LogOut size={20} />
+        </button>
       </div>
     </header>
   );
