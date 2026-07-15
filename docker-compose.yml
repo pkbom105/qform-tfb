@@ -19,7 +19,7 @@ services:
 
   # --- 2. Toffy Boutique Next.js App ---
   qform-app:
-    build: ./app
+    build: .
     container_name: qform-tfb
     restart: always
     ports:
@@ -28,7 +28,7 @@ services:
       - /home/qform/app/public/uploads:/app/public/uploads
       - /home/qform/upload2:/home/qform/uploads
     env_file:
-      - ./app/.env
+      - ./.env
     depends_on:
       - db
     networks:
