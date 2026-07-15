@@ -8,6 +8,9 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get("search") || "";
+    const statusFilter = searchParams.get("status") || "";
+    const startDate = searchParams.get("startDate") || "";
+    const endDate = searchParams.get("endDate") || "";
 
     // Primary source: Local SQLite orders table (has correct reportName/offset)
     const localOrders = await localDb.order.findMany({
@@ -109,16 +112,50 @@ export async function GET(request: Request) {
       (a, b) => new Date(b.lastOrderDate).getTime() - new Date(a.lastOrderDate).getTime()
     );
 
-    // Filter by search term if provided
-    const filtered = search
-      ? allCustomers.filter(
-          (c) =>
-            c.name.toLowerCase().includes(search.toLowerCase()) ||
-            c.company.toLowerCase().includes(search.toLowerCase()) ||
-            c.email.toLowerCase().includes(search.toLowerCase()) ||
-            c.phone.includes(search),
-        )
-      : allCustomers;
+    // Apply filters sequentially
+    let filtered = allCustomers;
+
+    // Filter by search term
+    if (search) {
+      filtered = filtered.filter(
+        (c) =>
+          c.name.toLowerCase().includes(search.toLowerCase()) ||
+          c.company.toLowerCase().includes(search.toLowerCase()) ||
+          c.email.toLowerCase().includes(search.toLowerCase()) ||
+          c.phone.includes(search),
+      );
+    }
+
+    // Filter by status
+    if (statusFilter) {
+      filtered = filtered.filter((c) => c.status === statusFilter);
+    }
+
+    // Filter by date range (parse Thai date format back to compare)
+    if (startDate || endDate) {
+      // Convert YYYY-MM-DD to Date object for comparison
+      filtered = filtered.filter((c) => {
+        // Parse Thai date string like "15 ก.ค. 2569"
+        const thaiMonths = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+        const parts = c.lastOrderDate.split(" ");
+        if (parts.length !== 3) return false;
+        const day = parseInt(parts[0], 10);
+        const monthIndex = thaiMonths.indexOf(parts[1]);
+        const year = parseInt(parts[2], 10) - 543; // Convert Buddhist year to CE
+        if (isNaN(day) || monthIndex === -1 || isNaN(year)) return false;
+        const orderDate = new Date(year, monthIndex, day);
+
+        if (startDate) {
+          const sd = new Date(startDate);
+          if (orderDate < sd) return false;
+        }
+        if (endDate) {
+          const ed = new Date(endDate);
+          if (orderDate > ed) return false;
+        }
+        return true;
+      });
+    }
 
     return NextResponse.json({
       success: true,

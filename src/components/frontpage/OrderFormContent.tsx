@@ -410,8 +410,9 @@ const OrderFormContent: React.FC = () => {
     <div className="min-h-screen bg-slate-100 py-10 px-4 flex flex-col items-center font-kanit">
       <div className="max-w-6xl w-full bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-200 mb-10">
         {/* 1. Header Section */}
-        <div className="flex justify-between items-start border-b-4 border-red-500 pb-6 mb-8">
-          <div className="flex-shrink-0 ml-8 mt-8">
+        <div className="flex flex-col md:flex-row justify-between items-start border-b-4 border-red-500 pb-6 mb-8">
+          {/* Logo: on desktop shows left, on mobile shows below info */}
+          <div className="flex-shrink-0 ml-8 order-2 md:order-1 mt-4 md:mt-8">
             <img
               src="/toffy_logo.png"
               alt="Toffy Boutique Logo"
@@ -419,7 +420,7 @@ const OrderFormContent: React.FC = () => {
             />
           </div>
 
-          <div className="text-right flex flex-col gap-5 mr-10 mt-8">
+          <div className="text-right flex flex-col gap-5 mr-10 mt-8 order-1 md:order-2">
             <h2 className="text-2xl font-light text-black leading-none italic uppercase">
               บริษัท ทอฟฟี่ บูติก จำกัด
             </h2>

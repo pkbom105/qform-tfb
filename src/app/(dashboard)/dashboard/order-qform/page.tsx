@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import { Search, Printer, Loader2 } from "lucide-react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { Printer, Loader2, Calendar as CalendarIcon, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Pagination } from "@/components/ui/Pagination";
 import A4PreviewModal from "@/components/dashboard/A4PreviewModal";
@@ -30,7 +30,8 @@ const STATUS_STYLES: Record<string, { label: string; dot: string; bg: string; te
   cancelled: { label: "ยกเลิก", dot: "bg-red-600", bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
 };
 
-const STATUS_OPTIONS = [
+const STATUS_FILTERS = [
+  { value: "", label: "ทั้งหมด", dot: "bg-slate-400" },
   { value: "pending", label: "มาใหม่", dot: "bg-purple-600" },
   { value: "processing", label: "ดำเนินการ", dot: "bg-yellow-500" },
   { value: "producing", label: "ส่งผลิต", dot: "bg-green-600" },
@@ -45,7 +46,12 @@ export default function CustomersPage() {
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [previewOrderId, setPreviewOrderId] = useState<number | null>(null);
+  const [statusFilter, setStatusFilter] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [showCalendar, setShowCalendar] = useState(false);
 
+  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
@@ -53,14 +59,22 @@ export default function CustomersPage() {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
+  // Build query params
+  const buildQuery = useCallback(() => {
+    const params = new URLSearchParams();
+    if (debouncedSearch) params.set("search", debouncedSearch);
+    if (statusFilter) params.set("status", statusFilter);
+    if (startDate) params.set("startDate", startDate);
+    if (endDate) params.set("endDate", endDate);
+    return params.toString();
+  }, [debouncedSearch, statusFilter, startDate, endDate]);
+
   useEffect(() => {
     async function fetchCustomers() {
       setLoading(true);
       try {
-        const params = debouncedSearch
-          ? `?search=${encodeURIComponent(debouncedSearch)}`
-          : "";
-        const res = await fetch(`/api/customers${params}`);
+        const qs = buildQuery();
+        const res = await fetch(`/api/customers${qs ? `?${qs}` : ""}`);
         const json = await res.json();
         if (json.success) {
           setCustomers(json.data.customers);
@@ -74,7 +88,7 @@ export default function CustomersPage() {
     }
     fetchCustomers();
     setCurrentPage(1);
-  }, [debouncedSearch]);
+  }, [buildQuery]);
 
   const paginatedCustomers = useMemo(() => {
     const start = (currentPage - 1) * PAGE_SIZE;
@@ -90,7 +104,6 @@ export default function CustomersPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ orderId, status: newStatus }),
       });
-      // Optimistically update local state
       setCustomers((prev) =>
         prev.map((c) => (c.lastOrderId === orderId ? { ...c, status: newStatus } : c))
       );
@@ -107,27 +120,128 @@ export default function CustomersPage() {
     }
   };
 
+  const clearDateFilter = () => {
+    setStartDate("");
+    setEndDate("");
+    setShowCalendar(false);
+  };
+
   return (
     <div className="space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Row 1: Title + Filter Bar (Calendar + Status group + Clear) */}
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-light text-black">Order-QForm</h1>
           <p className="text-base text-black font-light mt-1">
             จัดการข้อมูลคำสั่งซื้อทั้งหมด ({total} รายการ)
           </p>
         </div>
-        <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-4 py-2.5 border border-slate-200 w-full sm:w-80">
-          <Search size={18} className="text-black" />
-          <input
-            type="text"
-            placeholder="ค้นหาลูกค้า..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-transparent outline-none text-base font-light text-black w-full placeholder:text-black"
-          />
+        <div className="flex flex-wrap items-center gap-3">
+        {/* Calendar Date Range */}
+        <div className="relative">
+          <button
+            onClick={() => setShowCalendar(!showCalendar)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-light transition-all ${
+              showCalendar || startDate
+                ? "bg-slate-800 text-white border-slate-800"
+                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <CalendarIcon size={16} />
+            {startDate && endDate
+              ? `${startDate} → ${endDate}`
+              : startDate
+              ? `ตั้งแต่ ${startDate}`
+              : "เลือกวันที่"}
+            {(startDate || endDate) && (
+              <X
+                size={14}
+                className="ml-1 opacity-60 hover:opacity-100"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  clearDateFilter();
+                }}
+              />
+            )}
+          </button>
+
+          {showCalendar && (
+            <div className="absolute top-full mt-2 left-0 z-50 bg-white border border-slate-200 rounded-xl shadow-xl p-4 w-[320px]">
+              <div className="flex flex-col gap-3">
+                <div>
+                  <label className="text-xs text-slate-500 font-light mb-1 block">วันที่เริ่มต้น</label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-light outline-none focus:ring-2 focus:ring-slate-800"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-slate-500 font-light mb-1 block">วันที่สิ้นสุด</label>
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    min={startDate || undefined}
+                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-light outline-none focus:ring-2 focus:ring-slate-800"
+                  />
+                </div>
+                <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+                  <button
+                    onClick={clearDateFilter}
+                    className="px-4 py-1.5 text-sm text-slate-500 hover:text-slate-800 font-light"
+                  >
+                    ล้าง
+                  </button>
+                  <button
+                    onClick={() => setShowCalendar(false)}
+                    className="px-4 py-1.5 text-sm bg-slate-800 text-white rounded-lg font-light hover:bg-slate-700"
+                  >
+                    ตกลง
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Status Group Button */}
+        <div className="inline-flex items-center rounded-lg border border-slate-200 overflow-hidden bg-white">
+          {STATUS_FILTERS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setStatusFilter(opt.value)}
+              className={`px-4 py-2 text-sm font-light transition-all ${
+                statusFilter === opt.value
+                  ? "bg-slate-800 text-white"
+                  : "bg-white text-slate-600 hover:bg-slate-50"
+              } ${opt.value !== "" ? "border-l border-slate-200" : ""}`}
+            >
+              <span className="flex items-center gap-1.5">
+                <span className={`w-2 h-2 rounded-full ${opt.dot}`}></span>
+                {opt.label}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {(statusFilter || startDate || endDate) && (
+          <button
+            onClick={() => {
+              setStatusFilter("");
+              clearDateFilter();
+            }}
+            className="flex items-center gap-1 px-3 py-2 text-xs text-red-600 hover:text-red-800 font-light"
+          >
+            <X size={14} />
+            ล้างทั้งหมด
+          </button>
+        )}
         </div>
       </div>
 
+      {/* Table */}
       <Card>
         <CardContent className="p-0">
           {loading ? (
@@ -154,7 +268,9 @@ export default function CustomersPage() {
                   {paginatedCustomers.length === 0 ? (
                     <tr>
                       <td colSpan={9} className="py-16 text-center text-base text-black font-light">
-                        {debouncedSearch ? "ไม่พบรายการที่ค้นหา" : "ยังไม่มีข้อมูลคำสั่งซื้อ"}
+                        {debouncedSearch || statusFilter || startDate || endDate
+                          ? "ไม่พบรายการที่ค้นหา"
+                          : "ยังไม่มีข้อมูลคำสั่งซื้อ"}
                       </td>
                     </tr>
                   ) : (
@@ -187,7 +303,7 @@ export default function CustomersPage() {
                                 className={`appearance-none text-xs font-light rounded-lg pl-7 pr-8 py-1.5 outline-none cursor-pointer border ${s.border} ${s.bg} ${s.text}`}
                                 style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
                               >
-                                {STATUS_OPTIONS.map((opt) => (
+                                {STATUS_FILTERS.filter(f => f.value).map((opt) => (
                                   <option key={opt.value} value={opt.value}>  {opt.label}</option>
                                 ))}
                               </select>
