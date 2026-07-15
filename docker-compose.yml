@@ -2,7 +2,6 @@ services:
   # --- 1. App Database (Postgres) ---
   db:
     image: docker.io/library/postgres:15-alpine
-    container_name: qform-db
     restart: always
     environment:
       - POSTGRES_USER=${DB_USER:-qform.admin}
@@ -20,7 +19,6 @@ services:
   # --- 2. Toffy Boutique Next.js App ---
   qform-app:
     build: .
-    container_name: qform-tfb
     restart: always
     ports:
       - "3000:3000"
