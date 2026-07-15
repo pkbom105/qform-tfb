@@ -4,12 +4,16 @@ import { NextResponse } from "next/server";
 export async function POST() {
   try {
     // Fetch data from PostgreSQL (VPN)
-    const wsoRecords = await onlineDb.wso.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-    const submissions = await onlineDb.submission.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    const wsoRecords = onlineDb
+      ? await onlineDb.wso.findMany({
+          orderBy: { createdAt: "desc" },
+        })
+      : [];
+    const submissions = onlineDb
+      ? await onlineDb.submission.findMany({
+          orderBy: { createdAt: "desc" },
+        })
+      : [];
 
     let synced = 0;
 

@@ -40,6 +40,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# postgres data directory (owned by container)
+/postgres_data
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

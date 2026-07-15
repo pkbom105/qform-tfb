@@ -19,9 +19,11 @@ export async function GET(
 
     // If not found in SQLite, try PostgreSQL (VPN) Wso table
     if (!order) {
-      const wso = await onlineDb.wso.findUnique({
-        where: { id: orderId },
-      });
+      const wso = onlineDb
+        ? await onlineDb.wso.findUnique({
+            where: { id: orderId },
+          })
+        : null;
 
       if (wso) {
         // Parse size details
@@ -84,9 +86,11 @@ export async function GET(
       // Try Submission table as last resort
       const subId = orderId >= 10000 ? orderId - 10000 : null;
       if (subId) {
-        const sub = await onlineDb.submission.findUnique({
-          where: { id: subId },
-        });
+        const sub = onlineDb
+          ? await onlineDb.submission.findUnique({
+              where: { id: subId },
+            })
+          : null;
         if (sub) {
           return NextResponse.json({
             success: true,

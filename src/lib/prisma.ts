@@ -4,6 +4,13 @@
 import { PrismaClient as LocalPrismaClient } from "../prisma/generated/local";
 import { PrismaClient as OnlinePrismaClient } from "../prisma/generated/online";
 
+const hasValidOnlineUrl = Boolean(
+  process.env.ONLINE_DATABASE_URL &&
+    /^postgres(?:ql)?:\/\//i.test(process.env.ONLINE_DATABASE_URL) &&
+    process.env.ONLINE_DATABASE_URL.includes("@") &&
+    process.env.ONLINE_DATABASE_URL.includes(":")
+);
+
 // --- Local SQLite Client (Primary) ---
 const globalForLocalPrisma = globalThis as unknown as {
   localPrisma: LocalPrismaClient | undefined;
@@ -24,13 +31,21 @@ const globalForOnlinePrisma = globalThis as unknown as {
   onlinePrisma: OnlinePrismaClient | undefined;
 };
 
-export const onlineDb =
-  globalForOnlinePrisma.onlinePrisma ??
-  new OnlinePrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-  });
+const hasOnlineClient = Boolean(
+  process.env.ONLINE_DATABASE_URL &&
+    /^postgres(?:ql)?:\/\//i.test(process.env.ONLINE_DATABASE_URL) &&
+    process.env.ONLINE_DATABASE_URL.includes("@") &&
+    process.env.ONLINE_DATABASE_URL.includes(":")
+);
 
-if (process.env.NODE_ENV !== "production") {
+export const onlineDb = hasOnlineClient
+  ? (globalForOnlinePrisma.onlinePrisma ??
+      new OnlinePrismaClient({
+        log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+      }))
+  : null;
+
+if (process.env.NODE_ENV !== "production" && onlineDb) {
   globalForOnlinePrisma.onlinePrisma = onlineDb;
 }
 

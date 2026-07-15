@@ -19,14 +19,26 @@ export async function GET() {
     });
 
     // Secondary source: PostgreSQL (VPN) - Wso table
-    const wsoRecords = await onlineDb.wso.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    let wsoRecords: Array<{ id: number; productType: string; totalQuantity: number; name: string; companyName?: string | null; createdAt: Date }> = [];
+    let submissions: Array<{ id: number; productType: string; totalQuantity: string | null; name: string; companyName?: string | null; createdAt: Date }> = [];
 
-    // Submission table
-    const submissions = await onlineDb.submission.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    if (onlineDb && typeof onlineDb === "object") {
+      try {
+        wsoRecords = await onlineDb.wso.findMany({
+          orderBy: { createdAt: "desc" },
+        });
+      } catch (error) {
+        console.warn("Online WSO fetch skipped:", error);
+      }
+
+      try {
+        submissions = await onlineDb.submission.findMany({
+          orderBy: { createdAt: "desc" },
+        });
+      } catch (error) {
+        console.warn("Online submission fetch skipped:", error);
+      }
+    }
 
     // Combine stats
     const totalOrders = localOrders.length + wsoRecords.length + submissions.length;

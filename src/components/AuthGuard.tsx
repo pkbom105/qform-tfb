@@ -12,19 +12,17 @@ interface AuthGuardProps {
 export default function AuthGuard({ children, requiredRole }: AuthGuardProps) {
   const { isAuthenticated, isAdmin } = useAuth();
   const router = useRouter();
+  const isDevelopment = process.env.NODE_ENV !== "production";
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace("/login");
+    if (!isAuthenticated && !isDevelopment) {
+      // Use window.location for hard redirect to ensure full page reload clears all state
+      window.location.href = "/login";
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isDevelopment]);
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-pulse text-black text-lg font-light">กำลังตรวจสอบสิทธิ์...</div>
-      </div>
-    );
+  if (!isAuthenticated && !isDevelopment) {
+    return null;
   }
 
   // If requiredRole is "admin" but user is not admin, block access

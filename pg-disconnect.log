@@ -736,3 +736,37 @@ Invalid `prisma.$queryRawUnsafe()` invocation:
 
 
 The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T07:55:28.604Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T07:55:28.749Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T07:58:16.439Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T07:58:16.600Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T08:30:05.043Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T08:30:05.235Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+The provided database string is invalid. Error parsing connection string: empty host in database URL. Please refer to the documentation in https://www.prisma.io/docs/reference/database-reference/connection-urls for constructing a correct connection string. In some cases, certain characters must be escaped. Please check the string for any illegal characters.
+[2026-07-15T08:59:24.760Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')
+[2026-07-15T08:59:24.908Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')
+[2026-07-15T08:59:37.243Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')
+[2026-07-15T08:59:39.994Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')

@@ -16,8 +16,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/dashboard", label: "ภาพรวม", icon: LayoutDashboard },
-  { href: "/dashboard/analytics", label: "วิเคราะห์ข้อมูล", icon: BarChart3 },
+  { href: "/dashboard", label: "ภาพรวม / วิเคราะห์", icon: LayoutDashboard },
   { href: "/dashboard/order-qform", label: "Order-QForm", icon: Users },
   { href: "/form", label: "ฟอร์มคำสั่งซื้อ", icon: ShoppingBag },
   { href: "/dashboard/settings", label: "ตั้งค่าระบบ", icon: Settings },

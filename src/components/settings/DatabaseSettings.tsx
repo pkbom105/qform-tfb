@@ -4,6 +4,11 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Database, Server, RefreshCw, Loader2, FileText } from "lucide-react";
 
+interface TableInfo {
+  name: string;
+  records: number;
+}
+
 interface DatabaseSettingsProps {
   connectionStatus: "idle" | "connected" | "failed";
   testing: boolean;
@@ -18,6 +23,9 @@ interface DatabaseSettingsProps {
   disconnectLogs: { timestamp: string; message: string }[];
   logsLoading: boolean;
   fetchDisconnectLogs: () => void;
+  pgTables: TableInfo[];
+  pgTablesLoading: boolean;
+  fetchPgTables: () => void;
 }
 
 export default function DatabaseSettings({
@@ -34,6 +42,9 @@ export default function DatabaseSettings({
   disconnectLogs,
   logsLoading,
   fetchDisconnectLogs,
+  pgTables,
+  pgTablesLoading,
+  fetchPgTables,
 }: DatabaseSettingsProps) {
   return (
     <div className="space-y-6">
@@ -134,7 +145,7 @@ export default function DatabaseSettings({
             )}
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <div className="flex items-center gap-4">
             <button
               onClick={testPgConnection}
@@ -156,7 +167,38 @@ export default function DatabaseSettings({
               <RefreshCw size={16} className={syncing ? "animate-spin" : ""} />
               {syncing ? "กำลังซิงค์..." : "ซิงค์ข้อมูลจาก VPN"}
             </button>
+            <button
+              onClick={fetchPgTables}
+              disabled={pgTablesLoading}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-700 text-white rounded-xl font-light hover:bg-blue-800 transition-all disabled:opacity-50 text-sm"
+            >
+              <RefreshCw size={16} className={pgTablesLoading ? "animate-spin" : ""} />
+              {pgTablesLoading ? "กำลังโหลด..." : "ดูตาราง"}
+            </button>
           </div>
+
+          {/* Tables & Records */}
+          {pgTablesLoading ? (
+            <div className="rounded-xl border border-blue-200 bg-white px-4 py-3 text-sm text-blue-700">
+              กำลังโหลดรายการตาราง...
+            </div>
+          ) : pgTables.length > 0 ? (
+            <div className="rounded-xl border border-blue-200 bg-white p-4 space-y-2">
+              {pgTables.map((t) => (
+                <div
+                  key={t.name}
+                  className="rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-800"
+                >
+                  <div className="font-light">DB Table Name: {t.name}</div>
+                  <div className="font-medium">Number of Record: {t.records.toLocaleString()}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-blue-200 bg-white px-4 py-3 text-sm text-blue-700">
+              No PostgreSQL tables found in the public schema.
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -168,14 +210,26 @@ export default function DatabaseSettings({
               <FileText size={20} className="text-red-700" />
               <CardTitle className="text-red-900">บันทึกการขาดการเชื่อมต่อ PostgreSQL</CardTitle>
             </div>
-            <button
-              onClick={fetchDisconnectLogs}
-              disabled={logsLoading}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-light bg-red-100 text-red-700 hover:bg-red-200 transition-all disabled:opacity-50"
-            >
-              <RefreshCw size={14} className={logsLoading ? "animate-spin" : ""} />
-              {logsLoading ? "กำลังโหลด..." : "รีเฟรช"}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  const text = disconnectLogs.map(e => `[${e.timestamp}] ${e.message}`).join('\n');
+                  navigator.clipboard.writeText(text);
+                }}
+                disabled={disconnectLogs.length === 0}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-light bg-red-100 text-red-700 hover:bg-red-200 transition-all disabled:opacity-50"
+              >
+                คัดลอก error code
+              </button>
+              <button
+                onClick={fetchDisconnectLogs}
+                disabled={logsLoading}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-light bg-red-100 text-red-700 hover:bg-red-200 transition-all disabled:opacity-50"
+              >
+                <RefreshCw size={14} className={logsLoading ? "animate-spin" : ""} />
+                {logsLoading ? "กำลังโหลด..." : "รีเฟรช"}
+              </button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>

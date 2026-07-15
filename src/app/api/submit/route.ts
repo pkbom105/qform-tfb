@@ -187,26 +187,28 @@ export async function POST(req: NextRequest) {
     // 4. Sync to Online PostgreSQL (backup)
     try {
       const { onlineDb } = await import("@/lib/prisma");
-      await onlineDb.wso.create({
-        data: {
-          name,
-          email,
-          companyName: companyName || "Toffy Boutique",
-          phone,
-          lineId,
-          productType,
-          fabricType,
-          specs,
-          sizeDetails: JSON.parse(sizeDetails || "{}"),
-          totalQuantity: parseInt(finalTotal) || 0,
-          printTitle,
-          printSize,
-          embroideryTitle,
-          embroiderySize,
-          additionalNeeds,
-          images: allUploadedUrls,
-        },
-      });
+      if (onlineDb) {
+        await onlineDb.wso.create({
+          data: {
+            name,
+            email,
+            companyName: companyName || "Toffy Boutique",
+            phone,
+            lineId,
+            productType,
+            fabricType,
+            specs,
+            sizeDetails: JSON.parse(sizeDetails || "{}"),
+            totalQuantity: parseInt(finalTotal) || 0,
+            printTitle,
+            printSize,
+            embroideryTitle,
+            embroiderySize,
+            additionalNeeds,
+            images: allUploadedUrls,
+          },
+        });
+      }
     } catch (onlineErr) {
       console.warn("[submit] Online sync skipped:", onlineErr);
     }

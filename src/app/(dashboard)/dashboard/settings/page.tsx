@@ -44,6 +44,8 @@ function SettingsContent() {
   const [syncing, setSyncing] = useState(false);
   const [disconnectLogs, setDisconnectLogs] = useState<{ timestamp: string; message: string }[]>([]);
   const [logsLoading, setLogsLoading] = useState(false);
+  const [pgTables, setPgTables] = useState<{ name: string; records: number }[]>([]);
+  const [pgTablesLoading, setPgTablesLoading] = useState(false);
 
   const fetchDisconnectLogs = async () => {
     setLogsLoading(true);
@@ -57,6 +59,21 @@ function SettingsContent() {
       // ignore
     } finally {
       setLogsLoading(false);
+    }
+  };
+
+  const fetchPgTables = async () => {
+    setPgTablesLoading(true);
+    try {
+      const res = await fetch("/api/settings/pg-tables");
+      const json = await res.json();
+      if (json.success) {
+        setPgTables(json.tables);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setPgTablesLoading(false);
     }
   };
 
@@ -95,6 +112,12 @@ function SettingsContent() {
         checkPgConnection();
       });
   }, []);
+
+  useEffect(() => {
+    if (activeTab === "database") {
+      fetchPgTables();
+    }
+  }, [activeTab]);
 
   const updateSetting = async (key: string, value: string) => {
     setSettings((prev) => ({ ...prev, [key]: value }));
@@ -220,6 +243,9 @@ function SettingsContent() {
           disconnectLogs={disconnectLogs}
           logsLoading={logsLoading}
           fetchDisconnectLogs={fetchDisconnectLogs}
+          pgTables={pgTables}
+          pgTablesLoading={pgTablesLoading}
+          fetchPgTables={fetchPgTables}
         />
       )}
 

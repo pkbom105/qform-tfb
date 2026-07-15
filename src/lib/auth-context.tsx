@@ -28,18 +28,17 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    if (typeof window === "undefined") return null;
 
-  useEffect(() => {
-    const stored = localStorage.getItem("dashboard_user");
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch {
-        localStorage.removeItem("dashboard_user");
-      }
+    try {
+      const stored = window.localStorage.getItem("dashboard_user");
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      window.localStorage.removeItem("dashboard_user");
+      return null;
     }
-  }, []);
+  });
 
   const login = useCallback(async (username: string, password: string) => {
     try {

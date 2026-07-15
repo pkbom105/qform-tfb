@@ -19,14 +19,19 @@ export async function GET(request: Request) {
     });
 
     // Secondary source: PostgreSQL (VPN) - Wso table (for orders not yet synced)
-    let wsoRecords = await onlineDb.wso.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    let wsoRecords: Array<{ id: number; name: string; email: string; companyName: string | null; phone: string; lineId?: string | null; createdAt: Date }> = [];
 
     // Also Submission table
-    const submissions = await onlineDb.submission.findMany({
-      orderBy: { createdAt: "desc" },
-    });
+    let submissions: Array<{ id: number; name: string; email: string; companyName: string | null; phone: string; createdAt: Date }> = [];
+
+    if (onlineDb) {
+      wsoRecords = await onlineDb.wso.findMany({
+        orderBy: { createdAt: "desc" },
+      });
+      submissions = await onlineDb.submission.findMany({
+        orderBy: { createdAt: "desc" },
+      });
+    }
 
     const fmtDate = (d: Date) => {
       const thaiMonths = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
