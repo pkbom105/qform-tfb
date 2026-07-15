@@ -256,11 +256,11 @@ export default function CustomersPage() {
                     <th className="p-4 text-sm font-light text-black uppercase">วันที่</th>
                     <th className="p-4 text-sm font-light text-black uppercase">Order-Form Number</th>
                     <th className="p-4 text-sm font-light text-black uppercase">ชื่อลูกค้า</th>
-                    <th className="p-4 text-sm font-light text-black uppercase">บริษัท</th>
+                    <th className="hidden md:table-cell p-4 text-sm font-light text-black uppercase">บริษัท</th>
                     <th className="p-4 text-sm font-light text-black uppercase">เบอร์โทร</th>
-                    <th className="p-4 text-sm font-light text-black uppercase">อีเมล</th>
-                    <th className="p-4 text-sm font-light text-black uppercase text-center">จำนวนชุด</th>
-                    <th className="p-4 text-sm font-light text-black uppercase">สถานะ</th>
+                    <th className="hidden md:table-cell p-4 text-sm font-light text-black uppercase">อีเมล</th>
+                    <th className="hidden md:table-cell p-4 text-sm font-light text-black uppercase text-center">จำนวนชุด</th>
+                    <th className="hidden md:table-cell p-4 text-sm font-light text-black uppercase">สถานะ</th>
                     <th className="p-4 text-sm font-light text-black uppercase text-center">จัดการ</th>
                   </tr>
                 </thead>
@@ -288,11 +288,11 @@ export default function CustomersPage() {
                               <span className="text-sm font-light text-black">{customer.name}</span>
                             </div>
                           </td>
-                          <td className="p-4 text-sm font-light text-black">{customer.company}</td>
+                          <td className="hidden md:table-cell p-4 text-sm font-light text-black">{customer.company}</td>
                           <td className="p-4 text-sm font-light text-black">{customer.phone}</td>
-                          <td className="p-4 text-sm font-light text-black">{customer.email}</td>
-                          <td className="p-4 text-center text-sm font-light text-black">{customer.setCount}</td>
-                          <td className="p-4">
+                          <td className="hidden md:table-cell p-4 text-sm font-light text-black">{customer.email}</td>
+                          <td className="hidden md:table-cell p-4 text-center text-sm font-light text-black">{customer.setCount}</td>
+                          <td className="hidden md:table-cell p-4">
                             <div className="relative inline-block">
                               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 z-10">
                                 <span className={`w-2 h-2 rounded-full ${s.dot}`}></span>

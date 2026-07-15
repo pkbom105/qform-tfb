@@ -411,16 +411,17 @@ const OrderFormContent: React.FC = () => {
       <div className="max-w-6xl w-full bg-white shadow-2xl rounded-3xl overflow-hidden border border-slate-200 mb-10">
         {/* 1. Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start border-b-4 border-red-500 pb-6 mb-8">
-          {/* Logo: on desktop shows left, on mobile shows below info */}
-          <div className="flex-shrink-0 ml-8 order-2 md:order-1 mt-4 md:mt-8">
+          {/* Mobile: Logo on top-center, Desktop: Logo on left */}
+          <div className="flex-shrink-0 w-full md:w-auto text-center md:text-left md:ml-8 mt-4 md:mt-8">
             <img
               src="/toffy_logo.png"
               alt="Toffy Boutique Logo"
-              className="h-24 w-auto object-contain"
+              className="h-24 w-auto object-contain mx-auto md:mx-0"
             />
           </div>
 
-          <div className="text-right flex flex-col gap-5 mr-10 mt-8 order-1 md:order-2">
+          {/* Mobile: Address on bottom-center, Desktop: Info on right */}
+          <div className="w-full md:w-auto text-center md:text-right flex flex-col gap-5 md:mr-10 mt-8">
             <h2 className="text-2xl font-light text-black leading-none italic uppercase">
               บริษัท ทอฟฟี่ บูติก จำกัด
             </h2>
@@ -433,7 +434,7 @@ const OrderFormContent: React.FC = () => {
                 เรายินดีให้คำปรึกษาแก่ทุกองค์กร
               </p>
               <p>258 ถนน พุทธบูชา แขวง บางมด เขตจอมทอง กรุงเทพฯ 10150</p>
-              <div className="flex justify-end gap-3 mt-1 font-light text-black">
+              <div className="flex justify-center md:justify-end gap-3 mt-1 font-light text-black">
                 <span>Tel: 02-428-2591, 02-874-0205</span>
                 <span className="text-black">|</span>
                 <span className="text-green-600">Line: @toffyboutique</span>
