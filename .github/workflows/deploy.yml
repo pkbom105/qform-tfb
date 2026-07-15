@@ -25,11 +25,17 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
           script: |
+            set -e
+            mkdir -p /home/qform/app
             cd /home/qform/app
-            git stash
-            git pull origin main --force
+            if [ -d .git ]; then
+              git fetch origin main --force
+              git reset --hard origin/main
+            else
+              git clone https://github.com/pkbom105/qform-tfb.git .
+              git checkout main
+            fi
             npm install
-            docker stop qform-tfb || true
-            docker rm qform-tfb || true
-            docker compose -p qform up -d --no-deps qform-app
+            docker compose down --remove-orphans || true
+            docker compose up -d --build
             docker image prune -f
