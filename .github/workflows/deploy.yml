@@ -26,16 +26,23 @@ jobs:
           port: 22
           script: |
             set -e
+            echo "[deploy] starting"
             mkdir -p /home/qform/app
             cd /home/qform/app
+            echo "[deploy] working dir: $(pwd)"
             if [ -d .git ]; then
+              echo "[deploy] updating existing repo"
               git fetch origin main --force
               git reset --hard origin/main
             else
+              echo "[deploy] cloning repo"
               git clone https://github.com/pkbom105/qform-tfb.git .
               git checkout main
             fi
+            echo "[deploy] installing deps"
             npm install
+            echo "[deploy] restarting containers"
             docker compose down --remove-orphans || true
             docker compose up -d --build
+            echo "[deploy] pruning old images"
             docker image prune -f
