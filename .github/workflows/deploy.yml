@@ -1,0 +1,35 @@
+name: Deploy to VPS (ns1)
+
+on:
+  # Trigger 1: Push to main branch
+  push:
+    branches: [main]
+
+  # Trigger 2: Manual trigger via GitHub UI button
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/qform/app
+            git stash
+            git pull origin main --force
+            npm install
+            docker stop qform-tfb || true
+            docker rm qform-tfb || true
+            docker compose -p qform up -d --no-deps qform-app
+            docker image prune -f
