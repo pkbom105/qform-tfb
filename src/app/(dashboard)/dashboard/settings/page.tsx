@@ -16,7 +16,6 @@ const defaultSettings: Record<string, string> = {
   "store_name": "ทอฟฟี่ บูติก",
   "store_email": "admin@toffyboutique.com",
   "store_phone": "088-888-8888",
-  "sqlite_enabled": "true",
 };
 
 type TabKey = "database" | "user" | "page";
@@ -37,30 +36,12 @@ function SettingsContent() {
   const [settings, setSettings] = useState<Record<string, string>>(defaultSettings);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [testing, setTesting] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState<"idle" | "connected" | "failed">("idle");
   const [testingPg, setTestingPg] = useState(false);
   const [pgConnectionStatus, setPgConnectionStatus] = useState<"idle" | "connected" | "failed">("idle");
-  const [syncing, setSyncing] = useState(false);
-  const [disconnectLogs, setDisconnectLogs] = useState<{ timestamp: string; message: string }[]>([]);
-  const [logsLoading, setLogsLoading] = useState(false);
   const [pgTables, setPgTables] = useState<{ name: string; records: number }[]>([]);
   const [pgTablesLoading, setPgTablesLoading] = useState(false);
-
-  const fetchDisconnectLogs = async () => {
-    setLogsLoading(true);
-    try {
-      const res = await fetch("/api/settings/disconnect-logs");
-      const json = await res.json();
-      if (json.success) {
-        setDisconnectLogs(json.logs);
-      }
-    } catch {
-      // ignore
-    } finally {
-      setLogsLoading(false);
-    }
-  };
+  const [disconnectLogs, setDisconnectLogs] = useState<{ timestamp: string; message: string }[]>([]);
+  const [logsLoading, setLogsLoading] = useState(false);
 
   const fetchPgTables = async () => {
     setPgTablesLoading(true);
@@ -77,13 +58,18 @@ function SettingsContent() {
     }
   };
 
-  const checkConnection = async () => {
+  const fetchDisconnectLogs = async () => {
+    setLogsLoading(true);
     try {
-      const res = await fetch("/api/settings/health");
+      const res = await fetch("/api/settings/disconnect-logs");
       const json = await res.json();
-      setConnectionStatus(json.connected ? "connected" : "failed");
+      if (json.success) {
+        setDisconnectLogs(json.logs);
+      }
     } catch {
-      setConnectionStatus("failed");
+      // ignore
+    } finally {
+      setLogsLoading(false);
     }
   };
 
@@ -108,8 +94,8 @@ function SettingsContent() {
       .catch(console.error)
       .finally(() => {
         setLoading(false);
-        checkConnection();
         checkPgConnection();
+        fetchDisconnectLogs();
       });
   }, []);
 
@@ -143,25 +129,6 @@ function SettingsContent() {
     }
   };
 
-  const toggle = (key: string) => {
-    const current = settings[key] === "true" ? "false" : "true";
-    updateSetting(key, current);
-  };
-
-  const testConnection = async () => {
-    setTesting(true);
-    setConnectionStatus("idle");
-    try {
-      const res = await fetch("/api/settings/health");
-      const json = await res.json();
-      setConnectionStatus(json.connected ? "connected" : "failed");
-    } catch {
-      setConnectionStatus("failed");
-    } finally {
-      setTesting(false);
-    }
-  };
-
   const testPgConnection = async () => {
     setTestingPg(true);
     setPgConnectionStatus("idle");
@@ -176,17 +143,6 @@ function SettingsContent() {
     }
   };
 
-  const handleSync = async () => {
-    setSyncing(true);
-    try {
-      await fetch("/api/sync", { method: "POST" });
-    } catch (err) {
-      console.error("Sync failed", err);
-    } finally {
-      setSyncing(false);
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -197,7 +153,6 @@ function SettingsContent() {
 
   return (
     <div className="space-y-8">
-      {/* Page Title */}
       <div>
         <h1 className="text-3xl font-light text-black">ตั้งค่าระบบ</h1>
         <p className="text-base text-black font-light mt-1">
@@ -205,7 +160,6 @@ function SettingsContent() {
         </p>
       </div>
 
-      {/* Group Menu Tabs - admins see all tabs, regular users only see User Setting */}
       <div className="flex gap-2 border-b border-slate-200 pb-1">
         {tabs.filter((tab) => isAdmin || tab.key === "user").map((tab) => {
           const Icon = tab.icon;
@@ -227,25 +181,18 @@ function SettingsContent() {
         })}
       </div>
 
-      {/* Tab Content */}
       {activeTab === "database" && (
         <DatabaseSettings
-          connectionStatus={connectionStatus}
-          testing={testing}
-          testConnection={testConnection}
-          sqliteEnabled={settings["sqlite_enabled"]}
-          toggle={toggle}
           pgConnectionStatus={pgConnectionStatus}
           testingPg={testingPg}
           testPgConnection={testPgConnection}
-          syncing={syncing}
-          onSync={handleSync}
-          disconnectLogs={disconnectLogs}
-          logsLoading={logsLoading}
-          fetchDisconnectLogs={fetchDisconnectLogs}
           pgTables={pgTables}
           pgTablesLoading={pgTablesLoading}
           fetchPgTables={fetchPgTables}
+          disconnectLogs={disconnectLogs}
+          logsLoading={logsLoading}
+          fetchDisconnectLogs={fetchDisconnectLogs}
+          onClearLogs={() => setDisconnectLogs([])}
         />
       )}
 
@@ -261,7 +208,6 @@ function SettingsContent() {
         />
       )}
 
-      {/* Save Button - only show for page/database settings */}
       {(activeTab === "database" || activeTab === "page") && isAdmin && (
         <div className="flex justify-end">
           <button
