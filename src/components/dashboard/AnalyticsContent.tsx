@@ -1,19 +1,61 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TrendingUp,
   Users,
   ShoppingBag,
   DollarSign,
+  Loader2,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import Chart from "@/components/dashboard/Chart";
-import { dashboardStats } from "@/constants/dashboardData";
 
 const AnalyticsContent: React.FC = () => {
-  const totalRevenue = dashboardStats.revenueData.reduce((a, b) => a + b, 0);
-  const avgOrderValue = Math.round(totalRevenue / dashboardStats.totalOrders);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<{
+    stats: {
+      totalOrders: number;
+      pendingOrders: number;
+      completedOrders: number;
+      totalCustomers: number;
+    };
+    monthlyOrders: number[];
+    revenueData: number[];
+    popularProducts: { name: string; count: number }[];
+  } | null>(null);
+
+  useEffect(() => {
+    async function fetchAnalytics() {
+      try {
+        const res = await fetch("/api/dashboard");
+        const json = await res.json();
+        if (json.success) {
+          setData(json.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch analytics data", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAnalytics();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <Loader2 className="animate-spin text-black" size={32} />
+      </div>
+    );
+  }
+
+  const totalRevenue = (data?.revenueData ?? []).reduce((a, b) => a + b, 0);
+  const totalOrders = data?.stats?.totalOrders ?? 0;
+  const avgOrderValue = totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
+  const completedRate = totalOrders > 0
+    ? Math.round(((data?.stats?.completedOrders ?? 0) / totalOrders) * 100)
+    : 0;
 
   return (
     <div className="space-y-8">
@@ -59,7 +101,7 @@ const AnalyticsContent: React.FC = () => {
               </div>
             </div>
             <p className="text-4xl font-light text-black">
-              {dashboardStats.totalCustomers}
+              {data?.stats?.totalCustomers ?? 0}
             </p>
             <p className="text-base text-black font-light mt-1">
               ลูกค้าทั้งหมด
@@ -75,7 +117,7 @@ const AnalyticsContent: React.FC = () => {
               </div>
             </div>
             <p className="text-4xl font-light text-black">
-              {Math.round((dashboardStats.completedOrders / dashboardStats.totalOrders) * 100)}%
+              {completedRate}%
             </p>
             <p className="text-base text-black font-light mt-1">
               อัตราความสำเร็จ
@@ -91,7 +133,7 @@ const AnalyticsContent: React.FC = () => {
         </CardHeader>
         <CardContent>
           <Chart
-            data={dashboardStats.revenueData}
+            data={data?.revenueData ?? []}
             height={280}
             color="bg-green-600"
             labels={["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."]}
@@ -107,7 +149,7 @@ const AnalyticsContent: React.FC = () => {
           </CardHeader>
           <CardContent>
             <Chart
-              data={dashboardStats.monthlyOrders}
+              data={data?.monthlyOrders ?? []}
               height={200}
               color="bg-blue-600"
               labels={["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."]}
@@ -121,24 +163,30 @@ const AnalyticsContent: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {dashboardStats.popularProducts.map((product, index) => {
-                const maxCount = dashboardStats.popularProducts[0].count;
-                const percentage = (product.count / maxCount) * 100;
-                return (
-                  <div key={product.name} className="space-y-1">
-                    <div className="flex justify-between text-base">
-                      <span className="font-light text-black">{product.name}</span>
-                      <span className="font-light text-black">{product.count}</span>
+              {(data?.popularProducts ?? []).length === 0 ? (
+                <p className="text-base text-black font-light text-center py-8">
+                  ยังไม่มีข้อมูล
+                </p>
+              ) : (
+                (data?.popularProducts ?? []).map((product, index) => {
+                  const maxCount = (data?.popularProducts ?? [])[0].count;
+                  const percentage = maxCount > 0 ? (product.count / maxCount) * 100 : 0;
+                  return (
+                    <div key={product.name} className="space-y-1">
+                      <div className="flex justify-between text-base">
+                        <span className="font-light text-black">{product.name}</span>
+                        <span className="font-light text-black">{product.count}</span>
+                      </div>
+                      <div className="w-full bg-slate-100 rounded-full h-2">
+                        <div
+                          className="bg-red-600 h-2 rounded-full transition-all"
+                          style={{ width: `${percentage}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="w-full bg-slate-100 rounded-full h-2">
-                      <div
-                        className="bg-red-600 h-2 rounded-full transition-all"
-                        style={{ width: `${percentage}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </CardContent>
         </Card>

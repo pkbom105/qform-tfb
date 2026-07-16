@@ -14,20 +14,25 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Submission
+ * Model Customer
  * 
  */
-export type Submission = $Result.DefaultSelection<Prisma.$SubmissionPayload>
+export type Customer = $Result.DefaultSelection<Prisma.$CustomerPayload>
+/**
+ * Model Order
+ * 
+ */
+export type Order = $Result.DefaultSelection<Prisma.$OrderPayload>
 /**
  * Model Admin
  * 
  */
 export type Admin = $Result.DefaultSelection<Prisma.$AdminPayload>
 /**
- * Model Wso
+ * Model Setting
  * 
  */
-export type Wso = $Result.DefaultSelection<Prisma.$WsoPayload>
+export type Setting = $Result.DefaultSelection<Prisma.$SettingPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -36,8 +41,8 @@ export type Wso = $Result.DefaultSelection<Prisma.$WsoPayload>
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Submissions
- * const submissions = await prisma.submission.findMany()
+ * // Fetch zero or more Customers
+ * const customers = await prisma.customer.findMany()
  * ```
  *
  * 
@@ -57,8 +62,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Submissions
-   * const submissions = await prisma.submission.findMany()
+   * // Fetch zero or more Customers
+   * const customers = await prisma.customer.findMany()
    * ```
    *
    * 
@@ -153,14 +158,24 @@ export class PrismaClient<
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb, ExtArgs>
 
       /**
-   * `prisma.submission`: Exposes CRUD operations for the **Submission** model.
+   * `prisma.customer`: Exposes CRUD operations for the **Customer** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Submissions
-    * const submissions = await prisma.submission.findMany()
+    * // Fetch zero or more Customers
+    * const customers = await prisma.customer.findMany()
     * ```
     */
-  get submission(): Prisma.SubmissionDelegate<ExtArgs>;
+  get customer(): Prisma.CustomerDelegate<ExtArgs>;
+
+  /**
+   * `prisma.order`: Exposes CRUD operations for the **Order** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Orders
+    * const orders = await prisma.order.findMany()
+    * ```
+    */
+  get order(): Prisma.OrderDelegate<ExtArgs>;
 
   /**
    * `prisma.admin`: Exposes CRUD operations for the **Admin** model.
@@ -173,14 +188,14 @@ export class PrismaClient<
   get admin(): Prisma.AdminDelegate<ExtArgs>;
 
   /**
-   * `prisma.wso`: Exposes CRUD operations for the **Wso** model.
+   * `prisma.setting`: Exposes CRUD operations for the **Setting** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Wsos
-    * const wsos = await prisma.wso.findMany()
+    * // Fetch zero or more Settings
+    * const settings = await prisma.setting.findMany()
     * ```
     */
-  get wso(): Prisma.WsoDelegate<ExtArgs>;
+  get setting(): Prisma.SettingDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -622,9 +637,10 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Submission: 'Submission',
+    Customer: 'Customer',
+    Order: 'Order',
     Admin: 'Admin',
-    Wso: 'Wso'
+    Setting: 'Setting'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -640,77 +656,147 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "submission" | "admin" | "wso"
+      modelProps: "customer" | "order" | "admin" | "setting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Submission: {
-        payload: Prisma.$SubmissionPayload<ExtArgs>
-        fields: Prisma.SubmissionFieldRefs
+      Customer: {
+        payload: Prisma.$CustomerPayload<ExtArgs>
+        fields: Prisma.CustomerFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SubmissionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload> | null
+            args: Prisma.CustomerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SubmissionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.CustomerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
           }
           findFirst: {
-            args: Prisma.SubmissionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload> | null
+            args: Prisma.CustomerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SubmissionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.CustomerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
           }
           findMany: {
-            args: Prisma.SubmissionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+            args: Prisma.CustomerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>[]
           }
           create: {
-            args: Prisma.SubmissionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.CustomerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
           }
           createMany: {
-            args: Prisma.SubmissionCreateManyArgs<ExtArgs>
+            args: Prisma.CustomerCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SubmissionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>[]
+            args: Prisma.CustomerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>[]
           }
           delete: {
-            args: Prisma.SubmissionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.CustomerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
           }
           update: {
-            args: Prisma.SubmissionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.CustomerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
           }
           deleteMany: {
-            args: Prisma.SubmissionDeleteManyArgs<ExtArgs>
+            args: Prisma.CustomerDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SubmissionUpdateManyArgs<ExtArgs>
+            args: Prisma.CustomerUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           upsert: {
-            args: Prisma.SubmissionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SubmissionPayload>
+            args: Prisma.CustomerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CustomerPayload>
           }
           aggregate: {
-            args: Prisma.SubmissionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSubmission>
+            args: Prisma.CustomerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCustomer>
           }
           groupBy: {
-            args: Prisma.SubmissionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SubmissionGroupByOutputType>[]
+            args: Prisma.CustomerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CustomerGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SubmissionCountArgs<ExtArgs>
-            result: $Utils.Optional<SubmissionCountAggregateOutputType> | number
+            args: Prisma.CustomerCountArgs<ExtArgs>
+            result: $Utils.Optional<CustomerCountAggregateOutputType> | number
+          }
+        }
+      }
+      Order: {
+        payload: Prisma.$OrderPayload<ExtArgs>
+        fields: Prisma.OrderFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OrderFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OrderFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>
+          }
+          findFirst: {
+            args: Prisma.OrderFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OrderFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>
+          }
+          findMany: {
+            args: Prisma.OrderFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>[]
+          }
+          create: {
+            args: Prisma.OrderCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>
+          }
+          createMany: {
+            args: Prisma.OrderCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OrderCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>[]
+          }
+          delete: {
+            args: Prisma.OrderDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>
+          }
+          update: {
+            args: Prisma.OrderUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>
+          }
+          deleteMany: {
+            args: Prisma.OrderDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OrderUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OrderUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OrderPayload>
+          }
+          aggregate: {
+            args: Prisma.OrderAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOrder>
+          }
+          groupBy: {
+            args: Prisma.OrderGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OrderGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OrderCountArgs<ExtArgs>
+            result: $Utils.Optional<OrderCountAggregateOutputType> | number
           }
         }
       }
@@ -784,73 +870,73 @@ export namespace Prisma {
           }
         }
       }
-      Wso: {
-        payload: Prisma.$WsoPayload<ExtArgs>
-        fields: Prisma.WsoFieldRefs
+      Setting: {
+        payload: Prisma.$SettingPayload<ExtArgs>
+        fields: Prisma.SettingFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.WsoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload> | null
+            args: Prisma.SettingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.WsoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>
+            args: Prisma.SettingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
           }
           findFirst: {
-            args: Prisma.WsoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload> | null
+            args: Prisma.SettingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.WsoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>
+            args: Prisma.SettingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
           }
           findMany: {
-            args: Prisma.WsoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>[]
+            args: Prisma.SettingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>[]
           }
           create: {
-            args: Prisma.WsoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>
+            args: Prisma.SettingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
           }
           createMany: {
-            args: Prisma.WsoCreateManyArgs<ExtArgs>
+            args: Prisma.SettingCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.WsoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>[]
+            args: Prisma.SettingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>[]
           }
           delete: {
-            args: Prisma.WsoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>
+            args: Prisma.SettingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
           }
           update: {
-            args: Prisma.WsoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>
+            args: Prisma.SettingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
           }
           deleteMany: {
-            args: Prisma.WsoDeleteManyArgs<ExtArgs>
+            args: Prisma.SettingDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.WsoUpdateManyArgs<ExtArgs>
+            args: Prisma.SettingUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           upsert: {
-            args: Prisma.WsoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WsoPayload>
+            args: Prisma.SettingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingPayload>
           }
           aggregate: {
-            args: Prisma.WsoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateWso>
+            args: Prisma.SettingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSetting>
           }
           groupBy: {
-            args: Prisma.WsoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<WsoGroupByOutputType>[]
+            args: Prisma.SettingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingGroupByOutputType>[]
           }
           count: {
-            args: Prisma.WsoCountArgs<ExtArgs>
-            result: $Utils.Optional<WsoCountAggregateOutputType> | number
+            args: Prisma.SettingCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingCountAggregateOutputType> | number
           }
         }
       }
@@ -1010,469 +1096,454 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type CustomerCountOutputType
+   */
+
+  export type CustomerCountOutputType = {
+    orders: number
+  }
+
+  export type CustomerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    orders?: boolean | CustomerCountOutputTypeCountOrdersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CustomerCountOutputType
+     */
+    select?: CustomerCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CustomerCountOutputType without action
+   */
+  export type CustomerCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
+  }
+
 
   /**
    * Models
    */
 
   /**
-   * Model Submission
+   * Model Customer
    */
 
-  export type AggregateSubmission = {
-    _count: SubmissionCountAggregateOutputType | null
-    _avg: SubmissionAvgAggregateOutputType | null
-    _sum: SubmissionSumAggregateOutputType | null
-    _min: SubmissionMinAggregateOutputType | null
-    _max: SubmissionMaxAggregateOutputType | null
+  export type AggregateCustomer = {
+    _count: CustomerCountAggregateOutputType | null
+    _avg: CustomerAvgAggregateOutputType | null
+    _sum: CustomerSumAggregateOutputType | null
+    _min: CustomerMinAggregateOutputType | null
+    _max: CustomerMaxAggregateOutputType | null
   }
 
-  export type SubmissionAvgAggregateOutputType = {
+  export type CustomerAvgAggregateOutputType = {
     id: number | null
+    totalOrders: number | null
   }
 
-  export type SubmissionSumAggregateOutputType = {
+  export type CustomerSumAggregateOutputType = {
     id: number | null
+    totalOrders: number | null
   }
 
-  export type SubmissionMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    email: string | null
-    companyName: string | null
-    phone: string | null
-    productType: string | null
-    fabricType: string | null
-    createdAt: Date | null
-    additionalNeeds: string | null
-    embroideryPositions: string | null
-    printPoints: string | null
-    specs: string | null
-    totalQuantity: string | null
-  }
-
-  export type SubmissionMaxAggregateOutputType = {
+  export type CustomerMinAggregateOutputType = {
     id: number | null
     name: string | null
     email: string | null
     companyName: string | null
     phone: string | null
-    productType: string | null
-    fabricType: string | null
+    lineId: string | null
+    totalOrders: number | null
     createdAt: Date | null
-    additionalNeeds: string | null
-    embroideryPositions: string | null
-    printPoints: string | null
-    specs: string | null
-    totalQuantity: string | null
+    updatedAt: Date | null
   }
 
-  export type SubmissionCountAggregateOutputType = {
+  export type CustomerMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    email: string | null
+    companyName: string | null
+    phone: string | null
+    lineId: string | null
+    totalOrders: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CustomerCountAggregateOutputType = {
     id: number
     name: number
     email: number
     companyName: number
     phone: number
-    productType: number
-    fabricType: number
+    lineId: number
+    totalOrders: number
     createdAt: number
-    fileUrls: number
-    additionalNeeds: number
-    embroideryPositions: number
-    printPoints: number
-    sizeDetails: number
-    specs: number
-    totalQuantity: number
+    updatedAt: number
     _all: number
   }
 
 
-  export type SubmissionAvgAggregateInputType = {
+  export type CustomerAvgAggregateInputType = {
     id?: true
+    totalOrders?: true
   }
 
-  export type SubmissionSumAggregateInputType = {
+  export type CustomerSumAggregateInputType = {
     id?: true
+    totalOrders?: true
   }
 
-  export type SubmissionMinAggregateInputType = {
+  export type CustomerMinAggregateInputType = {
     id?: true
     name?: true
     email?: true
     companyName?: true
     phone?: true
-    productType?: true
-    fabricType?: true
+    lineId?: true
+    totalOrders?: true
     createdAt?: true
-    additionalNeeds?: true
-    embroideryPositions?: true
-    printPoints?: true
-    specs?: true
-    totalQuantity?: true
+    updatedAt?: true
   }
 
-  export type SubmissionMaxAggregateInputType = {
+  export type CustomerMaxAggregateInputType = {
     id?: true
     name?: true
     email?: true
     companyName?: true
     phone?: true
-    productType?: true
-    fabricType?: true
+    lineId?: true
+    totalOrders?: true
     createdAt?: true
-    additionalNeeds?: true
-    embroideryPositions?: true
-    printPoints?: true
-    specs?: true
-    totalQuantity?: true
+    updatedAt?: true
   }
 
-  export type SubmissionCountAggregateInputType = {
+  export type CustomerCountAggregateInputType = {
     id?: true
     name?: true
     email?: true
     companyName?: true
     phone?: true
-    productType?: true
-    fabricType?: true
+    lineId?: true
+    totalOrders?: true
     createdAt?: true
-    fileUrls?: true
-    additionalNeeds?: true
-    embroideryPositions?: true
-    printPoints?: true
-    sizeDetails?: true
-    specs?: true
-    totalQuantity?: true
+    updatedAt?: true
     _all?: true
   }
 
-  export type SubmissionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Submission to aggregate.
+     * Filter which Customer to aggregate.
      */
-    where?: SubmissionWhereInput
+    where?: CustomerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: CustomerOrderByWithRelationInput | CustomerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: CustomerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` Customers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Submissions
+     * Count returned Customers
     **/
-    _count?: true | SubmissionCountAggregateInputType
+    _count?: true | CustomerCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: SubmissionAvgAggregateInputType
+    _avg?: CustomerAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: SubmissionSumAggregateInputType
+    _sum?: CustomerSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SubmissionMinAggregateInputType
+    _min?: CustomerMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SubmissionMaxAggregateInputType
+    _max?: CustomerMaxAggregateInputType
   }
 
-  export type GetSubmissionAggregateType<T extends SubmissionAggregateArgs> = {
-        [P in keyof T & keyof AggregateSubmission]: P extends '_count' | 'count'
+  export type GetCustomerAggregateType<T extends CustomerAggregateArgs> = {
+        [P in keyof T & keyof AggregateCustomer]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSubmission[P]>
-      : GetScalarType<T[P], AggregateSubmission[P]>
+        : GetScalarType<T[P], AggregateCustomer[P]>
+      : GetScalarType<T[P], AggregateCustomer[P]>
   }
 
 
 
 
-  export type SubmissionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SubmissionWhereInput
-    orderBy?: SubmissionOrderByWithAggregationInput | SubmissionOrderByWithAggregationInput[]
-    by: SubmissionScalarFieldEnum[] | SubmissionScalarFieldEnum
-    having?: SubmissionScalarWhereWithAggregatesInput
+  export type CustomerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CustomerWhereInput
+    orderBy?: CustomerOrderByWithAggregationInput | CustomerOrderByWithAggregationInput[]
+    by: CustomerScalarFieldEnum[] | CustomerScalarFieldEnum
+    having?: CustomerScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SubmissionCountAggregateInputType | true
-    _avg?: SubmissionAvgAggregateInputType
-    _sum?: SubmissionSumAggregateInputType
-    _min?: SubmissionMinAggregateInputType
-    _max?: SubmissionMaxAggregateInputType
+    _count?: CustomerCountAggregateInputType | true
+    _avg?: CustomerAvgAggregateInputType
+    _sum?: CustomerSumAggregateInputType
+    _min?: CustomerMinAggregateInputType
+    _max?: CustomerMaxAggregateInputType
   }
 
-  export type SubmissionGroupByOutputType = {
+  export type CustomerGroupByOutputType = {
     id: number
     name: string
     email: string
     companyName: string | null
     phone: string
-    productType: string
-    fabricType: string | null
+    lineId: string | null
+    totalOrders: number
     createdAt: Date
-    fileUrls: string[]
-    additionalNeeds: string | null
-    embroideryPositions: string | null
-    printPoints: string | null
-    sizeDetails: JsonValue | null
-    specs: string | null
-    totalQuantity: string | null
-    _count: SubmissionCountAggregateOutputType | null
-    _avg: SubmissionAvgAggregateOutputType | null
-    _sum: SubmissionSumAggregateOutputType | null
-    _min: SubmissionMinAggregateOutputType | null
-    _max: SubmissionMaxAggregateOutputType | null
+    updatedAt: Date
+    _count: CustomerCountAggregateOutputType | null
+    _avg: CustomerAvgAggregateOutputType | null
+    _sum: CustomerSumAggregateOutputType | null
+    _min: CustomerMinAggregateOutputType | null
+    _max: CustomerMaxAggregateOutputType | null
   }
 
-  type GetSubmissionGroupByPayload<T extends SubmissionGroupByArgs> = Prisma.PrismaPromise<
+  type GetCustomerGroupByPayload<T extends CustomerGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SubmissionGroupByOutputType, T['by']> &
+      PickEnumerable<CustomerGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SubmissionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof CustomerGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SubmissionGroupByOutputType[P]>
-            : GetScalarType<T[P], SubmissionGroupByOutputType[P]>
+              : GetScalarType<T[P], CustomerGroupByOutputType[P]>
+            : GetScalarType<T[P], CustomerGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SubmissionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CustomerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     email?: boolean
     companyName?: boolean
     phone?: boolean
-    productType?: boolean
-    fabricType?: boolean
+    lineId?: boolean
+    totalOrders?: boolean
     createdAt?: boolean
-    fileUrls?: boolean
-    additionalNeeds?: boolean
-    embroideryPositions?: boolean
-    printPoints?: boolean
-    sizeDetails?: boolean
-    specs?: boolean
-    totalQuantity?: boolean
-  }, ExtArgs["result"]["submission"]>
+    updatedAt?: boolean
+    orders?: boolean | Customer$ordersArgs<ExtArgs>
+    _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["customer"]>
 
-  export type SubmissionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type CustomerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     email?: boolean
     companyName?: boolean
     phone?: boolean
-    productType?: boolean
-    fabricType?: boolean
+    lineId?: boolean
+    totalOrders?: boolean
     createdAt?: boolean
-    fileUrls?: boolean
-    additionalNeeds?: boolean
-    embroideryPositions?: boolean
-    printPoints?: boolean
-    sizeDetails?: boolean
-    specs?: boolean
-    totalQuantity?: boolean
-  }, ExtArgs["result"]["submission"]>
+    updatedAt?: boolean
+  }, ExtArgs["result"]["customer"]>
 
-  export type SubmissionSelectScalar = {
+  export type CustomerSelectScalar = {
     id?: boolean
     name?: boolean
     email?: boolean
     companyName?: boolean
     phone?: boolean
-    productType?: boolean
-    fabricType?: boolean
+    lineId?: boolean
+    totalOrders?: boolean
     createdAt?: boolean
-    fileUrls?: boolean
-    additionalNeeds?: boolean
-    embroideryPositions?: boolean
-    printPoints?: boolean
-    sizeDetails?: boolean
-    specs?: boolean
-    totalQuantity?: boolean
+    updatedAt?: boolean
   }
 
+  export type CustomerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    orders?: boolean | Customer$ordersArgs<ExtArgs>
+    _count?: boolean | CustomerCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CustomerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $SubmissionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Submission"
-    objects: {}
+  export type $CustomerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Customer"
+    objects: {
+      orders: Prisma.$OrderPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
       email: string
       companyName: string | null
       phone: string
-      productType: string
-      fabricType: string | null
+      lineId: string | null
+      totalOrders: number
       createdAt: Date
-      fileUrls: string[]
-      additionalNeeds: string | null
-      embroideryPositions: string | null
-      printPoints: string | null
-      sizeDetails: Prisma.JsonValue | null
-      specs: string | null
-      totalQuantity: string | null
-    }, ExtArgs["result"]["submission"]>
+      updatedAt: Date
+    }, ExtArgs["result"]["customer"]>
     composites: {}
   }
 
-  type SubmissionGetPayload<S extends boolean | null | undefined | SubmissionDefaultArgs> = $Result.GetResult<Prisma.$SubmissionPayload, S>
+  type CustomerGetPayload<S extends boolean | null | undefined | CustomerDefaultArgs> = $Result.GetResult<Prisma.$CustomerPayload, S>
 
-  type SubmissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<SubmissionFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: SubmissionCountAggregateInputType | true
+  type CustomerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CustomerFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: CustomerCountAggregateInputType | true
     }
 
-  export interface SubmissionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Submission'], meta: { name: 'Submission' } }
+  export interface CustomerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Customer'], meta: { name: 'Customer' } }
     /**
-     * Find zero or one Submission that matches the filter.
-     * @param {SubmissionFindUniqueArgs} args - Arguments to find a Submission
+     * Find zero or one Customer that matches the filter.
+     * @param {CustomerFindUniqueArgs} args - Arguments to find a Customer
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findUnique({
+     * // Get one Customer
+     * const customer = await prisma.customer.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SubmissionFindUniqueArgs>(args: SelectSubset<T, SubmissionFindUniqueArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+    findUnique<T extends CustomerFindUniqueArgs>(args: SelectSubset<T, CustomerFindUniqueArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
 
     /**
-     * Find one Submission that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Customer that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
-     * @param {SubmissionFindUniqueOrThrowArgs} args - Arguments to find a Submission
+     * @param {CustomerFindUniqueOrThrowArgs} args - Arguments to find a Customer
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findUniqueOrThrow({
+     * // Get one Customer
+     * const customer = await prisma.customer.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SubmissionFindUniqueOrThrowArgs>(args: SelectSubset<T, SubmissionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+    findUniqueOrThrow<T extends CustomerFindUniqueOrThrowArgs>(args: SelectSubset<T, CustomerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
 
     /**
-     * Find the first Submission that matches the filter.
+     * Find the first Customer that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionFindFirstArgs} args - Arguments to find a Submission
+     * @param {CustomerFindFirstArgs} args - Arguments to find a Customer
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findFirst({
+     * // Get one Customer
+     * const customer = await prisma.customer.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SubmissionFindFirstArgs>(args?: SelectSubset<T, SubmissionFindFirstArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+    findFirst<T extends CustomerFindFirstArgs>(args?: SelectSubset<T, CustomerFindFirstArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
 
     /**
-     * Find the first Submission that matches the filter or
+     * Find the first Customer that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionFindFirstOrThrowArgs} args - Arguments to find a Submission
+     * @param {CustomerFindFirstOrThrowArgs} args - Arguments to find a Customer
      * @example
-     * // Get one Submission
-     * const submission = await prisma.submission.findFirstOrThrow({
+     * // Get one Customer
+     * const customer = await prisma.customer.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SubmissionFindFirstOrThrowArgs>(args?: SelectSubset<T, SubmissionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+    findFirstOrThrow<T extends CustomerFindFirstOrThrowArgs>(args?: SelectSubset<T, CustomerFindFirstOrThrowArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
 
     /**
-     * Find zero or more Submissions that matches the filter.
+     * Find zero or more Customers that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {CustomerFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Submissions
-     * const submissions = await prisma.submission.findMany()
+     * // Get all Customers
+     * const customers = await prisma.customer.findMany()
      * 
-     * // Get first 10 Submissions
-     * const submissions = await prisma.submission.findMany({ take: 10 })
+     * // Get first 10 Customers
+     * const customers = await prisma.customer.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const submissionWithIdOnly = await prisma.submission.findMany({ select: { id: true } })
+     * const customerWithIdOnly = await prisma.customer.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SubmissionFindManyArgs>(args?: SelectSubset<T, SubmissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany">>
+    findMany<T extends CustomerFindManyArgs>(args?: SelectSubset<T, CustomerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany">>
 
     /**
-     * Create a Submission.
-     * @param {SubmissionCreateArgs} args - Arguments to create a Submission.
+     * Create a Customer.
+     * @param {CustomerCreateArgs} args - Arguments to create a Customer.
      * @example
-     * // Create one Submission
-     * const Submission = await prisma.submission.create({
+     * // Create one Customer
+     * const Customer = await prisma.customer.create({
      *   data: {
-     *     // ... data to create a Submission
+     *     // ... data to create a Customer
      *   }
      * })
      * 
      */
-    create<T extends SubmissionCreateArgs>(args: SelectSubset<T, SubmissionCreateArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "create">, never, ExtArgs>
+    create<T extends CustomerCreateArgs>(args: SelectSubset<T, CustomerCreateArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "create">, never, ExtArgs>
 
     /**
-     * Create many Submissions.
-     * @param {SubmissionCreateManyArgs} args - Arguments to create many Submissions.
+     * Create many Customers.
+     * @param {CustomerCreateManyArgs} args - Arguments to create many Customers.
      * @example
-     * // Create many Submissions
-     * const submission = await prisma.submission.createMany({
+     * // Create many Customers
+     * const customer = await prisma.customer.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SubmissionCreateManyArgs>(args?: SelectSubset<T, SubmissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends CustomerCreateManyArgs>(args?: SelectSubset<T, CustomerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Submissions and returns the data saved in the database.
-     * @param {SubmissionCreateManyAndReturnArgs} args - Arguments to create many Submissions.
+     * Create many Customers and returns the data saved in the database.
+     * @param {CustomerCreateManyAndReturnArgs} args - Arguments to create many Customers.
      * @example
-     * // Create many Submissions
-     * const submission = await prisma.submission.createManyAndReturn({
+     * // Create many Customers
+     * const customer = await prisma.customer.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Submissions and only return the `id`
-     * const submissionWithIdOnly = await prisma.submission.createManyAndReturn({ 
+     * // Create many Customers and only return the `id`
+     * const customerWithIdOnly = await prisma.customer.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1482,28 +1553,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SubmissionCreateManyAndReturnArgs>(args?: SelectSubset<T, SubmissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "createManyAndReturn">>
+    createManyAndReturn<T extends CustomerCreateManyAndReturnArgs>(args?: SelectSubset<T, CustomerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "createManyAndReturn">>
 
     /**
-     * Delete a Submission.
-     * @param {SubmissionDeleteArgs} args - Arguments to delete one Submission.
+     * Delete a Customer.
+     * @param {CustomerDeleteArgs} args - Arguments to delete one Customer.
      * @example
-     * // Delete one Submission
-     * const Submission = await prisma.submission.delete({
+     * // Delete one Customer
+     * const Customer = await prisma.customer.delete({
      *   where: {
-     *     // ... filter to delete one Submission
+     *     // ... filter to delete one Customer
      *   }
      * })
      * 
      */
-    delete<T extends SubmissionDeleteArgs>(args: SelectSubset<T, SubmissionDeleteArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+    delete<T extends CustomerDeleteArgs>(args: SelectSubset<T, CustomerDeleteArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "delete">, never, ExtArgs>
 
     /**
-     * Update one Submission.
-     * @param {SubmissionUpdateArgs} args - Arguments to update one Submission.
+     * Update one Customer.
+     * @param {CustomerUpdateArgs} args - Arguments to update one Customer.
      * @example
-     * // Update one Submission
-     * const submission = await prisma.submission.update({
+     * // Update one Customer
+     * const customer = await prisma.customer.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1513,30 +1584,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SubmissionUpdateArgs>(args: SelectSubset<T, SubmissionUpdateArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "update">, never, ExtArgs>
+    update<T extends CustomerUpdateArgs>(args: SelectSubset<T, CustomerUpdateArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "update">, never, ExtArgs>
 
     /**
-     * Delete zero or more Submissions.
-     * @param {SubmissionDeleteManyArgs} args - Arguments to filter Submissions to delete.
+     * Delete zero or more Customers.
+     * @param {CustomerDeleteManyArgs} args - Arguments to filter Customers to delete.
      * @example
-     * // Delete a few Submissions
-     * const { count } = await prisma.submission.deleteMany({
+     * // Delete a few Customers
+     * const { count } = await prisma.customer.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SubmissionDeleteManyArgs>(args?: SelectSubset<T, SubmissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends CustomerDeleteManyArgs>(args?: SelectSubset<T, CustomerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Submissions.
+     * Update zero or more Customers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {CustomerUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Submissions
-     * const submission = await prisma.submission.updateMany({
+     * // Update many Customers
+     * const customer = await prisma.customer.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -1546,56 +1617,56 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SubmissionUpdateManyArgs>(args: SelectSubset<T, SubmissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends CustomerUpdateManyArgs>(args: SelectSubset<T, CustomerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Submission.
-     * @param {SubmissionUpsertArgs} args - Arguments to update or create a Submission.
+     * Create or update one Customer.
+     * @param {CustomerUpsertArgs} args - Arguments to update or create a Customer.
      * @example
-     * // Update or create a Submission
-     * const submission = await prisma.submission.upsert({
+     * // Update or create a Customer
+     * const customer = await prisma.customer.upsert({
      *   create: {
-     *     // ... data to create a Submission
+     *     // ... data to create a Customer
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Submission we want to update
+     *     // ... the filter for the Customer we want to update
      *   }
      * })
      */
-    upsert<T extends SubmissionUpsertArgs>(args: SelectSubset<T, SubmissionUpsertArgs<ExtArgs>>): Prisma__SubmissionClient<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+    upsert<T extends CustomerUpsertArgs>(args: SelectSubset<T, CustomerUpsertArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
 
 
     /**
-     * Count the number of Submissions.
+     * Count the number of Customers.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionCountArgs} args - Arguments to filter Submissions to count.
+     * @param {CustomerCountArgs} args - Arguments to filter Customers to count.
      * @example
-     * // Count the number of Submissions
-     * const count = await prisma.submission.count({
+     * // Count the number of Customers
+     * const count = await prisma.customer.count({
      *   where: {
-     *     // ... the filter for the Submissions we want to count
+     *     // ... the filter for the Customers we want to count
      *   }
      * })
     **/
-    count<T extends SubmissionCountArgs>(
-      args?: Subset<T, SubmissionCountArgs>,
+    count<T extends CustomerCountArgs>(
+      args?: Subset<T, CustomerCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SubmissionCountAggregateOutputType>
+          : GetScalarType<T['select'], CustomerCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Submission.
+     * Allows you to perform aggregations operations on a Customer.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {CustomerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -1615,13 +1686,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SubmissionAggregateArgs>(args: Subset<T, SubmissionAggregateArgs>): Prisma.PrismaPromise<GetSubmissionAggregateType<T>>
+    aggregate<T extends CustomerAggregateArgs>(args: Subset<T, CustomerAggregateArgs>): Prisma.PrismaPromise<GetCustomerAggregateType<T>>
 
     /**
-     * Group by Submission.
+     * Group by Customer.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SubmissionGroupByArgs} args - Group by arguments.
+     * @param {CustomerGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -1636,14 +1707,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SubmissionGroupByArgs,
+      T extends CustomerGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SubmissionGroupByArgs['orderBy'] }
-        : { orderBy?: SubmissionGroupByArgs['orderBy'] },
+        ? { orderBy: CustomerGroupByArgs['orderBy'] }
+        : { orderBy?: CustomerGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -1692,21 +1763,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SubmissionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSubmissionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, CustomerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCustomerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Submission model
+   * Fields of the Customer model
    */
-  readonly fields: SubmissionFieldRefs;
+  readonly fields: CustomerFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Submission.
+   * The delegate class that acts as a "Promise-like" for Customer.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SubmissionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    orders<T extends Customer$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Customer$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1733,309 +1805,1698 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Submission model
+   * Fields of the Customer model
    */ 
-  interface SubmissionFieldRefs {
-    readonly id: FieldRef<"Submission", 'Int'>
-    readonly name: FieldRef<"Submission", 'String'>
-    readonly email: FieldRef<"Submission", 'String'>
-    readonly companyName: FieldRef<"Submission", 'String'>
-    readonly phone: FieldRef<"Submission", 'String'>
-    readonly productType: FieldRef<"Submission", 'String'>
-    readonly fabricType: FieldRef<"Submission", 'String'>
-    readonly createdAt: FieldRef<"Submission", 'DateTime'>
-    readonly fileUrls: FieldRef<"Submission", 'String[]'>
-    readonly additionalNeeds: FieldRef<"Submission", 'String'>
-    readonly embroideryPositions: FieldRef<"Submission", 'String'>
-    readonly printPoints: FieldRef<"Submission", 'String'>
-    readonly sizeDetails: FieldRef<"Submission", 'Json'>
-    readonly specs: FieldRef<"Submission", 'String'>
-    readonly totalQuantity: FieldRef<"Submission", 'String'>
+  interface CustomerFieldRefs {
+    readonly id: FieldRef<"Customer", 'Int'>
+    readonly name: FieldRef<"Customer", 'String'>
+    readonly email: FieldRef<"Customer", 'String'>
+    readonly companyName: FieldRef<"Customer", 'String'>
+    readonly phone: FieldRef<"Customer", 'String'>
+    readonly lineId: FieldRef<"Customer", 'String'>
+    readonly totalOrders: FieldRef<"Customer", 'Int'>
+    readonly createdAt: FieldRef<"Customer", 'DateTime'>
+    readonly updatedAt: FieldRef<"Customer", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * Submission findUnique
+   * Customer findUnique
    */
-  export type SubmissionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: SubmissionWhereUniqueInput
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * Filter, which Customer to fetch.
+     */
+    where: CustomerWhereUniqueInput
   }
 
   /**
-   * Submission findUniqueOrThrow
+   * Customer findUniqueOrThrow
    */
-  export type SubmissionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where: SubmissionWhereUniqueInput
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * Filter, which Customer to fetch.
+     */
+    where: CustomerWhereUniqueInput
   }
 
   /**
-   * Submission findFirst
+   * Customer findFirst
    */
-  export type SubmissionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: SubmissionWhereInput
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * Filter, which Customer to fetch.
+     */
+    where?: CustomerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: CustomerOrderByWithRelationInput | CustomerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Submissions.
+     * Sets the position for searching for Customers.
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: CustomerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` Customers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Submissions.
+     * Filter by unique combinations of Customers.
      */
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+    distinct?: CustomerScalarFieldEnum | CustomerScalarFieldEnum[]
   }
 
   /**
-   * Submission findFirstOrThrow
+   * Customer findFirstOrThrow
    */
-  export type SubmissionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * Filter, which Submission to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: SubmissionWhereInput
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * Filter, which Customer to fetch.
+     */
+    where?: CustomerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: CustomerOrderByWithRelationInput | CustomerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Submissions.
+     * Sets the position for searching for Customers.
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: CustomerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` Customers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Submissions.
+     * Filter by unique combinations of Customers.
      */
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+    distinct?: CustomerScalarFieldEnum | CustomerScalarFieldEnum[]
   }
 
   /**
-   * Submission findMany
+   * Customer findMany
    */
-  export type SubmissionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * Filter, which Submissions to fetch.
+     * Choose, which related nodes to fetch as well
      */
-    where?: SubmissionWhereInput
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * Filter, which Customers to fetch.
+     */
+    where?: CustomerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Submissions to fetch.
+     * Determine the order of Customers to fetch.
      */
-    orderBy?: SubmissionOrderByWithRelationInput | SubmissionOrderByWithRelationInput[]
+    orderBy?: CustomerOrderByWithRelationInput | CustomerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Submissions.
+     * Sets the position for listing Customers.
      */
-    cursor?: SubmissionWhereUniqueInput
+    cursor?: CustomerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Submissions from the position of the cursor.
+     * Take `±n` Customers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Submissions.
+     * Skip the first `n` Customers.
      */
     skip?: number
-    distinct?: SubmissionScalarFieldEnum | SubmissionScalarFieldEnum[]
+    distinct?: CustomerScalarFieldEnum | CustomerScalarFieldEnum[]
   }
 
   /**
-   * Submission create
+   * Customer create
    */
-  export type SubmissionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * The data needed to create a Submission.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<SubmissionCreateInput, SubmissionUncheckedCreateInput>
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Customer.
+     */
+    data: XOR<CustomerCreateInput, CustomerUncheckedCreateInput>
   }
 
   /**
-   * Submission createMany
+   * Customer createMany
    */
-  export type SubmissionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Submissions.
+     * The data used to create many Customers.
      */
-    data: SubmissionCreateManyInput | SubmissionCreateManyInput[]
+    data: CustomerCreateManyInput | CustomerCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Submission createManyAndReturn
+   * Customer createManyAndReturn
    */
-  export type SubmissionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: CustomerSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * The data used to create many Submissions.
+     * The data used to create many Customers.
      */
-    data: SubmissionCreateManyInput | SubmissionCreateManyInput[]
+    data: CustomerCreateManyInput | CustomerCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Submission update
+   * Customer update
    */
-  export type SubmissionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * The data needed to update a Submission.
+     * Choose, which related nodes to fetch as well
      */
-    data: XOR<SubmissionUpdateInput, SubmissionUncheckedUpdateInput>
+    include?: CustomerInclude<ExtArgs> | null
     /**
-     * Choose, which Submission to update.
+     * The data needed to update a Customer.
      */
-    where: SubmissionWhereUniqueInput
+    data: XOR<CustomerUpdateInput, CustomerUncheckedUpdateInput>
+    /**
+     * Choose, which Customer to update.
+     */
+    where: CustomerWhereUniqueInput
   }
 
   /**
-   * Submission updateMany
+   * Customer updateMany
    */
-  export type SubmissionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Submissions.
+     * The data used to update Customers.
      */
-    data: XOR<SubmissionUpdateManyMutationInput, SubmissionUncheckedUpdateManyInput>
+    data: XOR<CustomerUpdateManyMutationInput, CustomerUncheckedUpdateManyInput>
     /**
-     * Filter which Submissions to update
+     * Filter which Customers to update
      */
-    where?: SubmissionWhereInput
+    where?: CustomerWhereInput
   }
 
   /**
-   * Submission upsert
+   * Customer upsert
    */
-  export type SubmissionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * The filter to search for the Submission to update in case it exists.
+     * Choose, which related nodes to fetch as well
      */
-    where: SubmissionWhereUniqueInput
+    include?: CustomerInclude<ExtArgs> | null
     /**
-     * In case the Submission found by the `where` argument doesn't exist, create a new Submission with this data.
+     * The filter to search for the Customer to update in case it exists.
      */
-    create: XOR<SubmissionCreateInput, SubmissionUncheckedCreateInput>
+    where: CustomerWhereUniqueInput
     /**
-     * In case the Submission was found with the provided `where` argument, update it with this data.
+     * In case the Customer found by the `where` argument doesn't exist, create a new Customer with this data.
      */
-    update: XOR<SubmissionUpdateInput, SubmissionUncheckedUpdateInput>
+    create: XOR<CustomerCreateInput, CustomerUncheckedCreateInput>
+    /**
+     * In case the Customer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CustomerUpdateInput, CustomerUncheckedUpdateInput>
   }
 
   /**
-   * Submission delete
+   * Customer delete
    */
-  export type SubmissionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Customer
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: CustomerSelect<ExtArgs> | null
     /**
-     * Filter which Submission to delete.
+     * Choose, which related nodes to fetch as well
      */
-    where: SubmissionWhereUniqueInput
+    include?: CustomerInclude<ExtArgs> | null
+    /**
+     * Filter which Customer to delete.
+     */
+    where: CustomerWhereUniqueInput
   }
 
   /**
-   * Submission deleteMany
+   * Customer deleteMany
    */
-  export type SubmissionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CustomerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Submissions to delete
+     * Filter which Customers to delete
      */
-    where?: SubmissionWhereInput
+    where?: CustomerWhereInput
   }
 
   /**
-   * Submission without action
+   * Customer.orders
    */
-  export type SubmissionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Customer$ordersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Submission
+     * Select specific fields to fetch from the Order
      */
-    select?: SubmissionSelect<ExtArgs> | null
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    cursor?: OrderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Customer without action
+   */
+  export type CustomerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Customer
+     */
+    select?: CustomerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CustomerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Order
+   */
+
+  export type AggregateOrder = {
+    _count: OrderCountAggregateOutputType | null
+    _avg: OrderAvgAggregateOutputType | null
+    _sum: OrderSumAggregateOutputType | null
+    _min: OrderMinAggregateOutputType | null
+    _max: OrderMaxAggregateOutputType | null
+  }
+
+  export type OrderAvgAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    totalQuantity: number | null
+  }
+
+  export type OrderSumAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    totalQuantity: number | null
+  }
+
+  export type OrderMinAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    productType: string | null
+    fabricType: string | null
+    specs: string | null
+    sizeData: string | null
+    totalQuantity: number | null
+    manualTotal: string | null
+    decorationSets: string | null
+    printTitle: string | null
+    printSize: string | null
+    printPos2Title: string | null
+    printPos2Size: string | null
+    printPos3Title: string | null
+    printPos3Size: string | null
+    printPos4Title: string | null
+    printPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
+    embroideryTitle: string | null
+    embroiderySize: string | null
+    embroideryPos2Title: string | null
+    embroideryPos2Size: string | null
+    embroideryPos3Title: string | null
+    embroideryPos3Size: string | null
+    embroideryPos4Title: string | null
+    embroideryPos4Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
+    additionalNeeds: string | null
+    images: string | null
+    reportName: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OrderMaxAggregateOutputType = {
+    id: number | null
+    customerId: number | null
+    productType: string | null
+    fabricType: string | null
+    specs: string | null
+    sizeData: string | null
+    totalQuantity: number | null
+    manualTotal: string | null
+    decorationSets: string | null
+    printTitle: string | null
+    printSize: string | null
+    printPos2Title: string | null
+    printPos2Size: string | null
+    printPos3Title: string | null
+    printPos3Size: string | null
+    printPos4Title: string | null
+    printPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
+    embroideryTitle: string | null
+    embroiderySize: string | null
+    embroideryPos2Title: string | null
+    embroideryPos2Size: string | null
+    embroideryPos3Title: string | null
+    embroideryPos3Size: string | null
+    embroideryPos4Title: string | null
+    embroideryPos4Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
+    additionalNeeds: string | null
+    images: string | null
+    reportName: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OrderCountAggregateOutputType = {
+    id: number
+    customerId: number
+    productType: number
+    fabricType: number
+    specs: number
+    sizeData: number
+    totalQuantity: number
+    manualTotal: number
+    decorationSets: number
+    printTitle: number
+    printSize: number
+    printPos2Title: number
+    printPos2Size: number
+    printPos3Title: number
+    printPos3Size: number
+    printPos4Title: number
+    printPos4Size: number
+    printPos5Title: number
+    printPos5Size: number
+    embroideryTitle: number
+    embroiderySize: number
+    embroideryPos2Title: number
+    embroideryPos2Size: number
+    embroideryPos3Title: number
+    embroideryPos3Size: number
+    embroideryPos4Title: number
+    embroideryPos4Size: number
+    embroideryPos5Title: number
+    embroideryPos5Size: number
+    additionalNeeds: number
+    images: number
+    reportName: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OrderAvgAggregateInputType = {
+    id?: true
+    customerId?: true
+    totalQuantity?: true
+  }
+
+  export type OrderSumAggregateInputType = {
+    id?: true
+    customerId?: true
+    totalQuantity?: true
+  }
+
+  export type OrderMinAggregateInputType = {
+    id?: true
+    customerId?: true
+    productType?: true
+    fabricType?: true
+    specs?: true
+    sizeData?: true
+    totalQuantity?: true
+    manualTotal?: true
+    decorationSets?: true
+    printTitle?: true
+    printSize?: true
+    printPos2Title?: true
+    printPos2Size?: true
+    printPos3Title?: true
+    printPos3Size?: true
+    printPos4Title?: true
+    printPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
+    embroideryTitle?: true
+    embroiderySize?: true
+    embroideryPos2Title?: true
+    embroideryPos2Size?: true
+    embroideryPos3Title?: true
+    embroideryPos3Size?: true
+    embroideryPos4Title?: true
+    embroideryPos4Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
+    additionalNeeds?: true
+    images?: true
+    reportName?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OrderMaxAggregateInputType = {
+    id?: true
+    customerId?: true
+    productType?: true
+    fabricType?: true
+    specs?: true
+    sizeData?: true
+    totalQuantity?: true
+    manualTotal?: true
+    decorationSets?: true
+    printTitle?: true
+    printSize?: true
+    printPos2Title?: true
+    printPos2Size?: true
+    printPos3Title?: true
+    printPos3Size?: true
+    printPos4Title?: true
+    printPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
+    embroideryTitle?: true
+    embroiderySize?: true
+    embroideryPos2Title?: true
+    embroideryPos2Size?: true
+    embroideryPos3Title?: true
+    embroideryPos3Size?: true
+    embroideryPos4Title?: true
+    embroideryPos4Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
+    additionalNeeds?: true
+    images?: true
+    reportName?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OrderCountAggregateInputType = {
+    id?: true
+    customerId?: true
+    productType?: true
+    fabricType?: true
+    specs?: true
+    sizeData?: true
+    totalQuantity?: true
+    manualTotal?: true
+    decorationSets?: true
+    printTitle?: true
+    printSize?: true
+    printPos2Title?: true
+    printPos2Size?: true
+    printPos3Title?: true
+    printPos3Size?: true
+    printPos4Title?: true
+    printPos4Size?: true
+    printPos5Title?: true
+    printPos5Size?: true
+    embroideryTitle?: true
+    embroiderySize?: true
+    embroideryPos2Title?: true
+    embroideryPos2Size?: true
+    embroideryPos3Title?: true
+    embroideryPos3Size?: true
+    embroideryPos4Title?: true
+    embroideryPos4Size?: true
+    embroideryPos5Title?: true
+    embroideryPos5Size?: true
+    additionalNeeds?: true
+    images?: true
+    reportName?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OrderAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Order to aggregate.
+     */
+    where?: OrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Orders
+    **/
+    _count?: true | OrderCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OrderAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OrderSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OrderMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OrderMaxAggregateInputType
+  }
+
+  export type GetOrderAggregateType<T extends OrderAggregateArgs> = {
+        [P in keyof T & keyof AggregateOrder]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOrder[P]>
+      : GetScalarType<T[P], AggregateOrder[P]>
+  }
+
+
+
+
+  export type OrderGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithAggregationInput | OrderOrderByWithAggregationInput[]
+    by: OrderScalarFieldEnum[] | OrderScalarFieldEnum
+    having?: OrderScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OrderCountAggregateInputType | true
+    _avg?: OrderAvgAggregateInputType
+    _sum?: OrderSumAggregateInputType
+    _min?: OrderMinAggregateInputType
+    _max?: OrderMaxAggregateInputType
+  }
+
+  export type OrderGroupByOutputType = {
+    id: number
+    customerId: number
+    productType: string
+    fabricType: string
+    specs: string | null
+    sizeData: string
+    totalQuantity: number
+    manualTotal: string | null
+    decorationSets: string
+    printTitle: string | null
+    printSize: string | null
+    printPos2Title: string | null
+    printPos2Size: string | null
+    printPos3Title: string | null
+    printPos3Size: string | null
+    printPos4Title: string | null
+    printPos4Size: string | null
+    printPos5Title: string | null
+    printPos5Size: string | null
+    embroideryTitle: string | null
+    embroiderySize: string | null
+    embroideryPos2Title: string | null
+    embroideryPos2Size: string | null
+    embroideryPos3Title: string | null
+    embroideryPos3Size: string | null
+    embroideryPos4Title: string | null
+    embroideryPos4Size: string | null
+    embroideryPos5Title: string | null
+    embroideryPos5Size: string | null
+    additionalNeeds: string | null
+    images: string
+    reportName: string | null
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: OrderCountAggregateOutputType | null
+    _avg: OrderAvgAggregateOutputType | null
+    _sum: OrderSumAggregateOutputType | null
+    _min: OrderMinAggregateOutputType | null
+    _max: OrderMaxAggregateOutputType | null
+  }
+
+  type GetOrderGroupByPayload<T extends OrderGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OrderGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OrderGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OrderGroupByOutputType[P]>
+            : GetScalarType<T[P], OrderGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OrderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customerId?: boolean
+    productType?: boolean
+    fabricType?: boolean
+    specs?: boolean
+    sizeData?: boolean
+    totalQuantity?: boolean
+    manualTotal?: boolean
+    decorationSets?: boolean
+    printTitle?: boolean
+    printSize?: boolean
+    printPos2Title?: boolean
+    printPos2Size?: boolean
+    printPos3Title?: boolean
+    printPos3Size?: boolean
+    printPos4Title?: boolean
+    printPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
+    embroideryTitle?: boolean
+    embroiderySize?: boolean
+    embroideryPos2Title?: boolean
+    embroideryPos2Size?: boolean
+    embroideryPos3Title?: boolean
+    embroideryPos3Size?: boolean
+    embroideryPos4Title?: boolean
+    embroideryPos4Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
+    additionalNeeds?: boolean
+    images?: boolean
+    reportName?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["order"]>
+
+  export type OrderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    customerId?: boolean
+    productType?: boolean
+    fabricType?: boolean
+    specs?: boolean
+    sizeData?: boolean
+    totalQuantity?: boolean
+    manualTotal?: boolean
+    decorationSets?: boolean
+    printTitle?: boolean
+    printSize?: boolean
+    printPos2Title?: boolean
+    printPos2Size?: boolean
+    printPos3Title?: boolean
+    printPos3Size?: boolean
+    printPos4Title?: boolean
+    printPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
+    embroideryTitle?: boolean
+    embroiderySize?: boolean
+    embroideryPos2Title?: boolean
+    embroideryPos2Size?: boolean
+    embroideryPos3Title?: boolean
+    embroideryPos3Size?: boolean
+    embroideryPos4Title?: boolean
+    embroideryPos4Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
+    additionalNeeds?: boolean
+    images?: boolean
+    reportName?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["order"]>
+
+  export type OrderSelectScalar = {
+    id?: boolean
+    customerId?: boolean
+    productType?: boolean
+    fabricType?: boolean
+    specs?: boolean
+    sizeData?: boolean
+    totalQuantity?: boolean
+    manualTotal?: boolean
+    decorationSets?: boolean
+    printTitle?: boolean
+    printSize?: boolean
+    printPos2Title?: boolean
+    printPos2Size?: boolean
+    printPos3Title?: boolean
+    printPos3Size?: boolean
+    printPos4Title?: boolean
+    printPos4Size?: boolean
+    printPos5Title?: boolean
+    printPos5Size?: boolean
+    embroideryTitle?: boolean
+    embroiderySize?: boolean
+    embroideryPos2Title?: boolean
+    embroideryPos2Size?: boolean
+    embroideryPos3Title?: boolean
+    embroideryPos3Size?: boolean
+    embroideryPos4Title?: boolean
+    embroideryPos4Size?: boolean
+    embroideryPos5Title?: boolean
+    embroideryPos5Size?: boolean
+    additionalNeeds?: boolean
+    images?: boolean
+    reportName?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+  }
+  export type OrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    customer?: boolean | CustomerDefaultArgs<ExtArgs>
+  }
+
+  export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Order"
+    objects: {
+      customer: Prisma.$CustomerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      customerId: number
+      productType: string
+      fabricType: string
+      specs: string | null
+      sizeData: string
+      totalQuantity: number
+      manualTotal: string | null
+      decorationSets: string
+      printTitle: string | null
+      printSize: string | null
+      printPos2Title: string | null
+      printPos2Size: string | null
+      printPos3Title: string | null
+      printPos3Size: string | null
+      printPos4Title: string | null
+      printPos4Size: string | null
+      printPos5Title: string | null
+      printPos5Size: string | null
+      embroideryTitle: string | null
+      embroiderySize: string | null
+      embroideryPos2Title: string | null
+      embroideryPos2Size: string | null
+      embroideryPos3Title: string | null
+      embroideryPos3Size: string | null
+      embroideryPos4Title: string | null
+      embroideryPos4Size: string | null
+      embroideryPos5Title: string | null
+      embroideryPos5Size: string | null
+      additionalNeeds: string | null
+      images: string
+      reportName: string | null
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["order"]>
+    composites: {}
+  }
+
+  type OrderGetPayload<S extends boolean | null | undefined | OrderDefaultArgs> = $Result.GetResult<Prisma.$OrderPayload, S>
+
+  type OrderCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OrderFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OrderCountAggregateInputType | true
+    }
+
+  export interface OrderDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Order'], meta: { name: 'Order' } }
+    /**
+     * Find zero or one Order that matches the filter.
+     * @param {OrderFindUniqueArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OrderFindUniqueArgs>(args: SelectSubset<T, OrderFindUniqueArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Order that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OrderFindUniqueOrThrowArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OrderFindUniqueOrThrowArgs>(args: SelectSubset<T, OrderFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Order that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderFindFirstArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OrderFindFirstArgs>(args?: SelectSubset<T, OrderFindFirstArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Order that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderFindFirstOrThrowArgs} args - Arguments to find a Order
+     * @example
+     * // Get one Order
+     * const order = await prisma.order.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OrderFindFirstOrThrowArgs>(args?: SelectSubset<T, OrderFindFirstOrThrowArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Orders that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Orders
+     * const orders = await prisma.order.findMany()
+     * 
+     * // Get first 10 Orders
+     * const orders = await prisma.order.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const orderWithIdOnly = await prisma.order.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OrderFindManyArgs>(args?: SelectSubset<T, OrderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Order.
+     * @param {OrderCreateArgs} args - Arguments to create a Order.
+     * @example
+     * // Create one Order
+     * const Order = await prisma.order.create({
+     *   data: {
+     *     // ... data to create a Order
+     *   }
+     * })
+     * 
+     */
+    create<T extends OrderCreateArgs>(args: SelectSubset<T, OrderCreateArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Orders.
+     * @param {OrderCreateManyArgs} args - Arguments to create many Orders.
+     * @example
+     * // Create many Orders
+     * const order = await prisma.order.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OrderCreateManyArgs>(args?: SelectSubset<T, OrderCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Orders and returns the data saved in the database.
+     * @param {OrderCreateManyAndReturnArgs} args - Arguments to create many Orders.
+     * @example
+     * // Create many Orders
+     * const order = await prisma.order.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Orders and only return the `id`
+     * const orderWithIdOnly = await prisma.order.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OrderCreateManyAndReturnArgs>(args?: SelectSubset<T, OrderCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Order.
+     * @param {OrderDeleteArgs} args - Arguments to delete one Order.
+     * @example
+     * // Delete one Order
+     * const Order = await prisma.order.delete({
+     *   where: {
+     *     // ... filter to delete one Order
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OrderDeleteArgs>(args: SelectSubset<T, OrderDeleteArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Order.
+     * @param {OrderUpdateArgs} args - Arguments to update one Order.
+     * @example
+     * // Update one Order
+     * const order = await prisma.order.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OrderUpdateArgs>(args: SelectSubset<T, OrderUpdateArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Orders.
+     * @param {OrderDeleteManyArgs} args - Arguments to filter Orders to delete.
+     * @example
+     * // Delete a few Orders
+     * const { count } = await prisma.order.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OrderDeleteManyArgs>(args?: SelectSubset<T, OrderDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Orders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Orders
+     * const order = await prisma.order.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OrderUpdateManyArgs>(args: SelectSubset<T, OrderUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Order.
+     * @param {OrderUpsertArgs} args - Arguments to update or create a Order.
+     * @example
+     * // Update or create a Order
+     * const order = await prisma.order.upsert({
+     *   create: {
+     *     // ... data to create a Order
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Order we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OrderUpsertArgs>(args: SelectSubset<T, OrderUpsertArgs<ExtArgs>>): Prisma__OrderClient<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Orders.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderCountArgs} args - Arguments to filter Orders to count.
+     * @example
+     * // Count the number of Orders
+     * const count = await prisma.order.count({
+     *   where: {
+     *     // ... the filter for the Orders we want to count
+     *   }
+     * })
+    **/
+    count<T extends OrderCountArgs>(
+      args?: Subset<T, OrderCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OrderCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Order.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OrderAggregateArgs>(args: Subset<T, OrderAggregateArgs>): Prisma.PrismaPromise<GetOrderAggregateType<T>>
+
+    /**
+     * Group by Order.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OrderGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OrderGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OrderGroupByArgs['orderBy'] }
+        : { orderBy?: OrderGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OrderGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOrderGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Order model
+   */
+  readonly fields: OrderFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Order.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    customer<T extends CustomerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CustomerDefaultArgs<ExtArgs>>): Prisma__CustomerClient<$Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Order model
+   */ 
+  interface OrderFieldRefs {
+    readonly id: FieldRef<"Order", 'Int'>
+    readonly customerId: FieldRef<"Order", 'Int'>
+    readonly productType: FieldRef<"Order", 'String'>
+    readonly fabricType: FieldRef<"Order", 'String'>
+    readonly specs: FieldRef<"Order", 'String'>
+    readonly sizeData: FieldRef<"Order", 'String'>
+    readonly totalQuantity: FieldRef<"Order", 'Int'>
+    readonly manualTotal: FieldRef<"Order", 'String'>
+    readonly decorationSets: FieldRef<"Order", 'String'>
+    readonly printTitle: FieldRef<"Order", 'String'>
+    readonly printSize: FieldRef<"Order", 'String'>
+    readonly printPos2Title: FieldRef<"Order", 'String'>
+    readonly printPos2Size: FieldRef<"Order", 'String'>
+    readonly printPos3Title: FieldRef<"Order", 'String'>
+    readonly printPos3Size: FieldRef<"Order", 'String'>
+    readonly printPos4Title: FieldRef<"Order", 'String'>
+    readonly printPos4Size: FieldRef<"Order", 'String'>
+    readonly printPos5Title: FieldRef<"Order", 'String'>
+    readonly printPos5Size: FieldRef<"Order", 'String'>
+    readonly embroideryTitle: FieldRef<"Order", 'String'>
+    readonly embroiderySize: FieldRef<"Order", 'String'>
+    readonly embroideryPos2Title: FieldRef<"Order", 'String'>
+    readonly embroideryPos2Size: FieldRef<"Order", 'String'>
+    readonly embroideryPos3Title: FieldRef<"Order", 'String'>
+    readonly embroideryPos3Size: FieldRef<"Order", 'String'>
+    readonly embroideryPos4Title: FieldRef<"Order", 'String'>
+    readonly embroideryPos4Size: FieldRef<"Order", 'String'>
+    readonly embroideryPos5Title: FieldRef<"Order", 'String'>
+    readonly embroideryPos5Size: FieldRef<"Order", 'String'>
+    readonly additionalNeeds: FieldRef<"Order", 'String'>
+    readonly images: FieldRef<"Order", 'String'>
+    readonly reportName: FieldRef<"Order", 'String'>
+    readonly status: FieldRef<"Order", 'String'>
+    readonly createdAt: FieldRef<"Order", 'DateTime'>
+    readonly updatedAt: FieldRef<"Order", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Order findUnique
+   */
+  export type OrderFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * Filter, which Order to fetch.
+     */
+    where: OrderWhereUniqueInput
+  }
+
+  /**
+   * Order findUniqueOrThrow
+   */
+  export type OrderFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * Filter, which Order to fetch.
+     */
+    where: OrderWhereUniqueInput
+  }
+
+  /**
+   * Order findFirst
+   */
+  export type OrderFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * Filter, which Order to fetch.
+     */
+    where?: OrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Orders.
+     */
+    cursor?: OrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Orders.
+     */
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Order findFirstOrThrow
+   */
+  export type OrderFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * Filter, which Order to fetch.
+     */
+    where?: OrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Orders.
+     */
+    cursor?: OrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orders.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Orders.
+     */
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Order findMany
+   */
+  export type OrderFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * Filter, which Orders to fetch.
+     */
+    where?: OrderWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Orders to fetch.
+     */
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Orders.
+     */
+    cursor?: OrderWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Orders from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Orders.
+     */
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
+   * Order create
+   */
+  export type OrderCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Order.
+     */
+    data: XOR<OrderCreateInput, OrderUncheckedCreateInput>
+  }
+
+  /**
+   * Order createMany
+   */
+  export type OrderCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Orders.
+     */
+    data: OrderCreateManyInput | OrderCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Order createManyAndReturn
+   */
+  export type OrderCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Orders.
+     */
+    data: OrderCreateManyInput | OrderCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Order update
+   */
+  export type OrderUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Order.
+     */
+    data: XOR<OrderUpdateInput, OrderUncheckedUpdateInput>
+    /**
+     * Choose, which Order to update.
+     */
+    where: OrderWhereUniqueInput
+  }
+
+  /**
+   * Order updateMany
+   */
+  export type OrderUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Orders.
+     */
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyInput>
+    /**
+     * Filter which Orders to update
+     */
+    where?: OrderWhereInput
+  }
+
+  /**
+   * Order upsert
+   */
+  export type OrderUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Order to update in case it exists.
+     */
+    where: OrderWhereUniqueInput
+    /**
+     * In case the Order found by the `where` argument doesn't exist, create a new Order with this data.
+     */
+    create: XOR<OrderCreateInput, OrderUncheckedCreateInput>
+    /**
+     * In case the Order was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OrderUpdateInput, OrderUncheckedUpdateInput>
+  }
+
+  /**
+   * Order delete
+   */
+  export type OrderDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
+     * Filter which Order to delete.
+     */
+    where: OrderWhereUniqueInput
+  }
+
+  /**
+   * Order deleteMany
+   */
+  export type OrderDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Orders to delete
+     */
+    where?: OrderWhereInput
+  }
+
+  /**
+   * Order without action
+   */
+  export type OrderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
   }
 
 
@@ -2928,676 +4389,339 @@ export namespace Prisma {
 
 
   /**
-   * Model Wso
+   * Model Setting
    */
 
-  export type AggregateWso = {
-    _count: WsoCountAggregateOutputType | null
-    _avg: WsoAvgAggregateOutputType | null
-    _sum: WsoSumAggregateOutputType | null
-    _min: WsoMinAggregateOutputType | null
-    _max: WsoMaxAggregateOutputType | null
+  export type AggregateSetting = {
+    _count: SettingCountAggregateOutputType | null
+    _avg: SettingAvgAggregateOutputType | null
+    _sum: SettingSumAggregateOutputType | null
+    _min: SettingMinAggregateOutputType | null
+    _max: SettingMaxAggregateOutputType | null
   }
 
-  export type WsoAvgAggregateOutputType = {
+  export type SettingAvgAggregateOutputType = {
     id: number | null
-    totalQuantity: number | null
   }
 
-  export type WsoSumAggregateOutputType = {
+  export type SettingSumAggregateOutputType = {
     id: number | null
-    totalQuantity: number | null
   }
 
-  export type WsoMinAggregateOutputType = {
+  export type SettingMinAggregateOutputType = {
     id: number | null
-    name: string | null
-    email: string | null
-    companyName: string | null
-    phone: string | null
-    lineId: string | null
-    productType: string | null
-    fabricType: string | null
-    specs: string | null
-    totalQuantity: number | null
-    printTitle: string | null
-    printSize: string | null
-    embroideryTitle: string | null
-    embroiderySize: string | null
-    printPos2Title: string | null
-    printPos2Size: string | null
-    embroideryPos2Title: string | null
-    embroideryPos2Size: string | null
-    printPos3Title: string | null
-    printPos3Size: string | null
-    embroideryPos3Title: string | null
-    embroideryPos3Size: string | null
-    printPos4Title: string | null
-    printPos4Size: string | null
-    embroideryPos4Title: string | null
-    embroideryPos4Size: string | null
-    printPos5Title: string | null
-    printPos5Size: string | null
-    embroideryPos5Title: string | null
-    embroideryPos5Size: string | null
-    additionalNeeds: string | null
-    createdAt: Date | null
+    key: string | null
+    value: string | null
   }
 
-  export type WsoMaxAggregateOutputType = {
+  export type SettingMaxAggregateOutputType = {
     id: number | null
-    name: string | null
-    email: string | null
-    companyName: string | null
-    phone: string | null
-    lineId: string | null
-    productType: string | null
-    fabricType: string | null
-    specs: string | null
-    totalQuantity: number | null
-    printTitle: string | null
-    printSize: string | null
-    embroideryTitle: string | null
-    embroiderySize: string | null
-    printPos2Title: string | null
-    printPos2Size: string | null
-    embroideryPos2Title: string | null
-    embroideryPos2Size: string | null
-    printPos3Title: string | null
-    printPos3Size: string | null
-    embroideryPos3Title: string | null
-    embroideryPos3Size: string | null
-    printPos4Title: string | null
-    printPos4Size: string | null
-    embroideryPos4Title: string | null
-    embroideryPos4Size: string | null
-    printPos5Title: string | null
-    printPos5Size: string | null
-    embroideryPos5Title: string | null
-    embroideryPos5Size: string | null
-    additionalNeeds: string | null
-    createdAt: Date | null
+    key: string | null
+    value: string | null
   }
 
-  export type WsoCountAggregateOutputType = {
+  export type SettingCountAggregateOutputType = {
     id: number
-    name: number
-    email: number
-    companyName: number
-    phone: number
-    lineId: number
-    productType: number
-    fabricType: number
-    specs: number
-    sizeDetails: number
-    totalQuantity: number
-    printTitle: number
-    printSize: number
-    embroideryTitle: number
-    embroiderySize: number
-    printPos2Title: number
-    printPos2Size: number
-    embroideryPos2Title: number
-    embroideryPos2Size: number
-    printPos3Title: number
-    printPos3Size: number
-    embroideryPos3Title: number
-    embroideryPos3Size: number
-    printPos4Title: number
-    printPos4Size: number
-    embroideryPos4Title: number
-    embroideryPos4Size: number
-    printPos5Title: number
-    printPos5Size: number
-    embroideryPos5Title: number
-    embroideryPos5Size: number
-    additionalNeeds: number
-    images: number
-    createdAt: number
+    key: number
+    value: number
     _all: number
   }
 
 
-  export type WsoAvgAggregateInputType = {
+  export type SettingAvgAggregateInputType = {
     id?: true
-    totalQuantity?: true
   }
 
-  export type WsoSumAggregateInputType = {
+  export type SettingSumAggregateInputType = {
     id?: true
-    totalQuantity?: true
   }
 
-  export type WsoMinAggregateInputType = {
+  export type SettingMinAggregateInputType = {
     id?: true
-    name?: true
-    email?: true
-    companyName?: true
-    phone?: true
-    lineId?: true
-    productType?: true
-    fabricType?: true
-    specs?: true
-    totalQuantity?: true
-    printTitle?: true
-    printSize?: true
-    embroideryTitle?: true
-    embroiderySize?: true
-    printPos2Title?: true
-    printPos2Size?: true
-    embroideryPos2Title?: true
-    embroideryPos2Size?: true
-    printPos3Title?: true
-    printPos3Size?: true
-    embroideryPos3Title?: true
-    embroideryPos3Size?: true
-    printPos4Title?: true
-    printPos4Size?: true
-    embroideryPos4Title?: true
-    embroideryPos4Size?: true
-    printPos5Title?: true
-    printPos5Size?: true
-    embroideryPos5Title?: true
-    embroideryPos5Size?: true
-    additionalNeeds?: true
-    createdAt?: true
+    key?: true
+    value?: true
   }
 
-  export type WsoMaxAggregateInputType = {
+  export type SettingMaxAggregateInputType = {
     id?: true
-    name?: true
-    email?: true
-    companyName?: true
-    phone?: true
-    lineId?: true
-    productType?: true
-    fabricType?: true
-    specs?: true
-    totalQuantity?: true
-    printTitle?: true
-    printSize?: true
-    embroideryTitle?: true
-    embroiderySize?: true
-    printPos2Title?: true
-    printPos2Size?: true
-    embroideryPos2Title?: true
-    embroideryPos2Size?: true
-    printPos3Title?: true
-    printPos3Size?: true
-    embroideryPos3Title?: true
-    embroideryPos3Size?: true
-    printPos4Title?: true
-    printPos4Size?: true
-    embroideryPos4Title?: true
-    embroideryPos4Size?: true
-    printPos5Title?: true
-    printPos5Size?: true
-    embroideryPos5Title?: true
-    embroideryPos5Size?: true
-    additionalNeeds?: true
-    createdAt?: true
+    key?: true
+    value?: true
   }
 
-  export type WsoCountAggregateInputType = {
+  export type SettingCountAggregateInputType = {
     id?: true
-    name?: true
-    email?: true
-    companyName?: true
-    phone?: true
-    lineId?: true
-    productType?: true
-    fabricType?: true
-    specs?: true
-    sizeDetails?: true
-    totalQuantity?: true
-    printTitle?: true
-    printSize?: true
-    embroideryTitle?: true
-    embroiderySize?: true
-    printPos2Title?: true
-    printPos2Size?: true
-    embroideryPos2Title?: true
-    embroideryPos2Size?: true
-    printPos3Title?: true
-    printPos3Size?: true
-    embroideryPos3Title?: true
-    embroideryPos3Size?: true
-    printPos4Title?: true
-    printPos4Size?: true
-    embroideryPos4Title?: true
-    embroideryPos4Size?: true
-    printPos5Title?: true
-    printPos5Size?: true
-    embroideryPos5Title?: true
-    embroideryPos5Size?: true
-    additionalNeeds?: true
-    images?: true
-    createdAt?: true
+    key?: true
+    value?: true
     _all?: true
   }
 
-  export type WsoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Wso to aggregate.
+     * Filter which Setting to aggregate.
      */
-    where?: WsoWhereInput
+    where?: SettingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Wsos to fetch.
+     * Determine the order of Settings to fetch.
      */
-    orderBy?: WsoOrderByWithRelationInput | WsoOrderByWithRelationInput[]
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: WsoWhereUniqueInput
+    cursor?: SettingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Wsos from the position of the cursor.
+     * Take `±n` Settings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Wsos.
+     * Skip the first `n` Settings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Wsos
+     * Count returned Settings
     **/
-    _count?: true | WsoCountAggregateInputType
+    _count?: true | SettingCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: WsoAvgAggregateInputType
+    _avg?: SettingAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: WsoSumAggregateInputType
+    _sum?: SettingSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: WsoMinAggregateInputType
+    _min?: SettingMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: WsoMaxAggregateInputType
+    _max?: SettingMaxAggregateInputType
   }
 
-  export type GetWsoAggregateType<T extends WsoAggregateArgs> = {
-        [P in keyof T & keyof AggregateWso]: P extends '_count' | 'count'
+  export type GetSettingAggregateType<T extends SettingAggregateArgs> = {
+        [P in keyof T & keyof AggregateSetting]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateWso[P]>
-      : GetScalarType<T[P], AggregateWso[P]>
+        : GetScalarType<T[P], AggregateSetting[P]>
+      : GetScalarType<T[P], AggregateSetting[P]>
   }
 
 
 
 
-  export type WsoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WsoWhereInput
-    orderBy?: WsoOrderByWithAggregationInput | WsoOrderByWithAggregationInput[]
-    by: WsoScalarFieldEnum[] | WsoScalarFieldEnum
-    having?: WsoScalarWhereWithAggregatesInput
+  export type SettingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingWhereInput
+    orderBy?: SettingOrderByWithAggregationInput | SettingOrderByWithAggregationInput[]
+    by: SettingScalarFieldEnum[] | SettingScalarFieldEnum
+    having?: SettingScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: WsoCountAggregateInputType | true
-    _avg?: WsoAvgAggregateInputType
-    _sum?: WsoSumAggregateInputType
-    _min?: WsoMinAggregateInputType
-    _max?: WsoMaxAggregateInputType
+    _count?: SettingCountAggregateInputType | true
+    _avg?: SettingAvgAggregateInputType
+    _sum?: SettingSumAggregateInputType
+    _min?: SettingMinAggregateInputType
+    _max?: SettingMaxAggregateInputType
   }
 
-  export type WsoGroupByOutputType = {
+  export type SettingGroupByOutputType = {
     id: number
-    name: string
-    email: string
-    companyName: string | null
-    phone: string
-    lineId: string | null
-    productType: string
-    fabricType: string
-    specs: string | null
-    sizeDetails: JsonValue
-    totalQuantity: number
-    printTitle: string | null
-    printSize: string | null
-    embroideryTitle: string | null
-    embroiderySize: string | null
-    printPos2Title: string | null
-    printPos2Size: string | null
-    embroideryPos2Title: string | null
-    embroideryPos2Size: string | null
-    printPos3Title: string | null
-    printPos3Size: string | null
-    embroideryPos3Title: string | null
-    embroideryPos3Size: string | null
-    printPos4Title: string | null
-    printPos4Size: string | null
-    embroideryPos4Title: string | null
-    embroideryPos4Size: string | null
-    printPos5Title: string | null
-    printPos5Size: string | null
-    embroideryPos5Title: string | null
-    embroideryPos5Size: string | null
-    additionalNeeds: string | null
-    images: JsonValue | null
-    createdAt: Date
-    _count: WsoCountAggregateOutputType | null
-    _avg: WsoAvgAggregateOutputType | null
-    _sum: WsoSumAggregateOutputType | null
-    _min: WsoMinAggregateOutputType | null
-    _max: WsoMaxAggregateOutputType | null
+    key: string
+    value: string
+    _count: SettingCountAggregateOutputType | null
+    _avg: SettingAvgAggregateOutputType | null
+    _sum: SettingSumAggregateOutputType | null
+    _min: SettingMinAggregateOutputType | null
+    _max: SettingMaxAggregateOutputType | null
   }
 
-  type GetWsoGroupByPayload<T extends WsoGroupByArgs> = Prisma.PrismaPromise<
+  type GetSettingGroupByPayload<T extends SettingGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<WsoGroupByOutputType, T['by']> &
+      PickEnumerable<SettingGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof WsoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof SettingGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], WsoGroupByOutputType[P]>
-            : GetScalarType<T[P], WsoGroupByOutputType[P]>
+              : GetScalarType<T[P], SettingGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type WsoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SettingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    email?: boolean
-    companyName?: boolean
-    phone?: boolean
-    lineId?: boolean
-    productType?: boolean
-    fabricType?: boolean
-    specs?: boolean
-    sizeDetails?: boolean
-    totalQuantity?: boolean
-    printTitle?: boolean
-    printSize?: boolean
-    embroideryTitle?: boolean
-    embroiderySize?: boolean
-    printPos2Title?: boolean
-    printPos2Size?: boolean
-    embroideryPos2Title?: boolean
-    embroideryPos2Size?: boolean
-    printPos3Title?: boolean
-    printPos3Size?: boolean
-    embroideryPos3Title?: boolean
-    embroideryPos3Size?: boolean
-    printPos4Title?: boolean
-    printPos4Size?: boolean
-    embroideryPos4Title?: boolean
-    embroideryPos4Size?: boolean
-    printPos5Title?: boolean
-    printPos5Size?: boolean
-    embroideryPos5Title?: boolean
-    embroideryPos5Size?: boolean
-    additionalNeeds?: boolean
-    images?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["wso"]>
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["setting"]>
 
-  export type WsoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type SettingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
-    email?: boolean
-    companyName?: boolean
-    phone?: boolean
-    lineId?: boolean
-    productType?: boolean
-    fabricType?: boolean
-    specs?: boolean
-    sizeDetails?: boolean
-    totalQuantity?: boolean
-    printTitle?: boolean
-    printSize?: boolean
-    embroideryTitle?: boolean
-    embroiderySize?: boolean
-    printPos2Title?: boolean
-    printPos2Size?: boolean
-    embroideryPos2Title?: boolean
-    embroideryPos2Size?: boolean
-    printPos3Title?: boolean
-    printPos3Size?: boolean
-    embroideryPos3Title?: boolean
-    embroideryPos3Size?: boolean
-    printPos4Title?: boolean
-    printPos4Size?: boolean
-    embroideryPos4Title?: boolean
-    embroideryPos4Size?: boolean
-    printPos5Title?: boolean
-    printPos5Size?: boolean
-    embroideryPos5Title?: boolean
-    embroideryPos5Size?: boolean
-    additionalNeeds?: boolean
-    images?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["wso"]>
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["setting"]>
 
-  export type WsoSelectScalar = {
+  export type SettingSelectScalar = {
     id?: boolean
-    name?: boolean
-    email?: boolean
-    companyName?: boolean
-    phone?: boolean
-    lineId?: boolean
-    productType?: boolean
-    fabricType?: boolean
-    specs?: boolean
-    sizeDetails?: boolean
-    totalQuantity?: boolean
-    printTitle?: boolean
-    printSize?: boolean
-    embroideryTitle?: boolean
-    embroiderySize?: boolean
-    printPos2Title?: boolean
-    printPos2Size?: boolean
-    embroideryPos2Title?: boolean
-    embroideryPos2Size?: boolean
-    printPos3Title?: boolean
-    printPos3Size?: boolean
-    embroideryPos3Title?: boolean
-    embroideryPos3Size?: boolean
-    printPos4Title?: boolean
-    printPos4Size?: boolean
-    embroideryPos4Title?: boolean
-    embroideryPos4Size?: boolean
-    printPos5Title?: boolean
-    printPos5Size?: boolean
-    embroideryPos5Title?: boolean
-    embroideryPos5Size?: boolean
-    additionalNeeds?: boolean
-    images?: boolean
-    createdAt?: boolean
+    key?: boolean
+    value?: boolean
   }
 
 
-  export type $WsoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Wso"
+  export type $SettingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Setting"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      name: string
-      email: string
-      companyName: string | null
-      phone: string
-      lineId: string | null
-      productType: string
-      fabricType: string
-      specs: string | null
-      sizeDetails: Prisma.JsonValue
-      totalQuantity: number
-      printTitle: string | null
-      printSize: string | null
-      embroideryTitle: string | null
-      embroiderySize: string | null
-      printPos2Title: string | null
-      printPos2Size: string | null
-      embroideryPos2Title: string | null
-      embroideryPos2Size: string | null
-      printPos3Title: string | null
-      printPos3Size: string | null
-      embroideryPos3Title: string | null
-      embroideryPos3Size: string | null
-      printPos4Title: string | null
-      printPos4Size: string | null
-      embroideryPos4Title: string | null
-      embroideryPos4Size: string | null
-      printPos5Title: string | null
-      printPos5Size: string | null
-      embroideryPos5Title: string | null
-      embroideryPos5Size: string | null
-      additionalNeeds: string | null
-      images: Prisma.JsonValue | null
-      createdAt: Date
-    }, ExtArgs["result"]["wso"]>
+      key: string
+      value: string
+    }, ExtArgs["result"]["setting"]>
     composites: {}
   }
 
-  type WsoGetPayload<S extends boolean | null | undefined | WsoDefaultArgs> = $Result.GetResult<Prisma.$WsoPayload, S>
+  type SettingGetPayload<S extends boolean | null | undefined | SettingDefaultArgs> = $Result.GetResult<Prisma.$SettingPayload, S>
 
-  type WsoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
-    Omit<WsoFindManyArgs, 'select' | 'include' | 'distinct'> & {
-      select?: WsoCountAggregateInputType | true
+  type SettingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SettingFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SettingCountAggregateInputType | true
     }
 
-  export interface WsoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Wso'], meta: { name: 'Wso' } }
+  export interface SettingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Setting'], meta: { name: 'Setting' } }
     /**
-     * Find zero or one Wso that matches the filter.
-     * @param {WsoFindUniqueArgs} args - Arguments to find a Wso
+     * Find zero or one Setting that matches the filter.
+     * @param {SettingFindUniqueArgs} args - Arguments to find a Setting
      * @example
-     * // Get one Wso
-     * const wso = await prisma.wso.findUnique({
+     * // Get one Setting
+     * const setting = await prisma.setting.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends WsoFindUniqueArgs>(args: SelectSubset<T, WsoFindUniqueArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+    findUnique<T extends SettingFindUniqueArgs>(args: SelectSubset<T, SettingFindUniqueArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
 
     /**
-     * Find one Wso that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Setting that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
-     * @param {WsoFindUniqueOrThrowArgs} args - Arguments to find a Wso
+     * @param {SettingFindUniqueOrThrowArgs} args - Arguments to find a Setting
      * @example
-     * // Get one Wso
-     * const wso = await prisma.wso.findUniqueOrThrow({
+     * // Get one Setting
+     * const setting = await prisma.setting.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends WsoFindUniqueOrThrowArgs>(args: SelectSubset<T, WsoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+    findUniqueOrThrow<T extends SettingFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
 
     /**
-     * Find the first Wso that matches the filter.
+     * Find the first Setting that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoFindFirstArgs} args - Arguments to find a Wso
+     * @param {SettingFindFirstArgs} args - Arguments to find a Setting
      * @example
-     * // Get one Wso
-     * const wso = await prisma.wso.findFirst({
+     * // Get one Setting
+     * const setting = await prisma.setting.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends WsoFindFirstArgs>(args?: SelectSubset<T, WsoFindFirstArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+    findFirst<T extends SettingFindFirstArgs>(args?: SelectSubset<T, SettingFindFirstArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
 
     /**
-     * Find the first Wso that matches the filter or
+     * Find the first Setting that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoFindFirstOrThrowArgs} args - Arguments to find a Wso
+     * @param {SettingFindFirstOrThrowArgs} args - Arguments to find a Setting
      * @example
-     * // Get one Wso
-     * const wso = await prisma.wso.findFirstOrThrow({
+     * // Get one Setting
+     * const setting = await prisma.setting.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends WsoFindFirstOrThrowArgs>(args?: SelectSubset<T, WsoFindFirstOrThrowArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+    findFirstOrThrow<T extends SettingFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
 
     /**
-     * Find zero or more Wsos that matches the filter.
+     * Find zero or more Settings that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {SettingFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Wsos
-     * const wsos = await prisma.wso.findMany()
+     * // Get all Settings
+     * const settings = await prisma.setting.findMany()
      * 
-     * // Get first 10 Wsos
-     * const wsos = await prisma.wso.findMany({ take: 10 })
+     * // Get first 10 Settings
+     * const settings = await prisma.setting.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const wsoWithIdOnly = await prisma.wso.findMany({ select: { id: true } })
+     * const settingWithIdOnly = await prisma.setting.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends WsoFindManyArgs>(args?: SelectSubset<T, WsoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "findMany">>
+    findMany<T extends SettingFindManyArgs>(args?: SelectSubset<T, SettingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findMany">>
 
     /**
-     * Create a Wso.
-     * @param {WsoCreateArgs} args - Arguments to create a Wso.
+     * Create a Setting.
+     * @param {SettingCreateArgs} args - Arguments to create a Setting.
      * @example
-     * // Create one Wso
-     * const Wso = await prisma.wso.create({
+     * // Create one Setting
+     * const Setting = await prisma.setting.create({
      *   data: {
-     *     // ... data to create a Wso
+     *     // ... data to create a Setting
      *   }
      * })
      * 
      */
-    create<T extends WsoCreateArgs>(args: SelectSubset<T, WsoCreateArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "create">, never, ExtArgs>
+    create<T extends SettingCreateArgs>(args: SelectSubset<T, SettingCreateArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "create">, never, ExtArgs>
 
     /**
-     * Create many Wsos.
-     * @param {WsoCreateManyArgs} args - Arguments to create many Wsos.
+     * Create many Settings.
+     * @param {SettingCreateManyArgs} args - Arguments to create many Settings.
      * @example
-     * // Create many Wsos
-     * const wso = await prisma.wso.createMany({
+     * // Create many Settings
+     * const setting = await prisma.setting.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends WsoCreateManyArgs>(args?: SelectSubset<T, WsoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends SettingCreateManyArgs>(args?: SelectSubset<T, SettingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Wsos and returns the data saved in the database.
-     * @param {WsoCreateManyAndReturnArgs} args - Arguments to create many Wsos.
+     * Create many Settings and returns the data saved in the database.
+     * @param {SettingCreateManyAndReturnArgs} args - Arguments to create many Settings.
      * @example
-     * // Create many Wsos
-     * const wso = await prisma.wso.createManyAndReturn({
+     * // Create many Settings
+     * const setting = await prisma.setting.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Wsos and only return the `id`
-     * const wsoWithIdOnly = await prisma.wso.createManyAndReturn({ 
+     * // Create many Settings and only return the `id`
+     * const settingWithIdOnly = await prisma.setting.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -3607,28 +4731,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends WsoCreateManyAndReturnArgs>(args?: SelectSubset<T, WsoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "createManyAndReturn">>
+    createManyAndReturn<T extends SettingCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "createManyAndReturn">>
 
     /**
-     * Delete a Wso.
-     * @param {WsoDeleteArgs} args - Arguments to delete one Wso.
+     * Delete a Setting.
+     * @param {SettingDeleteArgs} args - Arguments to delete one Setting.
      * @example
-     * // Delete one Wso
-     * const Wso = await prisma.wso.delete({
+     * // Delete one Setting
+     * const Setting = await prisma.setting.delete({
      *   where: {
-     *     // ... filter to delete one Wso
+     *     // ... filter to delete one Setting
      *   }
      * })
      * 
      */
-    delete<T extends WsoDeleteArgs>(args: SelectSubset<T, WsoDeleteArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+    delete<T extends SettingDeleteArgs>(args: SelectSubset<T, SettingDeleteArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "delete">, never, ExtArgs>
 
     /**
-     * Update one Wso.
-     * @param {WsoUpdateArgs} args - Arguments to update one Wso.
+     * Update one Setting.
+     * @param {SettingUpdateArgs} args - Arguments to update one Setting.
      * @example
-     * // Update one Wso
-     * const wso = await prisma.wso.update({
+     * // Update one Setting
+     * const setting = await prisma.setting.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3638,30 +4762,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends WsoUpdateArgs>(args: SelectSubset<T, WsoUpdateArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "update">, never, ExtArgs>
+    update<T extends SettingUpdateArgs>(args: SelectSubset<T, SettingUpdateArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "update">, never, ExtArgs>
 
     /**
-     * Delete zero or more Wsos.
-     * @param {WsoDeleteManyArgs} args - Arguments to filter Wsos to delete.
+     * Delete zero or more Settings.
+     * @param {SettingDeleteManyArgs} args - Arguments to filter Settings to delete.
      * @example
-     * // Delete a few Wsos
-     * const { count } = await prisma.wso.deleteMany({
+     * // Delete a few Settings
+     * const { count } = await prisma.setting.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends WsoDeleteManyArgs>(args?: SelectSubset<T, WsoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends SettingDeleteManyArgs>(args?: SelectSubset<T, SettingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Wsos.
+     * Update zero or more Settings.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {SettingUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Wsos
-     * const wso = await prisma.wso.updateMany({
+     * // Update many Settings
+     * const setting = await prisma.setting.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -3671,56 +4795,56 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends WsoUpdateManyArgs>(args: SelectSubset<T, WsoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends SettingUpdateManyArgs>(args: SelectSubset<T, SettingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Wso.
-     * @param {WsoUpsertArgs} args - Arguments to update or create a Wso.
+     * Create or update one Setting.
+     * @param {SettingUpsertArgs} args - Arguments to update or create a Setting.
      * @example
-     * // Update or create a Wso
-     * const wso = await prisma.wso.upsert({
+     * // Update or create a Setting
+     * const setting = await prisma.setting.upsert({
      *   create: {
-     *     // ... data to create a Wso
+     *     // ... data to create a Setting
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Wso we want to update
+     *     // ... the filter for the Setting we want to update
      *   }
      * })
      */
-    upsert<T extends WsoUpsertArgs>(args: SelectSubset<T, WsoUpsertArgs<ExtArgs>>): Prisma__WsoClient<$Result.GetResult<Prisma.$WsoPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+    upsert<T extends SettingUpsertArgs>(args: SelectSubset<T, SettingUpsertArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
 
 
     /**
-     * Count the number of Wsos.
+     * Count the number of Settings.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoCountArgs} args - Arguments to filter Wsos to count.
+     * @param {SettingCountArgs} args - Arguments to filter Settings to count.
      * @example
-     * // Count the number of Wsos
-     * const count = await prisma.wso.count({
+     * // Count the number of Settings
+     * const count = await prisma.setting.count({
      *   where: {
-     *     // ... the filter for the Wsos we want to count
+     *     // ... the filter for the Settings we want to count
      *   }
      * })
     **/
-    count<T extends WsoCountArgs>(
-      args?: Subset<T, WsoCountArgs>,
+    count<T extends SettingCountArgs>(
+      args?: Subset<T, SettingCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], WsoCountAggregateOutputType>
+          : GetScalarType<T['select'], SettingCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Wso.
+     * Allows you to perform aggregations operations on a Setting.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {SettingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -3740,13 +4864,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends WsoAggregateArgs>(args: Subset<T, WsoAggregateArgs>): Prisma.PrismaPromise<GetWsoAggregateType<T>>
+    aggregate<T extends SettingAggregateArgs>(args: Subset<T, SettingAggregateArgs>): Prisma.PrismaPromise<GetSettingAggregateType<T>>
 
     /**
-     * Group by Wso.
+     * Group by Setting.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WsoGroupByArgs} args - Group by arguments.
+     * @param {SettingGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -3761,14 +4885,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends WsoGroupByArgs,
+      T extends SettingGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: WsoGroupByArgs['orderBy'] }
-        : { orderBy?: WsoGroupByArgs['orderBy'] },
+        ? { orderBy: SettingGroupByArgs['orderBy'] }
+        : { orderBy?: SettingGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -3817,20 +4941,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, WsoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWsoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, SettingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Wso model
+   * Fields of the Setting model
    */
-  readonly fields: WsoFieldRefs;
+  readonly fields: SettingFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Wso.
+   * The delegate class that acts as a "Promise-like" for Setting.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__WsoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__SettingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3858,328 +4982,297 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Wso model
+   * Fields of the Setting model
    */ 
-  interface WsoFieldRefs {
-    readonly id: FieldRef<"Wso", 'Int'>
-    readonly name: FieldRef<"Wso", 'String'>
-    readonly email: FieldRef<"Wso", 'String'>
-    readonly companyName: FieldRef<"Wso", 'String'>
-    readonly phone: FieldRef<"Wso", 'String'>
-    readonly lineId: FieldRef<"Wso", 'String'>
-    readonly productType: FieldRef<"Wso", 'String'>
-    readonly fabricType: FieldRef<"Wso", 'String'>
-    readonly specs: FieldRef<"Wso", 'String'>
-    readonly sizeDetails: FieldRef<"Wso", 'Json'>
-    readonly totalQuantity: FieldRef<"Wso", 'Int'>
-    readonly printTitle: FieldRef<"Wso", 'String'>
-    readonly printSize: FieldRef<"Wso", 'String'>
-    readonly embroideryTitle: FieldRef<"Wso", 'String'>
-    readonly embroiderySize: FieldRef<"Wso", 'String'>
-    readonly printPos2Title: FieldRef<"Wso", 'String'>
-    readonly printPos2Size: FieldRef<"Wso", 'String'>
-    readonly embroideryPos2Title: FieldRef<"Wso", 'String'>
-    readonly embroideryPos2Size: FieldRef<"Wso", 'String'>
-    readonly printPos3Title: FieldRef<"Wso", 'String'>
-    readonly printPos3Size: FieldRef<"Wso", 'String'>
-    readonly embroideryPos3Title: FieldRef<"Wso", 'String'>
-    readonly embroideryPos3Size: FieldRef<"Wso", 'String'>
-    readonly printPos4Title: FieldRef<"Wso", 'String'>
-    readonly printPos4Size: FieldRef<"Wso", 'String'>
-    readonly embroideryPos4Title: FieldRef<"Wso", 'String'>
-    readonly embroideryPos4Size: FieldRef<"Wso", 'String'>
-    readonly printPos5Title: FieldRef<"Wso", 'String'>
-    readonly printPos5Size: FieldRef<"Wso", 'String'>
-    readonly embroideryPos5Title: FieldRef<"Wso", 'String'>
-    readonly embroideryPos5Size: FieldRef<"Wso", 'String'>
-    readonly additionalNeeds: FieldRef<"Wso", 'String'>
-    readonly images: FieldRef<"Wso", 'Json'>
-    readonly createdAt: FieldRef<"Wso", 'DateTime'>
+  interface SettingFieldRefs {
+    readonly id: FieldRef<"Setting", 'Int'>
+    readonly key: FieldRef<"Setting", 'String'>
+    readonly value: FieldRef<"Setting", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Wso findUnique
+   * Setting findUnique
    */
-  export type WsoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * Filter, which Wso to fetch.
+     * Filter, which Setting to fetch.
      */
-    where: WsoWhereUniqueInput
+    where: SettingWhereUniqueInput
   }
 
   /**
-   * Wso findUniqueOrThrow
+   * Setting findUniqueOrThrow
    */
-  export type WsoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * Filter, which Wso to fetch.
+     * Filter, which Setting to fetch.
      */
-    where: WsoWhereUniqueInput
+    where: SettingWhereUniqueInput
   }
 
   /**
-   * Wso findFirst
+   * Setting findFirst
    */
-  export type WsoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * Filter, which Wso to fetch.
+     * Filter, which Setting to fetch.
      */
-    where?: WsoWhereInput
+    where?: SettingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Wsos to fetch.
+     * Determine the order of Settings to fetch.
      */
-    orderBy?: WsoOrderByWithRelationInput | WsoOrderByWithRelationInput[]
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Wsos.
+     * Sets the position for searching for Settings.
      */
-    cursor?: WsoWhereUniqueInput
+    cursor?: SettingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Wsos from the position of the cursor.
+     * Take `±n` Settings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Wsos.
+     * Skip the first `n` Settings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Wsos.
+     * Filter by unique combinations of Settings.
      */
-    distinct?: WsoScalarFieldEnum | WsoScalarFieldEnum[]
+    distinct?: SettingScalarFieldEnum | SettingScalarFieldEnum[]
   }
 
   /**
-   * Wso findFirstOrThrow
+   * Setting findFirstOrThrow
    */
-  export type WsoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * Filter, which Wso to fetch.
+     * Filter, which Setting to fetch.
      */
-    where?: WsoWhereInput
+    where?: SettingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Wsos to fetch.
+     * Determine the order of Settings to fetch.
      */
-    orderBy?: WsoOrderByWithRelationInput | WsoOrderByWithRelationInput[]
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Wsos.
+     * Sets the position for searching for Settings.
      */
-    cursor?: WsoWhereUniqueInput
+    cursor?: SettingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Wsos from the position of the cursor.
+     * Take `±n` Settings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Wsos.
+     * Skip the first `n` Settings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Wsos.
+     * Filter by unique combinations of Settings.
      */
-    distinct?: WsoScalarFieldEnum | WsoScalarFieldEnum[]
+    distinct?: SettingScalarFieldEnum | SettingScalarFieldEnum[]
   }
 
   /**
-   * Wso findMany
+   * Setting findMany
    */
-  export type WsoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * Filter, which Wsos to fetch.
+     * Filter, which Settings to fetch.
      */
-    where?: WsoWhereInput
+    where?: SettingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Wsos to fetch.
+     * Determine the order of Settings to fetch.
      */
-    orderBy?: WsoOrderByWithRelationInput | WsoOrderByWithRelationInput[]
+    orderBy?: SettingOrderByWithRelationInput | SettingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Wsos.
+     * Sets the position for listing Settings.
      */
-    cursor?: WsoWhereUniqueInput
+    cursor?: SettingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Wsos from the position of the cursor.
+     * Take `±n` Settings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Wsos.
+     * Skip the first `n` Settings.
      */
     skip?: number
-    distinct?: WsoScalarFieldEnum | WsoScalarFieldEnum[]
+    distinct?: SettingScalarFieldEnum | SettingScalarFieldEnum[]
   }
 
   /**
-   * Wso create
+   * Setting create
    */
-  export type WsoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * The data needed to create a Wso.
+     * The data needed to create a Setting.
      */
-    data: XOR<WsoCreateInput, WsoUncheckedCreateInput>
+    data: XOR<SettingCreateInput, SettingUncheckedCreateInput>
   }
 
   /**
-   * Wso createMany
+   * Setting createMany
    */
-  export type WsoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Wsos.
+     * The data used to create many Settings.
      */
-    data: WsoCreateManyInput | WsoCreateManyInput[]
+    data: SettingCreateManyInput | SettingCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Wso createManyAndReturn
+   * Setting createManyAndReturn
    */
-  export type WsoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelectCreateManyAndReturn<ExtArgs> | null
+    select?: SettingSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * The data used to create many Wsos.
+     * The data used to create many Settings.
      */
-    data: WsoCreateManyInput | WsoCreateManyInput[]
+    data: SettingCreateManyInput | SettingCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Wso update
+   * Setting update
    */
-  export type WsoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * The data needed to update a Wso.
+     * The data needed to update a Setting.
      */
-    data: XOR<WsoUpdateInput, WsoUncheckedUpdateInput>
+    data: XOR<SettingUpdateInput, SettingUncheckedUpdateInput>
     /**
-     * Choose, which Wso to update.
+     * Choose, which Setting to update.
      */
-    where: WsoWhereUniqueInput
+    where: SettingWhereUniqueInput
   }
 
   /**
-   * Wso updateMany
+   * Setting updateMany
    */
-  export type WsoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Wsos.
+     * The data used to update Settings.
      */
-    data: XOR<WsoUpdateManyMutationInput, WsoUncheckedUpdateManyInput>
+    data: XOR<SettingUpdateManyMutationInput, SettingUncheckedUpdateManyInput>
     /**
-     * Filter which Wsos to update
+     * Filter which Settings to update
      */
-    where?: WsoWhereInput
+    where?: SettingWhereInput
   }
 
   /**
-   * Wso upsert
+   * Setting upsert
    */
-  export type WsoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * The filter to search for the Wso to update in case it exists.
+     * The filter to search for the Setting to update in case it exists.
      */
-    where: WsoWhereUniqueInput
+    where: SettingWhereUniqueInput
     /**
-     * In case the Wso found by the `where` argument doesn't exist, create a new Wso with this data.
+     * In case the Setting found by the `where` argument doesn't exist, create a new Setting with this data.
      */
-    create: XOR<WsoCreateInput, WsoUncheckedCreateInput>
+    create: XOR<SettingCreateInput, SettingUncheckedCreateInput>
     /**
-     * In case the Wso was found with the provided `where` argument, update it with this data.
+     * In case the Setting was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<WsoUpdateInput, WsoUncheckedUpdateInput>
+    update: XOR<SettingUpdateInput, SettingUncheckedUpdateInput>
   }
 
   /**
-   * Wso delete
+   * Setting delete
    */
-  export type WsoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
     /**
-     * Filter which Wso to delete.
+     * Filter which Setting to delete.
      */
-    where: WsoWhereUniqueInput
+    where: SettingWhereUniqueInput
   }
 
   /**
-   * Wso deleteMany
+   * Setting deleteMany
    */
-  export type WsoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Wsos to delete
+     * Filter which Settings to delete
      */
-    where?: WsoWhereInput
+    where?: SettingWhereInput
   }
 
   /**
-   * Wso without action
+   * Setting without action
    */
-  export type WsoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SettingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Wso
+     * Select specific fields to fetch from the Setting
      */
-    select?: WsoSelect<ExtArgs> | null
+    select?: SettingSelect<ExtArgs> | null
   }
 
 
@@ -4197,25 +5290,60 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const SubmissionScalarFieldEnum: {
+  export const CustomerScalarFieldEnum: {
     id: 'id',
     name: 'name',
     email: 'email',
     companyName: 'companyName',
     phone: 'phone',
-    productType: 'productType',
-    fabricType: 'fabricType',
+    lineId: 'lineId',
+    totalOrders: 'totalOrders',
     createdAt: 'createdAt',
-    fileUrls: 'fileUrls',
-    additionalNeeds: 'additionalNeeds',
-    embroideryPositions: 'embroideryPositions',
-    printPoints: 'printPoints',
-    sizeDetails: 'sizeDetails',
-    specs: 'specs',
-    totalQuantity: 'totalQuantity'
+    updatedAt: 'updatedAt'
   };
 
-  export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
+  export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+  export const OrderScalarFieldEnum: {
+    id: 'id',
+    customerId: 'customerId',
+    productType: 'productType',
+    fabricType: 'fabricType',
+    specs: 'specs',
+    sizeData: 'sizeData',
+    totalQuantity: 'totalQuantity',
+    manualTotal: 'manualTotal',
+    decorationSets: 'decorationSets',
+    printTitle: 'printTitle',
+    printSize: 'printSize',
+    printPos2Title: 'printPos2Title',
+    printPos2Size: 'printPos2Size',
+    printPos3Title: 'printPos3Title',
+    printPos3Size: 'printPos3Size',
+    printPos4Title: 'printPos4Title',
+    printPos4Size: 'printPos4Size',
+    printPos5Title: 'printPos5Title',
+    printPos5Size: 'printPos5Size',
+    embroideryTitle: 'embroideryTitle',
+    embroiderySize: 'embroiderySize',
+    embroideryPos2Title: 'embroideryPos2Title',
+    embroideryPos2Size: 'embroideryPos2Size',
+    embroideryPos3Title: 'embroideryPos3Title',
+    embroideryPos3Size: 'embroideryPos3Size',
+    embroideryPos4Title: 'embroideryPos4Title',
+    embroideryPos4Size: 'embroideryPos4Size',
+    embroideryPos5Title: 'embroideryPos5Title',
+    embroideryPos5Size: 'embroideryPos5Size',
+    additionalNeeds: 'additionalNeeds',
+    images: 'images',
+    reportName: 'reportName',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
 
 
   export const AdminScalarFieldEnum: {
@@ -4227,44 +5355,13 @@ export namespace Prisma {
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
-  export const WsoScalarFieldEnum: {
+  export const SettingScalarFieldEnum: {
     id: 'id',
-    name: 'name',
-    email: 'email',
-    companyName: 'companyName',
-    phone: 'phone',
-    lineId: 'lineId',
-    productType: 'productType',
-    fabricType: 'fabricType',
-    specs: 'specs',
-    sizeDetails: 'sizeDetails',
-    totalQuantity: 'totalQuantity',
-    printTitle: 'printTitle',
-    printSize: 'printSize',
-    embroideryTitle: 'embroideryTitle',
-    embroiderySize: 'embroiderySize',
-    printPos2Title: 'printPos2Title',
-    printPos2Size: 'printPos2Size',
-    embroideryPos2Title: 'embroideryPos2Title',
-    embroideryPos2Size: 'embroideryPos2Size',
-    printPos3Title: 'printPos3Title',
-    printPos3Size: 'printPos3Size',
-    embroideryPos3Title: 'embroideryPos3Title',
-    embroideryPos3Size: 'embroideryPos3Size',
-    printPos4Title: 'printPos4Title',
-    printPos4Size: 'printPos4Size',
-    embroideryPos4Title: 'embroideryPos4Title',
-    embroideryPos4Size: 'embroideryPos4Size',
-    printPos5Title: 'printPos5Title',
-    printPos5Size: 'printPos5Size',
-    embroideryPos5Title: 'embroideryPos5Title',
-    embroideryPos5Size: 'embroideryPos5Size',
-    additionalNeeds: 'additionalNeeds',
-    images: 'images',
-    createdAt: 'createdAt'
+    key: 'key',
+    value: 'value'
   };
 
-  export type WsoScalarFieldEnum = (typeof WsoScalarFieldEnum)[keyof typeof WsoScalarFieldEnum]
+  export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4275,36 +5372,12 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-  export const NullableJsonNullValueInput: {
-    DbNull: typeof DbNull,
-    JsonNull: typeof JsonNull
-  };
-
-  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-  export const JsonNullValueInput: {
-    JsonNull: typeof JsonNull
-  };
-
-  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-  export const JsonNullValueFilter: {
-    DbNull: typeof DbNull,
-    JsonNull: typeof JsonNull,
-    AnyNull: typeof AnyNull
-  };
-
-  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   export const NullsOrder: {
@@ -4363,13 +5436,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4386,108 +5452,288 @@ export namespace Prisma {
    */
 
 
-  export type SubmissionWhereInput = {
-    AND?: SubmissionWhereInput | SubmissionWhereInput[]
-    OR?: SubmissionWhereInput[]
-    NOT?: SubmissionWhereInput | SubmissionWhereInput[]
-    id?: IntFilter<"Submission"> | number
-    name?: StringFilter<"Submission"> | string
-    email?: StringFilter<"Submission"> | string
-    companyName?: StringNullableFilter<"Submission"> | string | null
-    phone?: StringFilter<"Submission"> | string
-    productType?: StringFilter<"Submission"> | string
-    fabricType?: StringNullableFilter<"Submission"> | string | null
-    createdAt?: DateTimeFilter<"Submission"> | Date | string
-    fileUrls?: StringNullableListFilter<"Submission">
-    additionalNeeds?: StringNullableFilter<"Submission"> | string | null
-    embroideryPositions?: StringNullableFilter<"Submission"> | string | null
-    printPoints?: StringNullableFilter<"Submission"> | string | null
-    sizeDetails?: JsonNullableFilter<"Submission">
-    specs?: StringNullableFilter<"Submission"> | string | null
-    totalQuantity?: StringNullableFilter<"Submission"> | string | null
+  export type CustomerWhereInput = {
+    AND?: CustomerWhereInput | CustomerWhereInput[]
+    OR?: CustomerWhereInput[]
+    NOT?: CustomerWhereInput | CustomerWhereInput[]
+    id?: IntFilter<"Customer"> | number
+    name?: StringFilter<"Customer"> | string
+    email?: StringFilter<"Customer"> | string
+    companyName?: StringNullableFilter<"Customer"> | string | null
+    phone?: StringFilter<"Customer"> | string
+    lineId?: StringNullableFilter<"Customer"> | string | null
+    totalOrders?: IntFilter<"Customer"> | number
+    createdAt?: DateTimeFilter<"Customer"> | Date | string
+    updatedAt?: DateTimeFilter<"Customer"> | Date | string
+    orders?: OrderListRelationFilter
   }
 
-  export type SubmissionOrderByWithRelationInput = {
+  export type CustomerOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     companyName?: SortOrderInput | SortOrder
     phone?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrderInput | SortOrder
+    lineId?: SortOrderInput | SortOrder
+    totalOrders?: SortOrder
     createdAt?: SortOrder
-    fileUrls?: SortOrder
-    additionalNeeds?: SortOrderInput | SortOrder
-    embroideryPositions?: SortOrderInput | SortOrder
-    printPoints?: SortOrderInput | SortOrder
-    sizeDetails?: SortOrderInput | SortOrder
-    specs?: SortOrderInput | SortOrder
-    totalQuantity?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    orders?: OrderOrderByRelationAggregateInput
   }
 
-  export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
+  export type CustomerWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: SubmissionWhereInput | SubmissionWhereInput[]
-    OR?: SubmissionWhereInput[]
-    NOT?: SubmissionWhereInput | SubmissionWhereInput[]
-    name?: StringFilter<"Submission"> | string
-    email?: StringFilter<"Submission"> | string
-    companyName?: StringNullableFilter<"Submission"> | string | null
-    phone?: StringFilter<"Submission"> | string
-    productType?: StringFilter<"Submission"> | string
-    fabricType?: StringNullableFilter<"Submission"> | string | null
-    createdAt?: DateTimeFilter<"Submission"> | Date | string
-    fileUrls?: StringNullableListFilter<"Submission">
-    additionalNeeds?: StringNullableFilter<"Submission"> | string | null
-    embroideryPositions?: StringNullableFilter<"Submission"> | string | null
-    printPoints?: StringNullableFilter<"Submission"> | string | null
-    sizeDetails?: JsonNullableFilter<"Submission">
-    specs?: StringNullableFilter<"Submission"> | string | null
-    totalQuantity?: StringNullableFilter<"Submission"> | string | null
+    AND?: CustomerWhereInput | CustomerWhereInput[]
+    OR?: CustomerWhereInput[]
+    NOT?: CustomerWhereInput | CustomerWhereInput[]
+    name?: StringFilter<"Customer"> | string
+    email?: StringFilter<"Customer"> | string
+    companyName?: StringNullableFilter<"Customer"> | string | null
+    phone?: StringFilter<"Customer"> | string
+    lineId?: StringNullableFilter<"Customer"> | string | null
+    totalOrders?: IntFilter<"Customer"> | number
+    createdAt?: DateTimeFilter<"Customer"> | Date | string
+    updatedAt?: DateTimeFilter<"Customer"> | Date | string
+    orders?: OrderListRelationFilter
   }, "id">
 
-  export type SubmissionOrderByWithAggregationInput = {
+  export type CustomerOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     companyName?: SortOrderInput | SortOrder
     phone?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrderInput | SortOrder
+    lineId?: SortOrderInput | SortOrder
+    totalOrders?: SortOrder
     createdAt?: SortOrder
-    fileUrls?: SortOrder
-    additionalNeeds?: SortOrderInput | SortOrder
-    embroideryPositions?: SortOrderInput | SortOrder
-    printPoints?: SortOrderInput | SortOrder
-    sizeDetails?: SortOrderInput | SortOrder
-    specs?: SortOrderInput | SortOrder
-    totalQuantity?: SortOrderInput | SortOrder
-    _count?: SubmissionCountOrderByAggregateInput
-    _avg?: SubmissionAvgOrderByAggregateInput
-    _max?: SubmissionMaxOrderByAggregateInput
-    _min?: SubmissionMinOrderByAggregateInput
-    _sum?: SubmissionSumOrderByAggregateInput
+    updatedAt?: SortOrder
+    _count?: CustomerCountOrderByAggregateInput
+    _avg?: CustomerAvgOrderByAggregateInput
+    _max?: CustomerMaxOrderByAggregateInput
+    _min?: CustomerMinOrderByAggregateInput
+    _sum?: CustomerSumOrderByAggregateInput
   }
 
-  export type SubmissionScalarWhereWithAggregatesInput = {
-    AND?: SubmissionScalarWhereWithAggregatesInput | SubmissionScalarWhereWithAggregatesInput[]
-    OR?: SubmissionScalarWhereWithAggregatesInput[]
-    NOT?: SubmissionScalarWhereWithAggregatesInput | SubmissionScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Submission"> | number
-    name?: StringWithAggregatesFilter<"Submission"> | string
-    email?: StringWithAggregatesFilter<"Submission"> | string
-    companyName?: StringNullableWithAggregatesFilter<"Submission"> | string | null
-    phone?: StringWithAggregatesFilter<"Submission"> | string
-    productType?: StringWithAggregatesFilter<"Submission"> | string
-    fabricType?: StringNullableWithAggregatesFilter<"Submission"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"Submission"> | Date | string
-    fileUrls?: StringNullableListFilter<"Submission">
-    additionalNeeds?: StringNullableWithAggregatesFilter<"Submission"> | string | null
-    embroideryPositions?: StringNullableWithAggregatesFilter<"Submission"> | string | null
-    printPoints?: StringNullableWithAggregatesFilter<"Submission"> | string | null
-    sizeDetails?: JsonNullableWithAggregatesFilter<"Submission">
-    specs?: StringNullableWithAggregatesFilter<"Submission"> | string | null
-    totalQuantity?: StringNullableWithAggregatesFilter<"Submission"> | string | null
+  export type CustomerScalarWhereWithAggregatesInput = {
+    AND?: CustomerScalarWhereWithAggregatesInput | CustomerScalarWhereWithAggregatesInput[]
+    OR?: CustomerScalarWhereWithAggregatesInput[]
+    NOT?: CustomerScalarWhereWithAggregatesInput | CustomerScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Customer"> | number
+    name?: StringWithAggregatesFilter<"Customer"> | string
+    email?: StringWithAggregatesFilter<"Customer"> | string
+    companyName?: StringNullableWithAggregatesFilter<"Customer"> | string | null
+    phone?: StringWithAggregatesFilter<"Customer"> | string
+    lineId?: StringNullableWithAggregatesFilter<"Customer"> | string | null
+    totalOrders?: IntWithAggregatesFilter<"Customer"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Customer"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Customer"> | Date | string
+  }
+
+  export type OrderWhereInput = {
+    AND?: OrderWhereInput | OrderWhereInput[]
+    OR?: OrderWhereInput[]
+    NOT?: OrderWhereInput | OrderWhereInput[]
+    id?: IntFilter<"Order"> | number
+    customerId?: IntFilter<"Order"> | number
+    productType?: StringFilter<"Order"> | string
+    fabricType?: StringFilter<"Order"> | string
+    specs?: StringNullableFilter<"Order"> | string | null
+    sizeData?: StringFilter<"Order"> | string
+    totalQuantity?: IntFilter<"Order"> | number
+    manualTotal?: StringNullableFilter<"Order"> | string | null
+    decorationSets?: StringFilter<"Order"> | string
+    printTitle?: StringNullableFilter<"Order"> | string | null
+    printSize?: StringNullableFilter<"Order"> | string | null
+    printPos2Title?: StringNullableFilter<"Order"> | string | null
+    printPos2Size?: StringNullableFilter<"Order"> | string | null
+    printPos3Title?: StringNullableFilter<"Order"> | string | null
+    printPos3Size?: StringNullableFilter<"Order"> | string | null
+    printPos4Title?: StringNullableFilter<"Order"> | string | null
+    printPos4Size?: StringNullableFilter<"Order"> | string | null
+    printPos5Title?: StringNullableFilter<"Order"> | string | null
+    printPos5Size?: StringNullableFilter<"Order"> | string | null
+    embroideryTitle?: StringNullableFilter<"Order"> | string | null
+    embroiderySize?: StringNullableFilter<"Order"> | string | null
+    embroideryPos2Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos2Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos3Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos3Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos4Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos4Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Order"> | string | null
+    additionalNeeds?: StringNullableFilter<"Order"> | string | null
+    images?: StringFilter<"Order"> | string
+    reportName?: StringNullableFilter<"Order"> | string | null
+    status?: StringFilter<"Order"> | string
+    createdAt?: DateTimeFilter<"Order"> | Date | string
+    updatedAt?: DateTimeFilter<"Order"> | Date | string
+    customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
+  }
+
+  export type OrderOrderByWithRelationInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    productType?: SortOrder
+    fabricType?: SortOrder
+    specs?: SortOrderInput | SortOrder
+    sizeData?: SortOrder
+    totalQuantity?: SortOrder
+    manualTotal?: SortOrderInput | SortOrder
+    decorationSets?: SortOrder
+    printTitle?: SortOrderInput | SortOrder
+    printSize?: SortOrderInput | SortOrder
+    printPos2Title?: SortOrderInput | SortOrder
+    printPos2Size?: SortOrderInput | SortOrder
+    printPos3Title?: SortOrderInput | SortOrder
+    printPos3Size?: SortOrderInput | SortOrder
+    printPos4Title?: SortOrderInput | SortOrder
+    printPos4Size?: SortOrderInput | SortOrder
+    printPos5Title?: SortOrderInput | SortOrder
+    printPos5Size?: SortOrderInput | SortOrder
+    embroideryTitle?: SortOrderInput | SortOrder
+    embroiderySize?: SortOrderInput | SortOrder
+    embroideryPos2Title?: SortOrderInput | SortOrder
+    embroideryPos2Size?: SortOrderInput | SortOrder
+    embroideryPos3Title?: SortOrderInput | SortOrder
+    embroideryPos3Size?: SortOrderInput | SortOrder
+    embroideryPos4Title?: SortOrderInput | SortOrder
+    embroideryPos4Size?: SortOrderInput | SortOrder
+    embroideryPos5Title?: SortOrderInput | SortOrder
+    embroideryPos5Size?: SortOrderInput | SortOrder
+    additionalNeeds?: SortOrderInput | SortOrder
+    images?: SortOrder
+    reportName?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    customer?: CustomerOrderByWithRelationInput
+  }
+
+  export type OrderWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: OrderWhereInput | OrderWhereInput[]
+    OR?: OrderWhereInput[]
+    NOT?: OrderWhereInput | OrderWhereInput[]
+    customerId?: IntFilter<"Order"> | number
+    productType?: StringFilter<"Order"> | string
+    fabricType?: StringFilter<"Order"> | string
+    specs?: StringNullableFilter<"Order"> | string | null
+    sizeData?: StringFilter<"Order"> | string
+    totalQuantity?: IntFilter<"Order"> | number
+    manualTotal?: StringNullableFilter<"Order"> | string | null
+    decorationSets?: StringFilter<"Order"> | string
+    printTitle?: StringNullableFilter<"Order"> | string | null
+    printSize?: StringNullableFilter<"Order"> | string | null
+    printPos2Title?: StringNullableFilter<"Order"> | string | null
+    printPos2Size?: StringNullableFilter<"Order"> | string | null
+    printPos3Title?: StringNullableFilter<"Order"> | string | null
+    printPos3Size?: StringNullableFilter<"Order"> | string | null
+    printPos4Title?: StringNullableFilter<"Order"> | string | null
+    printPos4Size?: StringNullableFilter<"Order"> | string | null
+    printPos5Title?: StringNullableFilter<"Order"> | string | null
+    printPos5Size?: StringNullableFilter<"Order"> | string | null
+    embroideryTitle?: StringNullableFilter<"Order"> | string | null
+    embroiderySize?: StringNullableFilter<"Order"> | string | null
+    embroideryPos2Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos2Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos3Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos3Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos4Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos4Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Order"> | string | null
+    additionalNeeds?: StringNullableFilter<"Order"> | string | null
+    images?: StringFilter<"Order"> | string
+    reportName?: StringNullableFilter<"Order"> | string | null
+    status?: StringFilter<"Order"> | string
+    createdAt?: DateTimeFilter<"Order"> | Date | string
+    updatedAt?: DateTimeFilter<"Order"> | Date | string
+    customer?: XOR<CustomerRelationFilter, CustomerWhereInput>
+  }, "id">
+
+  export type OrderOrderByWithAggregationInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    productType?: SortOrder
+    fabricType?: SortOrder
+    specs?: SortOrderInput | SortOrder
+    sizeData?: SortOrder
+    totalQuantity?: SortOrder
+    manualTotal?: SortOrderInput | SortOrder
+    decorationSets?: SortOrder
+    printTitle?: SortOrderInput | SortOrder
+    printSize?: SortOrderInput | SortOrder
+    printPos2Title?: SortOrderInput | SortOrder
+    printPos2Size?: SortOrderInput | SortOrder
+    printPos3Title?: SortOrderInput | SortOrder
+    printPos3Size?: SortOrderInput | SortOrder
+    printPos4Title?: SortOrderInput | SortOrder
+    printPos4Size?: SortOrderInput | SortOrder
+    printPos5Title?: SortOrderInput | SortOrder
+    printPos5Size?: SortOrderInput | SortOrder
+    embroideryTitle?: SortOrderInput | SortOrder
+    embroiderySize?: SortOrderInput | SortOrder
+    embroideryPos2Title?: SortOrderInput | SortOrder
+    embroideryPos2Size?: SortOrderInput | SortOrder
+    embroideryPos3Title?: SortOrderInput | SortOrder
+    embroideryPos3Size?: SortOrderInput | SortOrder
+    embroideryPos4Title?: SortOrderInput | SortOrder
+    embroideryPos4Size?: SortOrderInput | SortOrder
+    embroideryPos5Title?: SortOrderInput | SortOrder
+    embroideryPos5Size?: SortOrderInput | SortOrder
+    additionalNeeds?: SortOrderInput | SortOrder
+    images?: SortOrder
+    reportName?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OrderCountOrderByAggregateInput
+    _avg?: OrderAvgOrderByAggregateInput
+    _max?: OrderMaxOrderByAggregateInput
+    _min?: OrderMinOrderByAggregateInput
+    _sum?: OrderSumOrderByAggregateInput
+  }
+
+  export type OrderScalarWhereWithAggregatesInput = {
+    AND?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
+    OR?: OrderScalarWhereWithAggregatesInput[]
+    NOT?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Order"> | number
+    customerId?: IntWithAggregatesFilter<"Order"> | number
+    productType?: StringWithAggregatesFilter<"Order"> | string
+    fabricType?: StringWithAggregatesFilter<"Order"> | string
+    specs?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    sizeData?: StringWithAggregatesFilter<"Order"> | string
+    totalQuantity?: IntWithAggregatesFilter<"Order"> | number
+    manualTotal?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    decorationSets?: StringWithAggregatesFilter<"Order"> | string
+    printTitle?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printSize?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos2Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos2Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos3Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos3Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos4Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos4Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos5Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    printPos5Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryTitle?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroiderySize?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos2Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos2Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos3Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos3Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos4Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos4Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    additionalNeeds?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    images?: StringWithAggregatesFilter<"Order"> | string
+    reportName?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    status?: StringWithAggregatesFilter<"Order"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
   }
 
   export type AdminWhereInput = {
@@ -4534,326 +5780,395 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"Admin"> | string
   }
 
-  export type WsoWhereInput = {
-    AND?: WsoWhereInput | WsoWhereInput[]
-    OR?: WsoWhereInput[]
-    NOT?: WsoWhereInput | WsoWhereInput[]
-    id?: IntFilter<"Wso"> | number
-    name?: StringFilter<"Wso"> | string
-    email?: StringFilter<"Wso"> | string
-    companyName?: StringNullableFilter<"Wso"> | string | null
-    phone?: StringFilter<"Wso"> | string
-    lineId?: StringNullableFilter<"Wso"> | string | null
-    productType?: StringFilter<"Wso"> | string
-    fabricType?: StringFilter<"Wso"> | string
-    specs?: StringNullableFilter<"Wso"> | string | null
-    sizeDetails?: JsonFilter<"Wso">
-    totalQuantity?: IntFilter<"Wso"> | number
-    printTitle?: StringNullableFilter<"Wso"> | string | null
-    printSize?: StringNullableFilter<"Wso"> | string | null
-    embroideryTitle?: StringNullableFilter<"Wso"> | string | null
-    embroiderySize?: StringNullableFilter<"Wso"> | string | null
-    printPos2Title?: StringNullableFilter<"Wso"> | string | null
-    printPos2Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos2Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos2Size?: StringNullableFilter<"Wso"> | string | null
-    printPos3Title?: StringNullableFilter<"Wso"> | string | null
-    printPos3Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos3Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos3Size?: StringNullableFilter<"Wso"> | string | null
-    printPos4Title?: StringNullableFilter<"Wso"> | string | null
-    printPos4Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos4Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos4Size?: StringNullableFilter<"Wso"> | string | null
-    printPos5Title?: StringNullableFilter<"Wso"> | string | null
-    printPos5Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos5Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos5Size?: StringNullableFilter<"Wso"> | string | null
-    additionalNeeds?: StringNullableFilter<"Wso"> | string | null
-    images?: JsonNullableFilter<"Wso">
-    createdAt?: DateTimeFilter<"Wso"> | Date | string
+  export type SettingWhereInput = {
+    AND?: SettingWhereInput | SettingWhereInput[]
+    OR?: SettingWhereInput[]
+    NOT?: SettingWhereInput | SettingWhereInput[]
+    id?: IntFilter<"Setting"> | number
+    key?: StringFilter<"Setting"> | string
+    value?: StringFilter<"Setting"> | string
   }
 
-  export type WsoOrderByWithRelationInput = {
+  export type SettingOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    companyName?: SortOrderInput | SortOrder
-    phone?: SortOrder
-    lineId?: SortOrderInput | SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
-    specs?: SortOrderInput | SortOrder
-    sizeDetails?: SortOrder
-    totalQuantity?: SortOrder
-    printTitle?: SortOrderInput | SortOrder
-    printSize?: SortOrderInput | SortOrder
-    embroideryTitle?: SortOrderInput | SortOrder
-    embroiderySize?: SortOrderInput | SortOrder
-    printPos2Title?: SortOrderInput | SortOrder
-    printPos2Size?: SortOrderInput | SortOrder
-    embroideryPos2Title?: SortOrderInput | SortOrder
-    embroideryPos2Size?: SortOrderInput | SortOrder
-    printPos3Title?: SortOrderInput | SortOrder
-    printPos3Size?: SortOrderInput | SortOrder
-    embroideryPos3Title?: SortOrderInput | SortOrder
-    embroideryPos3Size?: SortOrderInput | SortOrder
-    printPos4Title?: SortOrderInput | SortOrder
-    printPos4Size?: SortOrderInput | SortOrder
-    embroideryPos4Title?: SortOrderInput | SortOrder
-    embroideryPos4Size?: SortOrderInput | SortOrder
-    printPos5Title?: SortOrderInput | SortOrder
-    printPos5Size?: SortOrderInput | SortOrder
-    embroideryPos5Title?: SortOrderInput | SortOrder
-    embroideryPos5Size?: SortOrderInput | SortOrder
-    additionalNeeds?: SortOrderInput | SortOrder
-    images?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
   }
 
-  export type WsoWhereUniqueInput = Prisma.AtLeast<{
+  export type SettingWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: WsoWhereInput | WsoWhereInput[]
-    OR?: WsoWhereInput[]
-    NOT?: WsoWhereInput | WsoWhereInput[]
-    name?: StringFilter<"Wso"> | string
-    email?: StringFilter<"Wso"> | string
-    companyName?: StringNullableFilter<"Wso"> | string | null
-    phone?: StringFilter<"Wso"> | string
-    lineId?: StringNullableFilter<"Wso"> | string | null
-    productType?: StringFilter<"Wso"> | string
-    fabricType?: StringFilter<"Wso"> | string
-    specs?: StringNullableFilter<"Wso"> | string | null
-    sizeDetails?: JsonFilter<"Wso">
-    totalQuantity?: IntFilter<"Wso"> | number
-    printTitle?: StringNullableFilter<"Wso"> | string | null
-    printSize?: StringNullableFilter<"Wso"> | string | null
-    embroideryTitle?: StringNullableFilter<"Wso"> | string | null
-    embroiderySize?: StringNullableFilter<"Wso"> | string | null
-    printPos2Title?: StringNullableFilter<"Wso"> | string | null
-    printPos2Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos2Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos2Size?: StringNullableFilter<"Wso"> | string | null
-    printPos3Title?: StringNullableFilter<"Wso"> | string | null
-    printPos3Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos3Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos3Size?: StringNullableFilter<"Wso"> | string | null
-    printPos4Title?: StringNullableFilter<"Wso"> | string | null
-    printPos4Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos4Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos4Size?: StringNullableFilter<"Wso"> | string | null
-    printPos5Title?: StringNullableFilter<"Wso"> | string | null
-    printPos5Size?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos5Title?: StringNullableFilter<"Wso"> | string | null
-    embroideryPos5Size?: StringNullableFilter<"Wso"> | string | null
-    additionalNeeds?: StringNullableFilter<"Wso"> | string | null
-    images?: JsonNullableFilter<"Wso">
-    createdAt?: DateTimeFilter<"Wso"> | Date | string
-  }, "id">
+    key?: string
+    AND?: SettingWhereInput | SettingWhereInput[]
+    OR?: SettingWhereInput[]
+    NOT?: SettingWhereInput | SettingWhereInput[]
+    value?: StringFilter<"Setting"> | string
+  }, "id" | "key">
 
-  export type WsoOrderByWithAggregationInput = {
+  export type SettingOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    companyName?: SortOrderInput | SortOrder
-    phone?: SortOrder
-    lineId?: SortOrderInput | SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
-    specs?: SortOrderInput | SortOrder
-    sizeDetails?: SortOrder
-    totalQuantity?: SortOrder
-    printTitle?: SortOrderInput | SortOrder
-    printSize?: SortOrderInput | SortOrder
-    embroideryTitle?: SortOrderInput | SortOrder
-    embroiderySize?: SortOrderInput | SortOrder
-    printPos2Title?: SortOrderInput | SortOrder
-    printPos2Size?: SortOrderInput | SortOrder
-    embroideryPos2Title?: SortOrderInput | SortOrder
-    embroideryPos2Size?: SortOrderInput | SortOrder
-    printPos3Title?: SortOrderInput | SortOrder
-    printPos3Size?: SortOrderInput | SortOrder
-    embroideryPos3Title?: SortOrderInput | SortOrder
-    embroideryPos3Size?: SortOrderInput | SortOrder
-    printPos4Title?: SortOrderInput | SortOrder
-    printPos4Size?: SortOrderInput | SortOrder
-    embroideryPos4Title?: SortOrderInput | SortOrder
-    embroideryPos4Size?: SortOrderInput | SortOrder
-    printPos5Title?: SortOrderInput | SortOrder
-    printPos5Size?: SortOrderInput | SortOrder
-    embroideryPos5Title?: SortOrderInput | SortOrder
-    embroideryPos5Size?: SortOrderInput | SortOrder
-    additionalNeeds?: SortOrderInput | SortOrder
-    images?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    _count?: WsoCountOrderByAggregateInput
-    _avg?: WsoAvgOrderByAggregateInput
-    _max?: WsoMaxOrderByAggregateInput
-    _min?: WsoMinOrderByAggregateInput
-    _sum?: WsoSumOrderByAggregateInput
+    key?: SortOrder
+    value?: SortOrder
+    _count?: SettingCountOrderByAggregateInput
+    _avg?: SettingAvgOrderByAggregateInput
+    _max?: SettingMaxOrderByAggregateInput
+    _min?: SettingMinOrderByAggregateInput
+    _sum?: SettingSumOrderByAggregateInput
   }
 
-  export type WsoScalarWhereWithAggregatesInput = {
-    AND?: WsoScalarWhereWithAggregatesInput | WsoScalarWhereWithAggregatesInput[]
-    OR?: WsoScalarWhereWithAggregatesInput[]
-    NOT?: WsoScalarWhereWithAggregatesInput | WsoScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Wso"> | number
-    name?: StringWithAggregatesFilter<"Wso"> | string
-    email?: StringWithAggregatesFilter<"Wso"> | string
-    companyName?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    phone?: StringWithAggregatesFilter<"Wso"> | string
-    lineId?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    productType?: StringWithAggregatesFilter<"Wso"> | string
-    fabricType?: StringWithAggregatesFilter<"Wso"> | string
-    specs?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    sizeDetails?: JsonWithAggregatesFilter<"Wso">
-    totalQuantity?: IntWithAggregatesFilter<"Wso"> | number
-    printTitle?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printSize?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryTitle?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroiderySize?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos2Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos2Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos2Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos2Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos3Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos3Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos3Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos3Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos4Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos4Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos4Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos4Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos5Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    printPos5Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos5Title?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    embroideryPos5Size?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    additionalNeeds?: StringNullableWithAggregatesFilter<"Wso"> | string | null
-    images?: JsonNullableWithAggregatesFilter<"Wso">
-    createdAt?: DateTimeWithAggregatesFilter<"Wso"> | Date | string
+  export type SettingScalarWhereWithAggregatesInput = {
+    AND?: SettingScalarWhereWithAggregatesInput | SettingScalarWhereWithAggregatesInput[]
+    OR?: SettingScalarWhereWithAggregatesInput[]
+    NOT?: SettingScalarWhereWithAggregatesInput | SettingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Setting"> | number
+    key?: StringWithAggregatesFilter<"Setting"> | string
+    value?: StringWithAggregatesFilter<"Setting"> | string
   }
 
-  export type SubmissionCreateInput = {
+  export type CustomerCreateInput = {
     name: string
     email: string
     companyName?: string | null
     phone: string
-    productType: string
-    fabricType?: string | null
+    lineId?: string | null
+    totalOrders?: number
     createdAt?: Date | string
-    fileUrls?: SubmissionCreatefileUrlsInput | string[]
-    additionalNeeds?: string | null
-    embroideryPositions?: string | null
-    printPoints?: string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
-    specs?: string | null
-    totalQuantity?: string | null
+    updatedAt?: Date | string
+    orders?: OrderCreateNestedManyWithoutCustomerInput
   }
 
-  export type SubmissionUncheckedCreateInput = {
+  export type CustomerUncheckedCreateInput = {
     id?: number
     name: string
     email: string
     companyName?: string | null
     phone: string
-    productType: string
-    fabricType?: string | null
+    lineId?: string | null
+    totalOrders?: number
     createdAt?: Date | string
-    fileUrls?: SubmissionCreatefileUrlsInput | string[]
-    additionalNeeds?: string | null
-    embroideryPositions?: string | null
-    printPoints?: string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
-    specs?: string | null
-    totalQuantity?: string | null
+    updatedAt?: Date | string
+    orders?: OrderUncheckedCreateNestedManyWithoutCustomerInput
   }
 
-  export type SubmissionUpdateInput = {
+  export type CustomerUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: NullableStringFieldUpdateOperationsInput | string | null
+    lineId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalOrders?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileUrls?: SubmissionUpdatefileUrlsInput | string[]
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPositions?: NullableStringFieldUpdateOperationsInput | string | null
-    printPoints?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    totalQuantity?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUpdateManyWithoutCustomerNestedInput
   }
 
-  export type SubmissionUncheckedUpdateInput = {
+  export type CustomerUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: NullableStringFieldUpdateOperationsInput | string | null
+    lineId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalOrders?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileUrls?: SubmissionUpdatefileUrlsInput | string[]
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPositions?: NullableStringFieldUpdateOperationsInput | string | null
-    printPoints?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    totalQuantity?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUncheckedUpdateManyWithoutCustomerNestedInput
   }
 
-  export type SubmissionCreateManyInput = {
+  export type CustomerCreateManyInput = {
     id?: number
     name: string
     email: string
     companyName?: string | null
     phone: string
-    productType: string
-    fabricType?: string | null
+    lineId?: string | null
+    totalOrders?: number
     createdAt?: Date | string
-    fileUrls?: SubmissionCreatefileUrlsInput | string[]
-    additionalNeeds?: string | null
-    embroideryPositions?: string | null
-    printPoints?: string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
-    specs?: string | null
-    totalQuantity?: string | null
+    updatedAt?: Date | string
   }
 
-  export type SubmissionUpdateManyMutationInput = {
+  export type CustomerUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: NullableStringFieldUpdateOperationsInput | string | null
+    lineId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalOrders?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileUrls?: SubmissionUpdatefileUrlsInput | string[]
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPositions?: NullableStringFieldUpdateOperationsInput | string | null
-    printPoints?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    totalQuantity?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SubmissionUncheckedUpdateManyInput = {
+  export type CustomerUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     companyName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: NullableStringFieldUpdateOperationsInput | string | null
+    lineId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalOrders?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    fileUrls?: SubmissionUpdatefileUrlsInput | string[]
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPositions?: NullableStringFieldUpdateOperationsInput | string | null
-    printPoints?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: NullableJsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderCreateInput = {
+    productType: string
+    fabricType: string
+    specs?: string | null
+    sizeData?: string
+    totalQuantity?: number
+    manualTotal?: string | null
+    decorationSets?: string
+    printTitle?: string | null
+    printSize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryTitle?: string | null
+    embroiderySize?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
+    additionalNeeds?: string | null
+    images?: string
+    reportName?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    customer: CustomerCreateNestedOneWithoutOrdersInput
+  }
+
+  export type OrderUncheckedCreateInput = {
+    id?: number
+    customerId: number
+    productType: string
+    fabricType: string
+    specs?: string | null
+    sizeData?: string
+    totalQuantity?: number
+    manualTotal?: string | null
+    decorationSets?: string
+    printTitle?: string | null
+    printSize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryTitle?: string | null
+    embroiderySize?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
+    additionalNeeds?: string | null
+    images?: string
+    reportName?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderUpdateInput = {
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
     specs?: NullableStringFieldUpdateOperationsInput | string | null
-    totalQuantity?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: CustomerUpdateOneRequiredWithoutOrdersNestedInput
+  }
+
+  export type OrderUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
+    specs?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderCreateManyInput = {
+    id?: number
+    customerId: number
+    productType: string
+    fabricType: string
+    specs?: string | null
+    sizeData?: string
+    totalQuantity?: number
+    manualTotal?: string | null
+    decorationSets?: string
+    printTitle?: string | null
+    printSize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryTitle?: string | null
+    embroiderySize?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
+    additionalNeeds?: string | null
+    images?: string
+    reportName?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderUpdateManyMutationInput = {
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
+    specs?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerId?: IntFieldUpdateOperationsInput | number
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
+    specs?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AdminCreateInput = {
@@ -4895,260 +6210,43 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
   }
 
-  export type WsoCreateInput = {
-    name: string
-    email: string
-    companyName?: string | null
-    phone: string
-    lineId?: string | null
-    productType: string
-    fabricType: string
-    specs?: string | null
-    sizeDetails: JsonNullValueInput | InputJsonValue
-    totalQuantity: number
-    printTitle?: string | null
-    printSize?: string | null
-    embroideryTitle?: string | null
-    embroiderySize?: string | null
-    printPos2Title?: string | null
-    printPos2Size?: string | null
-    embroideryPos2Title?: string | null
-    embroideryPos2Size?: string | null
-    printPos3Title?: string | null
-    printPos3Size?: string | null
-    embroideryPos3Title?: string | null
-    embroideryPos3Size?: string | null
-    printPos4Title?: string | null
-    printPos4Size?: string | null
-    embroideryPos4Title?: string | null
-    embroideryPos4Size?: string | null
-    printPos5Title?: string | null
-    printPos5Size?: string | null
-    embroideryPos5Title?: string | null
-    embroideryPos5Size?: string | null
-    additionalNeeds?: string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
+  export type SettingCreateInput = {
+    key: string
+    value: string
   }
 
-  export type WsoUncheckedCreateInput = {
+  export type SettingUncheckedCreateInput = {
     id?: number
-    name: string
-    email: string
-    companyName?: string | null
-    phone: string
-    lineId?: string | null
-    productType: string
-    fabricType: string
-    specs?: string | null
-    sizeDetails: JsonNullValueInput | InputJsonValue
-    totalQuantity: number
-    printTitle?: string | null
-    printSize?: string | null
-    embroideryTitle?: string | null
-    embroiderySize?: string | null
-    printPos2Title?: string | null
-    printPos2Size?: string | null
-    embroideryPos2Title?: string | null
-    embroideryPos2Size?: string | null
-    printPos3Title?: string | null
-    printPos3Size?: string | null
-    embroideryPos3Title?: string | null
-    embroideryPos3Size?: string | null
-    printPos4Title?: string | null
-    printPos4Size?: string | null
-    embroideryPos4Title?: string | null
-    embroideryPos4Size?: string | null
-    printPos5Title?: string | null
-    printPos5Size?: string | null
-    embroideryPos5Title?: string | null
-    embroideryPos5Size?: string | null
-    additionalNeeds?: string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
+    key: string
+    value: string
   }
 
-  export type WsoUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    companyName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
-    lineId?: NullableStringFieldUpdateOperationsInput | string | null
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: StringFieldUpdateOperationsInput | string
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: JsonNullValueInput | InputJsonValue
-    totalQuantity?: IntFieldUpdateOperationsInput | number
-    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    printSize?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type SettingUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
-  export type WsoUncheckedUpdateInput = {
+  export type SettingUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    companyName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
-    lineId?: NullableStringFieldUpdateOperationsInput | string | null
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: StringFieldUpdateOperationsInput | string
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: JsonNullValueInput | InputJsonValue
-    totalQuantity?: IntFieldUpdateOperationsInput | number
-    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    printSize?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
-  export type WsoCreateManyInput = {
+  export type SettingCreateManyInput = {
     id?: number
-    name: string
-    email: string
-    companyName?: string | null
-    phone: string
-    lineId?: string | null
-    productType: string
-    fabricType: string
-    specs?: string | null
-    sizeDetails: JsonNullValueInput | InputJsonValue
-    totalQuantity: number
-    printTitle?: string | null
-    printSize?: string | null
-    embroideryTitle?: string | null
-    embroiderySize?: string | null
-    printPos2Title?: string | null
-    printPos2Size?: string | null
-    embroideryPos2Title?: string | null
-    embroideryPos2Size?: string | null
-    printPos3Title?: string | null
-    printPos3Size?: string | null
-    embroideryPos3Title?: string | null
-    embroideryPos3Size?: string | null
-    printPos4Title?: string | null
-    printPos4Size?: string | null
-    embroideryPos4Title?: string | null
-    embroideryPos4Size?: string | null
-    printPos5Title?: string | null
-    printPos5Size?: string | null
-    embroideryPos5Title?: string | null
-    embroideryPos5Size?: string | null
-    additionalNeeds?: string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
+    key: string
+    value: string
   }
 
-  export type WsoUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    companyName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
-    lineId?: NullableStringFieldUpdateOperationsInput | string | null
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: StringFieldUpdateOperationsInput | string
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: JsonNullValueInput | InputJsonValue
-    totalQuantity?: IntFieldUpdateOperationsInput | number
-    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    printSize?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type SettingUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
-  export type WsoUncheckedUpdateManyInput = {
+  export type SettingUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    companyName?: NullableStringFieldUpdateOperationsInput | string | null
-    phone?: StringFieldUpdateOperationsInput | string
-    lineId?: NullableStringFieldUpdateOperationsInput | string | null
-    productType?: StringFieldUpdateOperationsInput | string
-    fabricType?: StringFieldUpdateOperationsInput | string
-    specs?: NullableStringFieldUpdateOperationsInput | string | null
-    sizeDetails?: JsonNullValueInput | InputJsonValue
-    totalQuantity?: IntFieldUpdateOperationsInput | number
-    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    printSize?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
-    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
-    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
-    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
-    images?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5203,34 +6301,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-  export type JsonNullableFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  export type OrderListRelationFilter = {
+    every?: OrderWhereInput
+    some?: OrderWhereInput
+    none?: OrderWhereInput
   }
 
   export type SortOrderInput = {
@@ -5238,62 +6312,54 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type SubmissionCountOrderByAggregateInput = {
+  export type OrderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CustomerCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     companyName?: SortOrder
     phone?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
+    lineId?: SortOrder
+    totalOrders?: SortOrder
     createdAt?: SortOrder
-    fileUrls?: SortOrder
-    additionalNeeds?: SortOrder
-    embroideryPositions?: SortOrder
-    printPoints?: SortOrder
-    sizeDetails?: SortOrder
-    specs?: SortOrder
-    totalQuantity?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type SubmissionAvgOrderByAggregateInput = {
+  export type CustomerAvgOrderByAggregateInput = {
     id?: SortOrder
+    totalOrders?: SortOrder
   }
 
-  export type SubmissionMaxOrderByAggregateInput = {
+  export type CustomerMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     companyName?: SortOrder
     phone?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
+    lineId?: SortOrder
+    totalOrders?: SortOrder
     createdAt?: SortOrder
-    additionalNeeds?: SortOrder
-    embroideryPositions?: SortOrder
-    printPoints?: SortOrder
-    specs?: SortOrder
-    totalQuantity?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type SubmissionMinOrderByAggregateInput = {
+  export type CustomerMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     companyName?: SortOrder
     phone?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
+    lineId?: SortOrder
+    totalOrders?: SortOrder
     createdAt?: SortOrder
-    additionalNeeds?: SortOrder
-    embroideryPositions?: SortOrder
-    printPoints?: SortOrder
-    specs?: SortOrder
-    totalQuantity?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type SubmissionSumOrderByAggregateInput = {
+  export type CustomerSumOrderByAggregateInput = {
     id?: SortOrder
+    totalOrders?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5361,30 +6427,136 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
-  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
 
-  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedJsonNullableFilter<$PrismaModel>
-    _max?: NestedJsonNullableFilter<$PrismaModel>
+  export type CustomerRelationFilter = {
+    is?: CustomerWhereInput
+    isNot?: CustomerWhereInput
+  }
+
+  export type OrderCountOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    productType?: SortOrder
+    fabricType?: SortOrder
+    specs?: SortOrder
+    sizeData?: SortOrder
+    totalQuantity?: SortOrder
+    manualTotal?: SortOrder
+    decorationSets?: SortOrder
+    printTitle?: SortOrder
+    printSize?: SortOrder
+    printPos2Title?: SortOrder
+    printPos2Size?: SortOrder
+    printPos3Title?: SortOrder
+    printPos3Size?: SortOrder
+    printPos4Title?: SortOrder
+    printPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
+    embroideryTitle?: SortOrder
+    embroiderySize?: SortOrder
+    embroideryPos2Title?: SortOrder
+    embroideryPos2Size?: SortOrder
+    embroideryPos3Title?: SortOrder
+    embroideryPos3Size?: SortOrder
+    embroideryPos4Title?: SortOrder
+    embroideryPos4Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
+    additionalNeeds?: SortOrder
+    images?: SortOrder
+    reportName?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OrderAvgOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    totalQuantity?: SortOrder
+  }
+
+  export type OrderMaxOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    productType?: SortOrder
+    fabricType?: SortOrder
+    specs?: SortOrder
+    sizeData?: SortOrder
+    totalQuantity?: SortOrder
+    manualTotal?: SortOrder
+    decorationSets?: SortOrder
+    printTitle?: SortOrder
+    printSize?: SortOrder
+    printPos2Title?: SortOrder
+    printPos2Size?: SortOrder
+    printPos3Title?: SortOrder
+    printPos3Size?: SortOrder
+    printPos4Title?: SortOrder
+    printPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
+    embroideryTitle?: SortOrder
+    embroiderySize?: SortOrder
+    embroideryPos2Title?: SortOrder
+    embroideryPos2Size?: SortOrder
+    embroideryPos3Title?: SortOrder
+    embroideryPos3Size?: SortOrder
+    embroideryPos4Title?: SortOrder
+    embroideryPos4Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
+    additionalNeeds?: SortOrder
+    images?: SortOrder
+    reportName?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OrderMinOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    productType?: SortOrder
+    fabricType?: SortOrder
+    specs?: SortOrder
+    sizeData?: SortOrder
+    totalQuantity?: SortOrder
+    manualTotal?: SortOrder
+    decorationSets?: SortOrder
+    printTitle?: SortOrder
+    printSize?: SortOrder
+    printPos2Title?: SortOrder
+    printPos2Size?: SortOrder
+    printPos3Title?: SortOrder
+    printPos3Size?: SortOrder
+    printPos4Title?: SortOrder
+    printPos4Size?: SortOrder
+    printPos5Title?: SortOrder
+    printPos5Size?: SortOrder
+    embroideryTitle?: SortOrder
+    embroiderySize?: SortOrder
+    embroideryPos2Title?: SortOrder
+    embroideryPos2Size?: SortOrder
+    embroideryPos3Title?: SortOrder
+    embroideryPos3Size?: SortOrder
+    embroideryPos4Title?: SortOrder
+    embroideryPos4Size?: SortOrder
+    embroideryPos5Title?: SortOrder
+    embroideryPos5Size?: SortOrder
+    additionalNeeds?: SortOrder
+    images?: SortOrder
+    reportName?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OrderSumOrderByAggregateInput = {
+    id?: SortOrder
+    customerId?: SortOrder
+    totalQuantity?: SortOrder
   }
 
   export type AdminCountOrderByAggregateInput = {
@@ -5412,173 +6584,45 @@ export namespace Prisma {
   export type AdminSumOrderByAggregateInput = {
     id?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
 
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type WsoCountOrderByAggregateInput = {
+  export type SettingCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    companyName?: SortOrder
-    phone?: SortOrder
-    lineId?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
-    specs?: SortOrder
-    sizeDetails?: SortOrder
-    totalQuantity?: SortOrder
-    printTitle?: SortOrder
-    printSize?: SortOrder
-    embroideryTitle?: SortOrder
-    embroiderySize?: SortOrder
-    printPos2Title?: SortOrder
-    printPos2Size?: SortOrder
-    embroideryPos2Title?: SortOrder
-    embroideryPos2Size?: SortOrder
-    printPos3Title?: SortOrder
-    printPos3Size?: SortOrder
-    embroideryPos3Title?: SortOrder
-    embroideryPos3Size?: SortOrder
-    printPos4Title?: SortOrder
-    printPos4Size?: SortOrder
-    embroideryPos4Title?: SortOrder
-    embroideryPos4Size?: SortOrder
-    printPos5Title?: SortOrder
-    printPos5Size?: SortOrder
-    embroideryPos5Title?: SortOrder
-    embroideryPos5Size?: SortOrder
-    additionalNeeds?: SortOrder
-    images?: SortOrder
-    createdAt?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
   }
 
-  export type WsoAvgOrderByAggregateInput = {
+  export type SettingAvgOrderByAggregateInput = {
     id?: SortOrder
-    totalQuantity?: SortOrder
   }
 
-  export type WsoMaxOrderByAggregateInput = {
+  export type SettingMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    companyName?: SortOrder
-    phone?: SortOrder
-    lineId?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
-    specs?: SortOrder
-    totalQuantity?: SortOrder
-    printTitle?: SortOrder
-    printSize?: SortOrder
-    embroideryTitle?: SortOrder
-    embroiderySize?: SortOrder
-    printPos2Title?: SortOrder
-    printPos2Size?: SortOrder
-    embroideryPos2Title?: SortOrder
-    embroideryPos2Size?: SortOrder
-    printPos3Title?: SortOrder
-    printPos3Size?: SortOrder
-    embroideryPos3Title?: SortOrder
-    embroideryPos3Size?: SortOrder
-    printPos4Title?: SortOrder
-    printPos4Size?: SortOrder
-    embroideryPos4Title?: SortOrder
-    embroideryPos4Size?: SortOrder
-    printPos5Title?: SortOrder
-    printPos5Size?: SortOrder
-    embroideryPos5Title?: SortOrder
-    embroideryPos5Size?: SortOrder
-    additionalNeeds?: SortOrder
-    createdAt?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
   }
 
-  export type WsoMinOrderByAggregateInput = {
+  export type SettingMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    companyName?: SortOrder
-    phone?: SortOrder
-    lineId?: SortOrder
-    productType?: SortOrder
-    fabricType?: SortOrder
-    specs?: SortOrder
-    totalQuantity?: SortOrder
-    printTitle?: SortOrder
-    printSize?: SortOrder
-    embroideryTitle?: SortOrder
-    embroiderySize?: SortOrder
-    printPos2Title?: SortOrder
-    printPos2Size?: SortOrder
-    embroideryPos2Title?: SortOrder
-    embroideryPos2Size?: SortOrder
-    printPos3Title?: SortOrder
-    printPos3Size?: SortOrder
-    embroideryPos3Title?: SortOrder
-    embroideryPos3Size?: SortOrder
-    printPos4Title?: SortOrder
-    printPos4Size?: SortOrder
-    embroideryPos4Title?: SortOrder
-    embroideryPos4Size?: SortOrder
-    printPos5Title?: SortOrder
-    printPos5Size?: SortOrder
-    embroideryPos5Title?: SortOrder
-    embroideryPos5Size?: SortOrder
-    additionalNeeds?: SortOrder
-    createdAt?: SortOrder
+    key?: SortOrder
+    value?: SortOrder
   }
 
-  export type WsoSumOrderByAggregateInput = {
+  export type SettingSumOrderByAggregateInput = {
     id?: SortOrder
-    totalQuantity?: SortOrder
-  }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
-  export type SubmissionCreatefileUrlsInput = {
-    set: string[]
+  export type OrderCreateNestedManyWithoutCustomerInput = {
+    create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
+    createMany?: OrderCreateManyCustomerInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
+  export type OrderUncheckedCreateNestedManyWithoutCustomerInput = {
+    create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
+    createMany?: OrderCreateManyCustomerInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5589,21 +6633,58 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type SubmissionUpdatefileUrlsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type OrderUpdateManyWithoutCustomerNestedInput = {
+    create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutCustomerInput | OrderUpsertWithWhereUniqueWithoutCustomerInput[]
+    createMany?: OrderCreateManyCustomerInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutCustomerInput | OrderUpdateWithWhereUniqueWithoutCustomerInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutCustomerInput | OrderUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type OrderUncheckedUpdateManyWithoutCustomerNestedInput = {
+    create?: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput> | OrderCreateWithoutCustomerInput[] | OrderUncheckedCreateWithoutCustomerInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutCustomerInput | OrderCreateOrConnectWithoutCustomerInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutCustomerInput | OrderUpsertWithWhereUniqueWithoutCustomerInput[]
+    createMany?: OrderCreateManyCustomerInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutCustomerInput | OrderUpdateWithWhereUniqueWithoutCustomerInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutCustomerInput | OrderUpdateManyWithWhereWithoutCustomerInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type CustomerCreateNestedOneWithoutOrdersInput = {
+    create?: XOR<CustomerCreateWithoutOrdersInput, CustomerUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: CustomerCreateOrConnectWithoutOrdersInput
+    connect?: CustomerWhereUniqueInput
+  }
+
+  export type CustomerUpdateOneRequiredWithoutOrdersNestedInput = {
+    create?: XOR<CustomerCreateWithoutOrdersInput, CustomerUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: CustomerCreateOrConnectWithoutOrdersInput
+    upsert?: CustomerUpsertWithoutOrdersInput
+    connect?: CustomerWhereUniqueInput
+    update?: XOR<XOR<CustomerUpdateToOneWithWhereWithoutOrdersInput, CustomerUpdateWithoutOrdersInput>, CustomerUncheckedUpdateWithoutOrdersInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5741,49 +6822,354 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
-  export type NestedJsonNullableFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  export type OrderCreateWithoutCustomerInput = {
+    productType: string
+    fabricType: string
+    specs?: string | null
+    sizeData?: string
+    totalQuantity?: number
+    manualTotal?: string | null
+    decorationSets?: string
+    printTitle?: string | null
+    printSize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryTitle?: string | null
+    embroiderySize?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
+    additionalNeeds?: string | null
+    images?: string
+    reportName?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
-  export type NestedJsonFilter<$PrismaModel = never> = 
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  export type OrderUncheckedCreateWithoutCustomerInput = {
+    id?: number
+    productType: string
+    fabricType: string
+    specs?: string | null
+    sizeData?: string
+    totalQuantity?: number
+    manualTotal?: string | null
+    decorationSets?: string
+    printTitle?: string | null
+    printSize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryTitle?: string | null
+    embroiderySize?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
+    additionalNeeds?: string | null
+    images?: string
+    reportName?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderCreateOrConnectWithoutCustomerInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput>
+  }
+
+  export type OrderCreateManyCustomerInputEnvelope = {
+    data: OrderCreateManyCustomerInput | OrderCreateManyCustomerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OrderUpsertWithWhereUniqueWithoutCustomerInput = {
+    where: OrderWhereUniqueInput
+    update: XOR<OrderUpdateWithoutCustomerInput, OrderUncheckedUpdateWithoutCustomerInput>
+    create: XOR<OrderCreateWithoutCustomerInput, OrderUncheckedCreateWithoutCustomerInput>
+  }
+
+  export type OrderUpdateWithWhereUniqueWithoutCustomerInput = {
+    where: OrderWhereUniqueInput
+    data: XOR<OrderUpdateWithoutCustomerInput, OrderUncheckedUpdateWithoutCustomerInput>
+  }
+
+  export type OrderUpdateManyWithWhereWithoutCustomerInput = {
+    where: OrderScalarWhereInput
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutCustomerInput>
+  }
+
+  export type OrderScalarWhereInput = {
+    AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    OR?: OrderScalarWhereInput[]
+    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    id?: IntFilter<"Order"> | number
+    customerId?: IntFilter<"Order"> | number
+    productType?: StringFilter<"Order"> | string
+    fabricType?: StringFilter<"Order"> | string
+    specs?: StringNullableFilter<"Order"> | string | null
+    sizeData?: StringFilter<"Order"> | string
+    totalQuantity?: IntFilter<"Order"> | number
+    manualTotal?: StringNullableFilter<"Order"> | string | null
+    decorationSets?: StringFilter<"Order"> | string
+    printTitle?: StringNullableFilter<"Order"> | string | null
+    printSize?: StringNullableFilter<"Order"> | string | null
+    printPos2Title?: StringNullableFilter<"Order"> | string | null
+    printPos2Size?: StringNullableFilter<"Order"> | string | null
+    printPos3Title?: StringNullableFilter<"Order"> | string | null
+    printPos3Size?: StringNullableFilter<"Order"> | string | null
+    printPos4Title?: StringNullableFilter<"Order"> | string | null
+    printPos4Size?: StringNullableFilter<"Order"> | string | null
+    printPos5Title?: StringNullableFilter<"Order"> | string | null
+    printPos5Size?: StringNullableFilter<"Order"> | string | null
+    embroideryTitle?: StringNullableFilter<"Order"> | string | null
+    embroiderySize?: StringNullableFilter<"Order"> | string | null
+    embroideryPos2Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos2Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos3Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos3Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos4Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos4Size?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Title?: StringNullableFilter<"Order"> | string | null
+    embroideryPos5Size?: StringNullableFilter<"Order"> | string | null
+    additionalNeeds?: StringNullableFilter<"Order"> | string | null
+    images?: StringFilter<"Order"> | string
+    reportName?: StringNullableFilter<"Order"> | string | null
+    status?: StringFilter<"Order"> | string
+    createdAt?: DateTimeFilter<"Order"> | Date | string
+    updatedAt?: DateTimeFilter<"Order"> | Date | string
+  }
+
+  export type CustomerCreateWithoutOrdersInput = {
+    name: string
+    email: string
+    companyName?: string | null
+    phone: string
+    lineId?: string | null
+    totalOrders?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CustomerUncheckedCreateWithoutOrdersInput = {
+    id?: number
+    name: string
+    email: string
+    companyName?: string | null
+    phone: string
+    lineId?: string | null
+    totalOrders?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CustomerCreateOrConnectWithoutOrdersInput = {
+    where: CustomerWhereUniqueInput
+    create: XOR<CustomerCreateWithoutOrdersInput, CustomerUncheckedCreateWithoutOrdersInput>
+  }
+
+  export type CustomerUpsertWithoutOrdersInput = {
+    update: XOR<CustomerUpdateWithoutOrdersInput, CustomerUncheckedUpdateWithoutOrdersInput>
+    create: XOR<CustomerCreateWithoutOrdersInput, CustomerUncheckedCreateWithoutOrdersInput>
+    where?: CustomerWhereInput
+  }
+
+  export type CustomerUpdateToOneWithWhereWithoutOrdersInput = {
+    where?: CustomerWhereInput
+    data: XOR<CustomerUpdateWithoutOrdersInput, CustomerUncheckedUpdateWithoutOrdersInput>
+  }
+
+  export type CustomerUpdateWithoutOrdersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
+    lineId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalOrders?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CustomerUncheckedUpdateWithoutOrdersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: StringFieldUpdateOperationsInput | string
+    lineId?: NullableStringFieldUpdateOperationsInput | string | null
+    totalOrders?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderCreateManyCustomerInput = {
+    id?: number
+    productType: string
+    fabricType: string
+    specs?: string | null
+    sizeData?: string
+    totalQuantity?: number
+    manualTotal?: string | null
+    decorationSets?: string
+    printTitle?: string | null
+    printSize?: string | null
+    printPos2Title?: string | null
+    printPos2Size?: string | null
+    printPos3Title?: string | null
+    printPos3Size?: string | null
+    printPos4Title?: string | null
+    printPos4Size?: string | null
+    printPos5Title?: string | null
+    printPos5Size?: string | null
+    embroideryTitle?: string | null
+    embroiderySize?: string | null
+    embroideryPos2Title?: string | null
+    embroideryPos2Size?: string | null
+    embroideryPos3Title?: string | null
+    embroideryPos3Size?: string | null
+    embroideryPos4Title?: string | null
+    embroideryPos4Size?: string | null
+    embroideryPos5Title?: string | null
+    embroideryPos5Size?: string | null
+    additionalNeeds?: string | null
+    images?: string
+    reportName?: string | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OrderUpdateWithoutCustomerInput = {
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
+    specs?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUncheckedUpdateWithoutCustomerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
+    specs?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUncheckedUpdateManyWithoutCustomerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    productType?: StringFieldUpdateOperationsInput | string
+    fabricType?: StringFieldUpdateOperationsInput | string
+    specs?: NullableStringFieldUpdateOperationsInput | string | null
+    sizeData?: StringFieldUpdateOperationsInput | string
+    totalQuantity?: IntFieldUpdateOperationsInput | number
+    manualTotal?: NullableStringFieldUpdateOperationsInput | string | null
+    decorationSets?: StringFieldUpdateOperationsInput | string
+    printTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    printSize?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    printPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    embroiderySize?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos2Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos3Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos4Size?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Title?: NullableStringFieldUpdateOperationsInput | string | null
+    embroideryPos5Size?: NullableStringFieldUpdateOperationsInput | string | null
+    additionalNeeds?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: StringFieldUpdateOperationsInput | string
+    reportName?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
@@ -5792,17 +7178,25 @@ export namespace Prisma {
    * Aliases for legacy arg types
    */
     /**
-     * @deprecated Use SubmissionDefaultArgs instead
+     * @deprecated Use CustomerCountOutputTypeDefaultArgs instead
      */
-    export type SubmissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SubmissionDefaultArgs<ExtArgs>
+    export type CustomerCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CustomerCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CustomerDefaultArgs instead
+     */
+    export type CustomerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CustomerDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OrderDefaultArgs instead
+     */
+    export type OrderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OrderDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AdminDefaultArgs instead
      */
     export type AdminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdminDefaultArgs<ExtArgs>
     /**
-     * @deprecated Use WsoDefaultArgs instead
+     * @deprecated Use SettingDefaultArgs instead
      */
-    export type WsoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = WsoDefaultArgs<ExtArgs>
+    export type SettingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SettingDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

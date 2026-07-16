@@ -1,54 +1,24 @@
 // =============================================
-// Dual Prisma Client for Local (SQLite) + Online (PostgreSQL)
+// Single Prisma Client for PostgreSQL
 // =============================================
-import { PrismaClient as LocalPrismaClient } from "../prisma/generated/local";
-import { PrismaClient as OnlinePrismaClient } from "../prisma/generated/online";
+import { PrismaClient } from "../prisma/generated/online";
 
-const hasValidOnlineUrl = Boolean(
-  process.env.ONLINE_DATABASE_URL &&
-    /^postgres(?:ql)?:\/\//i.test(process.env.ONLINE_DATABASE_URL) &&
-    process.env.ONLINE_DATABASE_URL.includes("@") &&
-    process.env.ONLINE_DATABASE_URL.includes(":")
-);
-
-// --- Local SQLite Client (Primary) ---
-const globalForLocalPrisma = globalThis as unknown as {
-  localPrisma: LocalPrismaClient | undefined;
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
 };
 
-export const localDb =
-  globalForLocalPrisma.localPrisma ??
-  new LocalPrismaClient({
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
   });
 
 if (process.env.NODE_ENV !== "production") {
-  globalForLocalPrisma.localPrisma = localDb;
+  globalForPrisma.prisma = prisma;
 }
 
-// --- Online PostgreSQL Client (Backup/Sync) ---
-const globalForOnlinePrisma = globalThis as unknown as {
-  onlinePrisma: OnlinePrismaClient | undefined;
-};
+// For backward compatibility with existing imports
+export const localDb = prisma;
+export const onlineDb = null;
 
-const hasOnlineClient = Boolean(
-  process.env.ONLINE_DATABASE_URL &&
-    /^postgres(?:ql)?:\/\//i.test(process.env.ONLINE_DATABASE_URL) &&
-    process.env.ONLINE_DATABASE_URL.includes("@") &&
-    process.env.ONLINE_DATABASE_URL.includes(":")
-);
-
-export const onlineDb = hasOnlineClient
-  ? (globalForOnlinePrisma.onlinePrisma ??
-      new OnlinePrismaClient({
-        log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-      }))
-  : null;
-
-if (process.env.NODE_ENV !== "production" && onlineDb) {
-  globalForOnlinePrisma.onlinePrisma = onlineDb;
-}
-
-// Default export = local (primary) database
-const prisma = localDb;
 export default prisma;

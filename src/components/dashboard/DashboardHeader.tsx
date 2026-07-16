@@ -14,9 +14,10 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ onMenuClick }) => {
   const { user, logout, isAdmin } = useAuth();
   const router = useRouter();
 
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
+  const handleLogout = async () => {
+    await logout();
+    // Use window.location for hard redirect to ensure middleware checks cleared cookie
+    window.location.href = "/login";
   };
 
   return (

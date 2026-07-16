@@ -10,17 +10,22 @@ interface AuthGuardProps {
 }
 
 export default function AuthGuard({ children, requiredRole }: AuthGuardProps) {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin, hydrated } = useAuth();
   const router = useRouter();
   const isDevelopment = process.env.NODE_ENV !== "production";
 
   useEffect(() => {
+    if (!hydrated) return; // Wait for hydration before checking auth
     if (!isAuthenticated && !isDevelopment) {
       // Use window.location for hard redirect to ensure full page reload clears all state
       window.location.href = "/login";
     }
-  }, [isAuthenticated, isDevelopment]);
+  }, [isAuthenticated, hydrated, isDevelopment]);
 
+  // Don't render anything until hydration is complete
+  if (!hydrated) return null;
+
+  // In development mode, allow access without authentication
   if (!isAuthenticated && !isDevelopment) {
     return null;
   }

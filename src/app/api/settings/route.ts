@@ -1,10 +1,12 @@
-import { localDb } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 
 // GET /api/settings - Fetch all settings as key-value map
 export async function GET() {
   try {
-    const settings = await localDb.setting.findMany();
+    const settings = await prisma.setting.findMany();
     const map: Record<string, string> = {};
     settings.forEach((s) => {
       map[s.key] = s.value;
@@ -30,7 +32,7 @@ export async function PUT(request: Request) {
       );
     }
 
-    await localDb.setting.upsert({
+    await prisma.setting.upsert({
       where: { key },
       update: { value },
       create: { key, value },

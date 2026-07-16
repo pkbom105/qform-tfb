@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { localDb, onlineDb } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { getDisplayReportName } from "@/lib/reportNameGenerator";
 
 export const dynamic = "force-dynamic";
@@ -12,26 +12,11 @@ export async function GET(request: Request) {
     const startDate = searchParams.get("startDate") || "";
     const endDate = searchParams.get("endDate") || "";
 
-    // Primary source: Local SQLite orders table (has correct reportName/offset)
-    const localOrders = await localDb.order.findMany({
+    // Read orders with customers from PostgreSQL
+    const orders = await prisma.order.findMany({
       include: { customer: true },
       orderBy: { createdAt: "desc" },
     });
-
-    // Secondary source: PostgreSQL (VPN) - Wso table (for orders not yet synced)
-    let wsoRecords: Array<{ id: number; name: string; email: string; companyName: string | null; phone: string; lineId?: string | null; createdAt: Date }> = [];
-
-    // Also Submission table
-    let submissions: Array<{ id: number; name: string; email: string; companyName: string | null; phone: string; createdAt: Date }> = [];
-
-    if (onlineDb) {
-      wsoRecords = await onlineDb.wso.findMany({
-        orderBy: { createdAt: "desc" },
-      });
-      submissions = await onlineDb.submission.findMany({
-        orderBy: { createdAt: "desc" },
-      });
-    }
 
     const fmtDate = (d: Date) => {
       const thaiMonths = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
@@ -40,7 +25,6 @@ export async function GET(request: Request) {
       return `${day} ${thaiMonths[d.getMonth()]} ${buddhistYear}`;
     };
 
-    // Helper to parse decorationSets count
     const getSetCount = (order: any): number => {
       try {
         const sets = JSON.parse(order.decorationSets || "[]");
@@ -50,77 +34,33 @@ export async function GET(request: Request) {
       }
     };
 
-    // Build customer records from local SQLite orders (primary source)
-    const localCustomersMap = new Map<string, any>();
-    for (const order of localOrders) {
+    // Build customer records from orders
+    const customers = orders.map((order) => {
       const cust = order.customer;
-      if (!cust) continue;
-      const key = order.id; // use order.id as key for unique rows per order
-      localCustomersMap.set(`local-${key}`, {
+      return {
         id: order.id,
-        name: cust.name,
-        email: cust.email,
-        company: cust.companyName || "-",
-        phone: cust.phone,
-        lineId: cust.lineId || "-",
+        name: cust?.name || "-",
+        email: cust?.email || "-",
+        company: cust?.companyName || "-",
+        phone: cust?.phone || "-",
+        lineId: cust?.lineId || "-",
         totalOrders: 1,
         lastOrderId: order.id,
         reportName: getDisplayReportName(order.id),
         lastOrderDate: fmtDate(new Date(order.createdAt)),
         status: order.status || "pending",
         setCount: getSetCount(order),
-      });
-    }
+      };
+    });
 
-    // Add Wso records that are NOT in local SQLite
-    const existingLocalIds = new Set(localOrders.map((o) => o.id));
-    for (const wso of wsoRecords) {
-      if (existingLocalIds.has(wso.id)) continue;
-      localCustomersMap.set(`wso-${wso.id}`, {
-        id: wso.id,
-        name: wso.name,
-        email: wso.email,
-        company: wso.companyName || "-",
-        phone: wso.phone,
-        lineId: wso.lineId || "-",
-        totalOrders: 1,
-        lastOrderId: wso.id,
-        reportName: getDisplayReportName(wso.id),
-        lastOrderDate: fmtDate(new Date(wso.createdAt)),
-        status: "pending",
-        setCount: 1,
-      });
-    }
-
-    // Add Submission records (id offset 10000)
-    for (const sub of submissions) {
-      const subId = 10000 + sub.id;
-      if (existingLocalIds.has(subId)) continue;
-      localCustomersMap.set(`sub-${subId}`, {
-        id: subId,
-        name: sub.name,
-        email: sub.email,
-        company: sub.companyName || "-",
-        phone: sub.phone,
-        lineId: "-",
-        totalOrders: 1,
-        lastOrderId: subId,
-        reportName: getDisplayReportName(subId),
-        lastOrderDate: fmtDate(new Date(sub.createdAt)),
-        status: "pending",
-        setCount: 1,
-      });
-    }
-
-    // Convert to array and sort by date desc
-    const allCustomers = Array.from(localCustomersMap.values()).sort(
+    // Sort by date desc
+    const sorted = customers.sort(
       (a, b) => new Date(b.lastOrderDate).getTime() - new Date(a.lastOrderDate).getTime()
     );
 
-    // Apply filters sequentially
-    let filtered = allCustomers;
+    // Apply filters
+    let filtered = sorted;
 
-    // Filter by search term
     if (search) {
       filtered = filtered.filter(
         (c) =>
@@ -131,22 +71,18 @@ export async function GET(request: Request) {
       );
     }
 
-    // Filter by status
     if (statusFilter) {
       filtered = filtered.filter((c) => c.status === statusFilter);
     }
 
-    // Filter by date range (parse Thai date format back to compare)
     if (startDate || endDate) {
-      // Convert YYYY-MM-DD to Date object for comparison
+      const thaiMonths = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
       filtered = filtered.filter((c) => {
-        // Parse Thai date string like "15 ก.ค. 2569"
-        const thaiMonths = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
         const parts = c.lastOrderDate.split(" ");
         if (parts.length !== 3) return false;
         const day = parseInt(parts[0], 10);
         const monthIndex = thaiMonths.indexOf(parts[1]);
-        const year = parseInt(parts[2], 10) - 543; // Convert Buddhist year to CE
+        const year = parseInt(parts[2], 10) - 543;
         if (isNaN(day) || monthIndex === -1 || isNaN(year)) return false;
         const orderDate = new Date(year, monthIndex, day);
 

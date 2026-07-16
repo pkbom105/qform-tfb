@@ -1,4 +1,4 @@
 // =============================================
 // App-level Prisma Client (aliases to src/lib)
 // =============================================
-export { localDb as default, localDb, onlineDb } from "@/lib/prisma";
+export { prisma as default, prisma, localDb, onlineDb } from "@/lib/prisma";

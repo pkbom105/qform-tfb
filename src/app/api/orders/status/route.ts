@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { localDb } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +22,7 @@ export async function PUT(request: Request) {
       );
     }
 
-    await localDb.order.update({
+    await prisma.order.update({
       where: { id: orderId },
       data: { status },
     });

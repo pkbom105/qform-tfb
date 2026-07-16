@@ -1,5 +1,4 @@
-// PostgreSQL Online Database - Cloud backup / sync
-// Mirrors qform data for online access
+// PostgreSQL — Primary storage for qform
 generator client {
   provider = "prisma-client-js"
   output   = "../../src/prisma/generated/online"
@@ -10,22 +9,64 @@ datasource db {
   url      = env("ONLINE_DATABASE_URL")
 }
 
-model Submission {
+model Customer {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  companyName String?
+  phone       String
+  lineId      String?
+  totalOrders Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+}
+
+model Order {
   id                  Int      @id @default(autoincrement())
-  name                String
-  email               String
-  companyName         String?
-  phone               String
+  customerId          Int
+  customer            Customer @relation(fields: [customerId], references: [id])
+  // Product info
   productType         String
-  fabricType          String?
-  createdAt           DateTime @default(now())
-  fileUrls            String[]
-  additionalNeeds     String?
-  embroideryPositions String?
-  printPoints         String?
-  sizeDetails         Json?
+  fabricType          String
   specs               String?
-  totalQuantity       String?
+  // Size & quantity
+  sizeData            String   @default("{}")
+  totalQuantity       Int      @default(0)
+  manualTotal         String?
+  // Decoration sets (JSON array string)
+  decorationSets      String   @default("[]")
+  // Printing details
+  printTitle          String?
+  printSize           String?
+  printPos2Title      String?
+  printPos2Size       String?
+  printPos3Title      String?
+  printPos3Size       String?
+  printPos4Title      String?
+  printPos4Size       String?
+  printPos5Title      String?
+  printPos5Size       String?
+  // Embroidery details
+  embroideryTitle     String?
+  embroiderySize      String?
+  embroideryPos2Title String?
+  embroideryPos2Size  String?
+  embroideryPos3Title String?
+  embroideryPos3Size  String?
+  embroideryPos4Title String?
+  embroideryPos4Size  String?
+  embroideryPos5Title String?
+  embroideryPos5Size  String?
+  // Additional
+  additionalNeeds     String?
+  images              String   @default("[]")
+  reportName          String?
+  status              String   @default("pending")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("orders")
 }
 
 model Admin {
@@ -34,46 +75,10 @@ model Admin {
   password String
 }
 
-model Wso {
-  id                  Int      @id @default(autoincrement())
-  name                String
-  email               String
-  companyName         String?
-  phone               String
-  lineId              String?
-  productType         String
-  fabricType          String
-  specs               String?
-  sizeDetails         Json
-  totalQuantity       Int
-  // Set 1
-  printTitle          String?
-  printSize           String?
-  embroideryTitle     String?
-  embroiderySize      String?
-  // Set 2
-  printPos2Title      String?
-  printPos2Size       String?
-  embroideryPos2Title String?
-  embroideryPos2Size  String?
-  // Set 3
-  printPos3Title      String?
-  printPos3Size       String?
-  embroideryPos3Title String?
-  embroideryPos3Size  String?
-  // Set 4
-  printPos4Title      String?
-  printPos4Size       String?
-  embroideryPos4Title String?
-  embroideryPos4Size  String?
-  // Set 5
-  printPos5Title      String?
-  printPos5Size       String?
-  embroideryPos5Title String?
-  embroideryPos5Size  String?
-  additionalNeeds     String?
-  images              Json?
-  createdAt           DateTime @default(now())
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String
 
-  @@map("wso")
+  @@map("settings")
 }

@@ -14,31 +14,36 @@ interface AuthUser {
 interface AuthContextType {
   user: AuthUser | null;
   login: (username: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  logout: () => void;
+  logout: () => Promise<void>;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  hydrated: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   login: async () => ({ success: false }),
-  logout: () => {},
+  logout: async () => {},
   isAuthenticated: false,
   isAdmin: false,
+  hydrated: false,
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(() => {
-    if (typeof window === "undefined") return null;
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
+  useEffect(() => {
     try {
       const stored = window.localStorage.getItem("dashboard_user");
-      return stored ? JSON.parse(stored) : null;
+      if (stored) {
+        setUser(JSON.parse(stored));
+      }
     } catch {
       window.localStorage.removeItem("dashboard_user");
-      return null;
     }
-  });
+    setHydrated(true);
+  }, []);
 
   const login = useCallback(async (username: string, password: string) => {
     try {
@@ -60,9 +65,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const logout = useCallback(() => {
-    // Call the logout API to clear the session cookie
-    fetch("/api/users/logout", { method: "POST" }).catch(() => {});
+  const logout = useCallback(async () => {
+    // Call the logout API to clear the session cookie and wait for it
+    try {
+      await fetch("/api/users/logout", { method: "POST" });
+    } catch {
+      // Ignore network errors — still clear local state
+    }
     setUser(null);
     localStorage.removeItem("dashboard_user");
   }, []);
@@ -75,6 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         logout,
         isAuthenticated: user !== null,
         isAdmin: user?.role === "admin",
+        hydrated,
       }}
     >
       {children}

@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { FileText } from "lucide-react";
 import { getReportName, getReportNameWithoutCounter } from "@/lib/reportNameGenerator";

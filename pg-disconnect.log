@@ -770,3 +770,227 @@ The provided database string is invalid. Error parsing connection string: empty 
 [2026-07-15T08:59:24.908Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')
 [2026-07-15T08:59:37.243Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')
 [2026-07-15T08:59:39.994Z] PostgreSQL disconnected: Cannot read properties of null (reading '$queryRawUnsafe')
+[2026-07-16T03:28:10.056Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:10.268Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:37.091Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:43.085Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:45.426Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:45.602Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:52.324Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:52.507Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:28:58.668Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:36:19.542Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:36:19.683Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:38:30.292Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:38:30.464Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:39:43.362Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:40:05.702Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:40:05.871Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:44:41.152Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:44:41.318Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:44:56.929Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T03:44:57.127Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:06:15.873Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:06:16.050Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:09:10.854Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:09:11.025Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:09:17.112Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:09:17.450Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:19:24.703Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:19:24.885Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:33:55.023Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:33:55.218Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:45:10.213Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+[2026-07-16T04:45:48.408Z] PostgreSQL disconnected: 
+Invalid `prisma.$queryRawUnsafe()` invocation:
+
+
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.

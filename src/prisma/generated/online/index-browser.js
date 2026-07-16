@@ -122,22 +122,54 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.SubmissionScalarFieldEnum = {
+exports.Prisma.CustomerScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   companyName: 'companyName',
   phone: 'phone',
+  lineId: 'lineId',
+  totalOrders: 'totalOrders',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
   productType: 'productType',
   fabricType: 'fabricType',
-  createdAt: 'createdAt',
-  fileUrls: 'fileUrls',
-  additionalNeeds: 'additionalNeeds',
-  embroideryPositions: 'embroideryPositions',
-  printPoints: 'printPoints',
-  sizeDetails: 'sizeDetails',
   specs: 'specs',
-  totalQuantity: 'totalQuantity'
+  sizeData: 'sizeData',
+  totalQuantity: 'totalQuantity',
+  manualTotal: 'manualTotal',
+  decorationSets: 'decorationSets',
+  printTitle: 'printTitle',
+  printSize: 'printSize',
+  printPos2Title: 'printPos2Title',
+  printPos2Size: 'printPos2Size',
+  printPos3Title: 'printPos3Title',
+  printPos3Size: 'printPos3Size',
+  printPos4Title: 'printPos4Title',
+  printPos4Size: 'printPos4Size',
+  printPos5Title: 'printPos5Title',
+  printPos5Size: 'printPos5Size',
+  embroideryTitle: 'embroideryTitle',
+  embroiderySize: 'embroiderySize',
+  embroideryPos2Title: 'embroideryPos2Title',
+  embroideryPos2Size: 'embroideryPos2Size',
+  embroideryPos3Title: 'embroideryPos3Title',
+  embroideryPos3Size: 'embroideryPos3Size',
+  embroideryPos4Title: 'embroideryPos4Title',
+  embroideryPos4Size: 'embroideryPos4Size',
+  embroideryPos5Title: 'embroideryPos5Title',
+  embroideryPos5Size: 'embroideryPos5Size',
+  additionalNeeds: 'additionalNeeds',
+  images: 'images',
+  reportName: 'reportName',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AdminScalarFieldEnum = {
@@ -146,41 +178,10 @@ exports.Prisma.AdminScalarFieldEnum = {
   password: 'password'
 };
 
-exports.Prisma.WsoScalarFieldEnum = {
+exports.Prisma.SettingScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  email: 'email',
-  companyName: 'companyName',
-  phone: 'phone',
-  lineId: 'lineId',
-  productType: 'productType',
-  fabricType: 'fabricType',
-  specs: 'specs',
-  sizeDetails: 'sizeDetails',
-  totalQuantity: 'totalQuantity',
-  printTitle: 'printTitle',
-  printSize: 'printSize',
-  embroideryTitle: 'embroideryTitle',
-  embroiderySize: 'embroiderySize',
-  printPos2Title: 'printPos2Title',
-  printPos2Size: 'printPos2Size',
-  embroideryPos2Title: 'embroideryPos2Title',
-  embroideryPos2Size: 'embroideryPos2Size',
-  printPos3Title: 'printPos3Title',
-  printPos3Size: 'printPos3Size',
-  embroideryPos3Title: 'embroideryPos3Title',
-  embroideryPos3Size: 'embroideryPos3Size',
-  printPos4Title: 'printPos4Title',
-  printPos4Size: 'printPos4Size',
-  embroideryPos4Title: 'embroideryPos4Title',
-  embroideryPos4Size: 'embroideryPos4Size',
-  printPos5Title: 'printPos5Title',
-  printPos5Size: 'printPos5Size',
-  embroideryPos5Title: 'embroideryPos5Title',
-  embroideryPos5Size: 'embroideryPos5Size',
-  additionalNeeds: 'additionalNeeds',
-  images: 'images',
-  createdAt: 'createdAt'
+  key: 'key',
+  value: 'value'
 };
 
 exports.Prisma.SortOrder = {
@@ -188,24 +189,9 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull
-};
-
-exports.Prisma.JsonNullValueInput = {
-  JsonNull: Prisma.JsonNull
-};
-
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
-};
-
-exports.Prisma.JsonNullValueFilter = {
-  DbNull: Prisma.DbNull,
-  JsonNull: Prisma.JsonNull,
-  AnyNull: Prisma.AnyNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -215,9 +201,10 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Submission: 'Submission',
+  Customer: 'Customer',
+  Order: 'Order',
   Admin: 'Admin',
-  Wso: 'Wso'
+  Setting: 'Setting'
 };
 
 /**

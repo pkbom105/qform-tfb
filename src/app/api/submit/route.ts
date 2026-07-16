@@ -1,7 +1,7 @@
 // src/app/api/submit/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import { localDb } from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import fs from "fs/promises";
 import path from "path";
 import { getReportName } from "@/lib/reportNameGenerator";
@@ -106,12 +106,12 @@ export async function POST(req: NextRequest) {
     // 3. บันทึกลง Local Database (SQLite)
     console.log("[submit] uploaded urls:", allUploadedUrls);
 
-    // Find or create customer
-    let customer = await localDb.customer.findFirst({
+    // Find or create customer in PostgreSQL
+    let customer = await prisma.customer.findFirst({
       where: { email: email || "" },
     });
     if (!customer) {
-      customer = await localDb.customer.create({
+      customer = await prisma.customer.create({
         data: {
           name: name || "ไม่ระบุ",
           email: email || "no-reply@example.com",
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
       });
     } else {
       // Update existing customer stats
-      customer = await localDb.customer.update({
+      customer = await prisma.customer.update({
         where: { id: customer.id },
         data: {
           totalOrders: { increment: 1 },
@@ -164,8 +164,8 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    // Save to local SQLite database
-    const newOrder = await localDb.order.create({
+    // Save to PostgreSQL database
+    const newOrder = await prisma.order.create({
       data: {
         customerId: customer.id,
         productType,
@@ -184,34 +184,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // 4. Sync to Online PostgreSQL (backup)
-    try {
-      const { onlineDb } = await import("@/lib/prisma");
-      if (onlineDb) {
-        await onlineDb.wso.create({
-          data: {
-            name,
-            email,
-            companyName: companyName || "Toffy Boutique",
-            phone,
-            lineId,
-            productType,
-            fabricType,
-            specs,
-            sizeDetails: JSON.parse(sizeDetails || "{}"),
-            totalQuantity: parseInt(finalTotal) || 0,
-            printTitle,
-            printSize,
-            embroideryTitle,
-            embroiderySize,
-            additionalNeeds,
-            images: allUploadedUrls,
-          },
-        });
-      }
-    } catch (onlineErr) {
-      console.warn("[submit] Online sync skipped:", onlineErr);
-    }
 
     // 5. Append uploads index JSON
     try {
